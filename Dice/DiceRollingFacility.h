@@ -5,25 +5,23 @@ class DiceRollingFacility
 public:
 	DiceRollingFacility();
 
-	// Roll 1-3 dices, store values in container/update percentage
-	void rollDice();
+	// Roll 1-3 dices, update percentages and return sorted Container with dice values
+	std::vector<int> rollDice();
 
-	// Sorted Container
-	void addToContainer(int value);
-	void displayContainer();
-	void clearContainer();
-	void sortContainer();
-
-	void getTotalDiceRolled();
 	// Percentage array
-	void initPercentArr();
 	void displayPercentArr();
-	void getPercentOfValues();
-	void addToPercentArr(int value);
+	void getPercentRoll(int roll);
+
+	//Getter for total number of dice
+	int getTotalDiceRolled();
 
 private:
+	// Attributes
 	int totalDiceRolled;
-	std::vector<int> sortedContainer;
-	int percentArr[6];
+	double percentArr[6];
+
+	// Helper methods for the Percent Array
+	void addToPercentArr(int value);
+	void initalizePercentArr();
 };
 
