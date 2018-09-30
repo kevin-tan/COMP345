@@ -9,19 +9,18 @@ public:
 	std::vector<int> rollDice();
 
 	// Percentage array
-	void displayPercentArr();
-	void getPercentRoll(int roll);
+	void displayPercentArr();					// Display percentages for the all possible values (1-6)
+	void getPercentRoll(int roll);					// Get percentage of the specific value of dice
 
 	//Getter for total number of dice
-	int getTotalDiceRolled();
+	int getTotalDiceRolled();						
 
-private:
+private:		
 	// Attributes
-	int totalDiceRolled;
-	double percentArr[6];
+	int totalDiceRolled;						// Total number of dice rolled
+	double percentArr[6];						// Array keeps percentages of the rolls from 1-6
 
 	// Helper methods for the Percent Array
-	void addToPercentArr(int value);
-	void initalizePercentArr();
+	void addToPercentArr(int value);				// Update percentage array
+	void initalizePercentArr();	
 };
-
