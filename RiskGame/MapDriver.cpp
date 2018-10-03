@@ -4,8 +4,7 @@
 
 
 // Driver for Map implementation
-int main()
-{
+int main() {
 	std::vector<std::string> map_info_vector = {
 		"Alaska,North America,Northwest Territory,Alberta,Kamchatka",
 		"Northwest Territory,North America,Alaska,Alberta,Ontario,Greenland",

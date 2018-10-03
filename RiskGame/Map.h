@@ -7,8 +7,7 @@
 
 // Defining properties for Graph provided by Boost
 
-struct VertexProperty
-{
+struct VertexProperty {
 	// Node info
 	std::string continent;
 	std::string country;
@@ -20,15 +19,14 @@ struct VertexProperty
 
 // Define the type of Graph and its properties we want
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-                              boost::directedS,
-                              VertexProperty,
-                              boost::no_property> Graph;
+	boost::directedS,
+	VertexProperty,
+	boost::no_property> Graph;
 // Type aliasing with Vertex for vertex_descriptor
 typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
 typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
 
-class Map
-{
+class Map {
 	const char DELIM = ',';
 	const signed int NULL_VERTEX = -1;
 	Vertex find_country_vertex(Graph graph, std::string country) const;
