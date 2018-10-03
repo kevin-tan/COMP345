@@ -1,11 +1,11 @@
 #pragma once
 
-#include <fstream>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/property_map/property_map.hpp>
 #include <boost/graph/named_function_params.hpp>
 #include <sstream>
+
+// Defining properties for Graph provided by Boost
 
 struct VertexProperty
 {
@@ -20,9 +20,9 @@ struct VertexProperty
 
 // Define the type of Graph and its properties we want
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-                              boost::directedS,
-                              VertexProperty,
-                              boost::no_property> Graph;
+	boost::directedS,
+	VertexProperty,
+	boost::no_property> Graph;
 // Type aliasing with Vertex for vertex_descriptor
 typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
 
