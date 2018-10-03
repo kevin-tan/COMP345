@@ -4,7 +4,6 @@
 
 
 // Driver for Map implementation
-
 int main()
 {
 	Map map;
@@ -55,8 +54,9 @@ int main()
 	};
 
 	map.generate_map(map_string);
-	map.getAllVertices();
-	map.printAllEdges();
+	map.get_all_vertices();
+	map.print_all_edges();
+	map.print_subgraph_continent("Asia");
 
 	// Temp
 	int x;

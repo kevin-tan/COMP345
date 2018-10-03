@@ -20,11 +20,12 @@ struct VertexProperty
 
 // Define the type of Graph and its properties we want
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-	boost::directedS,
-	VertexProperty,
-	boost::no_property> Graph;
+                              boost::directedS,
+                              VertexProperty,
+                              boost::no_property> Graph;
 // Type aliasing with Vertex for vertex_descriptor
 typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
+typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
 
 class Map
 {
@@ -35,8 +36,9 @@ class Map
 
 public:
 	Map();
-	void printAllEdges();
-	void getAllVertices();
+	void print_subgraph_continent(std::string continent) const;
+	void print_all_edges() const;
+	void get_all_vertices() const;
 	Graph get_generated_map() const;
 	bool generate_map(std::vector<std::string>); // Temporary
 	// bool generateMap(std::string fileName); // Generating map with the file

@@ -47,7 +47,8 @@ bool Map::generate_map(std::vector<std::string> map_info)
 				{
 					if (vertexFound)
 					{
-						cout << "Country : " << graph[main_vertex].country << " already has continent " << graph[main_vertex].continent << endl;
+						cout << "Country : " << graph[main_vertex].country << " already has continent " << graph[main_vertex].continent <<
+							endl;
 						graph = Graph(); // Return empty graph
 						return false;
 					}
@@ -72,7 +73,7 @@ bool Map::generate_map(std::vector<std::string> map_info)
 	return true;
 }
 
-Vertex Map::find_country_vertex(std::string country)
+Vertex Map::find_country_vertex(std::string const country)
 {
 	for (auto i = vertices(graph); i.first != i.second; ++i.first)
 	{
@@ -82,28 +83,50 @@ Vertex Map::find_country_vertex(std::string country)
 	return NULL_VERTEX;
 }
 
-
-void Map::printAllEdges()
+void Map::print_subgraph_continent(std::string const continent) const
 {
+	using namespace std;
+
+	cout << "Printing subgraph for continent " << continent << endl;
+
 	auto pairs = edges(graph);
 	for (auto i = pairs.first; i != pairs.second; ++i)
 	{
-		std::cout << "Edge : Country=" << graph[source(*i, graph)].country << " & Continent=" << graph[source(*i, graph)].continent << " --> Country="
-			<< graph[target(*i, graph)].country << " & Continent=" << graph[target(*i, graph)].continent << std::endl;
+		if (graph[source(*i, graph)].continent.compare(continent) == 0)
+		{
+			cout << "Edge : Country=" << graph[source(*i, graph)].country <<
+				" & Continent=" << graph[source(*i, graph)].continent << " --> Country=" << graph[target(*i, graph)].country <<
+				" & Continent=" << graph[target(*i, graph)].continent << endl;
+		}
 	}
 }
 
-void Map::getAllVertices()
+void Map::print_all_edges() const
 {
-	typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+	using namespace std;
 
+	// Index map to get the index of the current vertex in the vector set
+	IndexMap index = get(boost::vertex_index, graph);
+
+	auto pairs = edges(graph);
+	for (auto i = pairs.first; i != pairs.second; ++i)
+	{
+		cout << "Edge : index=" << index[source(*i, graph)] << " Country=" << graph[source(*i, graph)].country <<
+			" & Continent=" << graph[source(*i, graph)].continent << " --> index=" << index[target(*i, graph)] << " Country="
+			<< graph[target(*i, graph)].country << " & Continent=" << graph[target(*i, graph)].continent << endl;
+	}
+	cout << endl;
+}
+
+void Map::get_all_vertices() const
+{
 	// Index map to get the index of the current vertex in the vector set
 	IndexMap index = get(boost::vertex_index, graph);
 
 	std::cout << "vertices(g) = " << std::endl;
 	for (auto pair = vertices(graph); pair.first != pair.second; ++pair.first)
-		std::cout << index[*pair.first] << " : " << graph[*pair.first].country << " with continent " << graph[*pair.first].continent
-			<< std::endl;
+		std::cout << index[*pair.first] << " : " << graph[*pair.first].country << " with continent " << graph[*pair.first].
+			continent << std::endl;
 	std::cout << std::endl;
 }
 
