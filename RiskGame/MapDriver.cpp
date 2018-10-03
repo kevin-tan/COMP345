@@ -6,9 +6,7 @@
 // Driver for Map implementation
 int main()
 {
-	Map map;
-
-	std::vector<std::string> map_string = {
+	std::vector<std::string> map_info_vector = {
 		"Alaska,North America,Northwest Territory,Alberta,Kamchatka",
 		"Northwest Territory,North America,Alaska,Alberta,Ontario,Greenland",
 		"Alberta,North America,Alaska,Northwest Territory,Ontario,Western United States",
@@ -53,10 +51,17 @@ int main()
 		"Eastern Australia,Australia,Western Australia,New Guinea"
 	};
 
-	map.generate_map(map_string);
-	map.get_all_vertices();
-	map.print_all_edges();
-	map.print_subgraph_continent("Asia");
+
+	// Map accepted
+	Map map_generator;
+	Graph map_1 = map_generator.generate_map(map_info_vector);
+	map_generator.print_all_edges(map_1);
+
+	// Not accepted map
+	map_info_vector.push_back("Eastern Australia,North America,Western Australia,New Guinea");
+	Graph map_2 = map_generator.generate_map(map_info_vector);
+	map_generator.print_all_edges(map_2);
+
 
 	// Temp
 	int x;
