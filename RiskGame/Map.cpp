@@ -96,16 +96,13 @@ void Map::printAllEdges()
 void Map::getAllVertices()
 {
 	typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
-	typedef boost::graph_traits<Graph>::vertex_iterator vertex_iter;
 
 	// Index map to get the index of the current vertex in the vector set
 	IndexMap index = get(boost::vertex_index, graph);
-	// The vertex iterator pair
-	std::pair<vertex_iter, vertex_iter> vp;
 
 	std::cout << "vertices(g) = " << std::endl;
-	for (vp = vertices(graph); vp.first != vp.second; ++vp.first)
-		std::cout << index[*vp.first] << " : " << graph[*vp.first].country << " with continent " << graph[*vp.first].continent
+	for (auto pair = vertices(graph); pair.first != pair.second; ++pair.first)
+		std::cout << index[*pair.first] << " : " << graph[*pair.first].country << " with continent " << graph[*pair.first].continent
 			<< std::endl;
 	std::cout << std::endl;
 }
