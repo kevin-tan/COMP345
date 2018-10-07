@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Map.h"
+/**#include "Map.h"
 #include <iostream>
 
 
@@ -67,4 +67,4 @@ int main() {
 	std::cin >> x;
 
 	return 0;
-}
+}*/
