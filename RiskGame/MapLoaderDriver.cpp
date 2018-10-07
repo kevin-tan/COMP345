@@ -1,16 +1,23 @@
 #include "stdafx.h"
 #include "MapLoader.h"
 
-int main() {
+int main()
+{
 	Map map = read_map_file("World.map");
 
 	map.print_all_edges(map.get_graph());
-	map.get_all_vertices(map.get_graph());
+	map.print_all_vertices(map.get_graph());
 	std::cout << "Continents: ";
-	for(auto continent: map.get_continents())
+	for (auto continent : map.get_continents())
 	{
 		std::cout << continent << " ";
 	}
 	std::cout << std::endl;
+	std::cout << "--------------------" << std::endl;
+	Vertex v = map.find_country_vertex("Alaska");
+	map.traversal(v);
+
+	int x = 0;
+	std::cin >> x;
 	return 0;
 }

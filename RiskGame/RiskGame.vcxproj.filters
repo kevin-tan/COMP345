@@ -25,6 +25,12 @@
     <Filter Include="Source Files\MapLoader">
       <UniqueIdentifier>{5dd633d2-edb0-4551-86f9-ac6da21ddfdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dice">
+      <UniqueIdentifier>{e1994ff2-272a-470b-ae16-5e40eeda2f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dice">
+      <UniqueIdentifier>{cf6ebc89-2896-4a71-a738-5901149d9491}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -38,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="MapLoader.h">
       <Filter>Header Files\MapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="DiceRollingFacility.h">
+      <Filter>Header Files\Dice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +68,15 @@
     <ClCompile Include="MapLoaderDriver.cpp">
       <Filter>Source Files\MapLoader</Filter>
     </ClCompile>
+    <ClCompile Include="DiceRollingFacility.cpp">
+      <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="DiceDriver.cpp">
+      <Filter>Source Files\Dice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="World.map" />
   </ItemGroup>
 </Project>

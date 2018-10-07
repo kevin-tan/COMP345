@@ -17,19 +17,17 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 		bool vertexFound = true;
 		while (getline(ss, token, DELIM)) {
 			if (i == 0) {
-				main_vertex = find_country_vertex(graph, token);
+				main_vertex = find_country_vertex(token);
 				if (main_vertex == NULL_VERTEX) {
 					vertexFound = false;
 					main_vertex = add_vertex(graph);
 					graph[main_vertex].country = token;
 				}
 				i++;
-			}
-			else if (i == 1) {
+			} else if (i == 1) {
 				if (graph[main_vertex].continent.empty()) {
 					graph[main_vertex].continent = token;
-				}
-				else {
+				} else {
 					if (vertexFound) {
 						cout << "\nFailed to create map.\nCountry: " << graph[main_vertex].country <<
 							" already exist with continent " <<
@@ -39,10 +37,9 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 					}
 				}
 				i++;
-			}
-			else {
+			} else {
 				// Find a vertext to see if it exists already
-				Vertex v = find_country_vertex(graph, token);
+				Vertex v = find_country_vertex(token);
 				if (v == NULL_VERTEX) {
 					// Create new vertex
 					v = add_vertex(graph);
@@ -57,7 +54,7 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 	return graph;
 }
 
-Vertex Map::find_country_vertex(Graph graph, std::string const country) const {
+Vertex Map::find_country_vertex(std::string const country) const {
 	for (auto i = vertices(graph); i.first != i.second; ++i.first) {
 		if (graph[*i.first].country.compare(country) == 0)
 			return *i.first;
@@ -69,7 +66,7 @@ Map::Map() {
 	graph = Graph();
 };
 
-void Map::print_subgraph_continent(const Graph graph, std::string const continent) const {
+void Map::print_subgraph_continent(const Graph& graph, std::string const continent) const {
 	using namespace std;
 
 	cout << "Printing subgraph for continent " << continent << endl;
@@ -85,7 +82,7 @@ void Map::print_subgraph_continent(const Graph graph, std::string const continen
 	}
 }
 
-void Map::print_all_edges(const Graph graph) const {
+void Map::print_all_edges(const Graph& graph) const {
 	using namespace std;
 
 	// Index map to get the index of the current vertex in the vector set
@@ -101,7 +98,7 @@ void Map::print_all_edges(const Graph graph) const {
 	cout << endl;
 }
 
-void Map::get_all_vertices(const Graph graph) const {
+void Map::print_all_vertices(const Graph& graph) const {
 	// Index map to get the index of the current vertex in the vector set
 	IndexMap index = get(boost::vertex_index, graph);
 
@@ -114,7 +111,7 @@ void Map::get_all_vertices(const Graph graph) const {
 }
 
 Vertex Map::add_territory(const std::string territory) {
-	Vertex node = find_country_vertex(graph, territory);
+	Vertex node = find_country_vertex(territory);
 	if (node == NULL_VERTEX) {
 		node = boost::add_vertex(graph);
 		graph[node].country = territory;
@@ -122,24 +119,21 @@ Vertex Map::add_territory(const std::string territory) {
 	return node;
 }
 
-void Map::add_continent_to_territory(Vertex territory, const std::string continent) {
+void Map::add_continent_to_territory(Vertex& territory, const std::string continent) {
 	if (graph[territory].continent.empty()) {
-		if(continents.count(continent))
-		{
+		if (continents.count(continent)) {
 			graph[territory].continent = continent;
-		}else
-		{
+		} else {
 			throw "Continent does not exist cannot create graph";
 		}
-	}
-	else {
+	} else {
 		graph = Graph();
 		throw "Country node exists with a continent already. Cannot create graph.";
 	}
 }
 
-void Map::add_adjacency(const Vertex territory, std::string adj_territory) {
-	Vertex adj_node = find_country_vertex(graph, adj_territory);
+void Map::add_adjacency(Vertex& territory, const std::string adj_territory) {
+	Vertex adj_node = find_country_vertex(adj_territory);
 	if (adj_node == NULL_VERTEX) {
 		adj_node = boost::add_vertex(graph);
 		graph[adj_node].country = adj_territory;
@@ -147,8 +141,7 @@ void Map::add_adjacency(const Vertex territory, std::string adj_territory) {
 	auto edge = boost::add_edge(territory, adj_node, graph);
 }
 
-void Map::add_continents(const std::string continent)
-{
+void Map::add_continents(const std::string continent) {
 	continents.insert(continent);
 }
 
@@ -156,7 +149,20 @@ Graph Map::get_graph() const {
 	return graph;
 }
 
-std::unordered_set<std::string> Map::get_continents() const
-{
+void Map::traversal(const Vertex& vertex) const {
+	for (auto i = boost::adjacent_vertices(vertex, graph); i.first != i.second; ++i.first) {
+		std::cout << graph[vertex].country << " --> " << graph[*i.first].country << std::endl;
+	}
+}
+
+std::vector<Vertex> Map::get_adjacent_countries(const Vertex& vertex) const {
+	std::vector<Vertex> adj_nodes = std::vector<Vertex>();
+	for (auto i = boost::adjacent_vertices(vertex, graph); i.first != i.second; ++i.first) {
+		adj_nodes.push_back(*i.first);
+	}
+	return adj_nodes;
+}
+
+std::unordered_set<std::string> Map::get_continents() const {
 	return continents;
 }
