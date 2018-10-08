@@ -16,17 +16,9 @@ DiceRollingFacility::DiceRollingFacility(){
 	It enables player to decide how many dice are being rolled (from 1 to 3).
 	Returns sorted container with dice values and updates percentages.
 */
-vector<int> DiceRollingFacility::rollDice() {
-	int numberOfDice, roll;
+vector<int> DiceRollingFacility::rollDice(int numberOfDice) {
+	int roll;
 	vector <int> sortContainer;
-
-	// Number of dice user wants to roll
-	cout << "How many dice you would like to roll (from 1 to 3 dice)? ";
-	do {
-		cin >> numberOfDice;
-		if (numberOfDice < 1 || numberOfDice > 3)
-			cout << "Number of dice must be betwen 1 and 3 ";
-	} while (numberOfDice < 1 || numberOfDice > 3);
 
 	// Get values of dice and store in the Sorted Container/Update percentage array
 	for (int i = 0; i < numberOfDice; i++) {
