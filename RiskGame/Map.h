@@ -63,7 +63,7 @@ public:
 	Vertex find_country_vertex(std::string country) const;
 	// Get adjencency node for vertex
 	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
-	void traversal(const Vertex& vertex) const;
+	void traverse_edges(const Vertex& vertex) const;
 
 	// Temporary for driver
 	Graph generate_map(std::vector<std::string>);
