@@ -6,7 +6,7 @@ public:
 	DiceRollingFacility();
 
 	// Roll 1-3 dices, update percentages and return sorted Container with dice values
-	std::vector<int> rollDice();
+	std::vector<int> rollDice(int numberOfDice);
 
 	// Percentage array
 	void displayPercentArr();						// Display percentages for the all possible values(1-6)
