@@ -20,7 +20,7 @@ int main() {
 	do {
 		// Test object 1
 		cout << "\nTest for the first object" << endl;
-		container1 = obj1.rollDice();
+		container1 = obj1.rollDice(3);
 		cout << "Container values: ";
 		printContainer(container1);
 		cout << "Percentage of rolls " << endl;
@@ -28,7 +28,7 @@ int main() {
 
 		// Test object 2
 		cout << "\nTest for the second object" << endl;
-		container2 = obj2.rollDice();
+		container2 = obj2.rollDice(3);
 		cout << "Container values: ";
 		printContainer(container2);
 		cout << "Percentage of rolls: " << endl;
