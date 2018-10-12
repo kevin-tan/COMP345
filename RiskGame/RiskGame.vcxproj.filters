@@ -96,5 +96,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="World.map" />
+    <None Include="World1.map" />
+    <None Include="World2.map" />
   </ItemGroup>
 </Project>

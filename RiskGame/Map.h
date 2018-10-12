@@ -37,11 +37,11 @@ class Map
 	// Helper method to find the node
 
 public:
-	Map();
-	Graph& get_graph();
+	Map() = default;
+	Graph get_graph();
 
 	// Return the list of continents for this map
-	std::unordered_set<std::string> get_continents();
+	std::unordered_set<std::string> get_continents() const;
 	// Print all the connected nodes with edges in given continent
 	void print_subgraph_continent(const Graph& graph, std::string continent) const;
 	// Print all edges in the graph
@@ -61,8 +61,8 @@ public:
 	// Get the node for country
 	Vertex find_country_vertex(std::string country);
 	// Get adjencency node for vertex
-	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex);
-	void traverse_edges(const Vertex& vertex);
+	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
+	void traverse_edges(const Vertex& vertex) const;
 	// Set player that currently owns country
 	void set_country_owner(PlayerAbstract* player, Vertex& vertex);
 

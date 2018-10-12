@@ -38,8 +38,7 @@ Map read_map_file(std::string map_file) {
 				}
 
 				if (position_counter < 2) {
-					cout << "Invalid Map file. Line \"" << line << "\" is not in the correct format of: 'Continent'='Bonus'" << endl;
-					exit(1);
+					throw exception(("Invalid Map file. Line \"" + line + "\" is not in the correct format of: 'Continent'='Bonus'").c_str());
 				}
 			}
 
@@ -65,16 +64,14 @@ Map read_map_file(std::string map_file) {
 				}
 
 				if (position_counter < 5) {
-					cout << "Invalid Map file. Line \"" << line <<
-						"\" is not in the correct format of: 'Territory','x-coord','y-coord','Continent','Adjacencies',..." << endl;
-					exit(1);
+					throw  exception(("Invalid Map file. Line \"" + line +
+						"\" is not in the correct format of: 'Territory','x-coord','y-coord','Continent','Adjacencies',...").c_str());
 				}
 			}
 		}
 	}
 	else {
-		cout << "Input file cannot be read" << endl;
-		exit(1);
+		throw exception("Input file cannot be read");
 	}
 
 	return map;

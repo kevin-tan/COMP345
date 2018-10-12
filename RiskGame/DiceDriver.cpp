@@ -38,20 +38,16 @@ int main() {
 		cin >> repeat;
 	} while (repeat != 'n');
 
-	 Test for the equal share of rolls
+	//	 Test for the equal share of rolls
 	for(int i = 0; i < 500; ++i){
-		obj1.rollDice();
+		obj1.rollDice(3);
 	}
 	obj1.displayPercentArr();
+
+	int c = 0;
+	std::cin >> c;
 	
 	return 0;
 }
-
-	// Helper method to display container
-	void printContainer(vector<int> &MyV){
-		for (unsigned int i = 0; i < MyV.size(); ++i) {
-			cout << MyV.at(i) << " ";
-		}
-		cout << endl;
-}
 */
+

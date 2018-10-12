@@ -176,6 +176,8 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="World.map" />
+    <None Include="World1.map" />
+    <None Include="World2.map" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
