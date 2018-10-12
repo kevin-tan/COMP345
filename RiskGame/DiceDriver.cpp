@@ -1,15 +1,14 @@
 #include "stdafx.h"
-/*
+#include <iostream>
 #include <cstdlib>
 #include <vector>
-#include <algorithm>
 #include <time.h>
 #include "DiceRollingFacility.h"
 
 using namespace std;
 
 void printContainer(vector<int> &MyV);
-
+/*
 int main() {
 	srand(time(0));	// Unique pattern for the rand() function. MUST BE first statement in main function!
 	
@@ -39,12 +38,12 @@ int main() {
 		cin >> repeat;
 	} while (repeat != 'n');
 
-//	 Test for the equal share of rolls
-//	for(int i = 0; i < 500; ++i){
-//		obj1.rollDice();
-//	}
-//	obj1.displayPercentArr();
-//	
+	 Test for the equal share of rolls
+	for(int i = 0; i < 500; ++i){
+		obj1.rollDice();
+	}
+	obj1.displayPercentArr();
+	
 	return 0;
 }
 

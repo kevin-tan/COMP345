@@ -42,7 +42,7 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 				}
 				i++;
 			} else {
-				// Find a vertext to see if it exists already
+				// Find a vertex to see if it exists already
 				Vertex v = find_country_vertex(token);
 				if (v == NULL_VERTEX) {
 					// Create new vertex
@@ -58,15 +58,15 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 	return graph;
 }
 
-Graph Map::get_graph() const {
+Graph& Map::get_graph() {
 	return graph;
 }
 
-std::unordered_set<std::string> Map::get_continents() const {
+std::unordered_set<std::string> Map::get_continents(){
 	return continents;
 }
 
-std::vector<Vertex> Map::get_adjacent_countries(const Vertex& vertex) const {
+std::vector<Vertex> Map::get_adjacent_countries(const Vertex& vertex){
 	std::vector<Vertex> adj_nodes = std::vector<Vertex>();
 	for (auto i = boost::adjacent_vertices(vertex, graph); i.first != i.second; ++i.first) {
 		adj_nodes.push_back(*i.first);
@@ -74,7 +74,7 @@ std::vector<Vertex> Map::get_adjacent_countries(const Vertex& vertex) const {
 	return adj_nodes;
 }
 
-Vertex Map::find_country_vertex(std::string const country) const {
+Vertex Map::find_country_vertex(std::string const country){
 	for (auto i = vertices(graph); i.first != i.second; ++i.first) {
 		if (graph[*i.first].country.compare(country) == 0)
 			return *i.first;
@@ -117,7 +117,7 @@ void Map::add_adjacency(Vertex& territory, const std::string adj_territory) {
 	auto edge = boost::add_edge(territory, adj_node, graph);
 }
 
-void Map::traverse_edges(const Vertex& vertex) const {
+void Map::traverse_edges(const Vertex& vertex){
 	// Adjacent nodes to current vertex
 	std::vector<Vertex> adj_nodes = get_adjacent_countries(vertex);
 	Vertex current = vertex;
@@ -132,6 +132,10 @@ void Map::traverse_edges(const Vertex& vertex) const {
 		current = adj_nodes[country];
 		adj_nodes = get_adjacent_countries(current);
 	}
+}
+
+void Map::set_country_owner(PlayerAbstract* player, Vertex& vertex) {
+	graph[vertex].player = player;
 }
 
 void Map::print_subgraph_continent(const Graph& graph, std::string const continent) const {

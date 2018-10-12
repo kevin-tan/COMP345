@@ -1,32 +1,31 @@
 #pragma once
 
+#include "PlayerAbstract.h"
 #include <vector>
+#include <sstream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/named_function_params.hpp>
-#include <sstream>
 
 // Defining properties for Graph provided by Boost
-struct VertexProperty
-{
+struct VertexProperty {
 	// Vertex info
 	std::string continent;
 	std::string country;
 
 	// Player info
-	std::string player; //Player type should replace string
+	PlayerAbstract* player;
 	int army_size;
 };
 
 // Define the type of Graph and its properties we want
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-                              boost::directedS,
-                              VertexProperty,
-                              boost::no_property> Graph;
+	boost::directedS,
+	VertexProperty,
+	boost::no_property> Graph;
 // Type aliasing with Vertex for vertex_descriptor
 typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
 // Type aliasing for the Vertex IndexMap
 typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
-
 typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 
 class Map
@@ -39,10 +38,10 @@ class Map
 
 public:
 	Map();
-	Graph get_graph() const;
+	Graph& get_graph();
 
 	// Return the list of continents for this map
-	std::unordered_set<std::string> get_continents() const;
+	std::unordered_set<std::string> get_continents();
 	// Print all the connected nodes with edges in given continent
 	void print_subgraph_continent(const Graph& graph, std::string continent) const;
 	// Print all edges in the graph
@@ -60,10 +59,12 @@ public:
 	void add_continents(const std::string continent);
 
 	// Get the node for country
-	Vertex find_country_vertex(std::string country) const;
+	Vertex find_country_vertex(std::string country);
 	// Get adjencency node for vertex
-	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
-	void traverse_edges(const Vertex& vertex) const;
+	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex);
+	void traverse_edges(const Vertex& vertex);
+	// Set player that currently owns country
+	void set_country_owner(PlayerAbstract* player, Vertex& vertex);
 
 	// Temporary for driver
 	Graph generate_map(std::vector<std::string>);
