@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Dice">
       <UniqueIdentifier>{cf6ebc89-2896-4a71-a738-5901149d9491}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{981b36fa-ab8d-4b06-99d9-725356e8de19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{4928b6e8-3eb3-42e7-aeec-ab008785ffe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -47,6 +53,12 @@
     </ClInclude>
     <ClInclude Include="DiceRollingFacility.h">
       <Filter>Header Files\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAbstract.h">
+      <Filter>Header Files\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="DiceDriver.cpp">
       <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

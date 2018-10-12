@@ -6,12 +6,10 @@
 Map read_map_file(std::string map_file) {
 	using namespace std;
 
-	const int TERRITORY_POS = 0;
-	const int CONTINENT_POS = 3;
-	const int ADJACENCIES_POS = 4;
 	const string TERRITORIES_HEADER = "[Territories]";
 	const string CONTINENTS_HEADER = "[Continents]";
 
+	Map map;
 	string line;
 	string delimited_line;
 	int position_counter;
@@ -20,48 +18,63 @@ Map read_map_file(std::string map_file) {
 
 	ifstream input(map_file);
 
-	Map map;
+	if (input.good()) {
+		while (getline(input, line)) {
+			if (line == CONTINENTS_HEADER) {
+				continent_flag = true;
+			}
+			else if (continent_flag && !line.empty() && !territories_flag && line != TERRITORIES_HEADER) {
+				stringstream ss(line);
+				position_counter = 0;
 
-	while (getline(input, line)) {
-		//NOT USED YET
-		if (line == CONTINENTS_HEADER) {
-			continent_flag = true;
-		}
-		else if (continent_flag && !line.empty() && !territories_flag && line != TERRITORIES_HEADER) {
-			stringstream ss(line);
-			position_counter = 0;
-			while (getline(ss, delimited_line, '=')) {
-				if (position_counter == 0) {
-					cout << "Top Continent: " << delimited_line;
-					map.add_continents(delimited_line);
+				while (getline(ss, delimited_line, '=')) {
+					if (position_counter == 0) {
+						map.add_continents(delimited_line);
+					}
+					else if (position_counter == 1) {
+						//Continent bonus
+					}
 					position_counter++;
 				}
-				else if (position_counter == 1) {
-					cout << "=" << delimited_line << endl;
-				}
-			}
-		}
 
-		if (line == TERRITORIES_HEADER) {
-			territories_flag = true;
-		}
-		else if (territories_flag && !line.empty()) {
-			stringstream ss(line);
-			position_counter = 0;
-			Vertex node;
-			while (getline(ss, delimited_line, ',')) {
-				if (position_counter == TERRITORY_POS) {
-					node = map.add_territory(delimited_line);
+				if (position_counter < 2) {
+					cout << "Invalid Map file. Line \"" << line << "\" is not in the correct format of: 'Continent'='Bonus'" << endl;
+					exit(1);
 				}
-				else if (position_counter == CONTINENT_POS) {
-					map.add_continent_to_territory(node, delimited_line);
+			}
+
+			if (line == TERRITORIES_HEADER) {
+				territories_flag = true;
+			}
+			else if (territories_flag && !line.empty()) {
+				stringstream ss(line);
+				position_counter = 0;
+				Vertex node;
+
+				while (getline(ss, delimited_line, ',')) {
+					if (position_counter == 0) {
+						node = map.add_territory(delimited_line);
+					}
+					else if (position_counter == 3) {
+						map.add_continent_to_territory(node, delimited_line);
+					}
+					else if (position_counter >= 4) {
+						map.add_adjacency(node, delimited_line);
+					}
+					position_counter++;
 				}
-				else if (position_counter >= ADJACENCIES_POS) {
-					map.add_adjacency(node, delimited_line);
+
+				if (position_counter < 5) {
+					cout << "Invalid Map file. Line \"" << line <<
+						"\" is not in the correct format of: 'Territory','x-coord','y-coord','Continent','Adjacencies',..." << endl;
+					exit(1);
 				}
-				position_counter++;
 			}
 		}
+	}
+	else {
+		cout << "Input file cannot be read" << endl;
+		exit(1);
 	}
 
 	return map;
