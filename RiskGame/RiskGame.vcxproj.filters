@@ -13,6 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{07150e00-07f0-4b33-8e5e-2f71f098f3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{45aa79e2-8252-4511-aec0-cec59759ab11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MapLoader">
+      <UniqueIdentifier>{b2e41f20-eaa1-476f-ade7-8bc7d623ce62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MapLoader">
+      <UniqueIdentifier>{5dd633d2-edb0-4551-86f9-ac6da21ddfdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dice">
+      <UniqueIdentifier>{e1994ff2-272a-470b-ae16-5e40eeda2f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dice">
+      <UniqueIdentifier>{cf6ebc89-2896-4a71-a738-5901149d9491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{981b36fa-ab8d-4b06-99d9-725356e8de19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{4928b6e8-3eb3-42e7-aeec-ab008785ffe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -21,8 +45,20 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="classA.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLoader.h">
+      <Filter>Header Files\MapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="DiceRollingFacility.h">
+      <Filter>Header Files\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAbstract.h">
+      <Filter>Header Files\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,11 +68,35 @@
     <ClCompile Include="RiskGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="classA.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapDriver.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapLoader.cpp">
+      <Filter>Source Files\MapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="MapLoaderDriver.cpp">
+      <Filter>Source Files\MapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="DiceRollingFacility.cpp">
+      <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="DiceDriver.cpp">
+      <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="World.map" />
+    <None Include="World1.map" />
+    <None Include="World2.map" />
   </ItemGroup>
 </Project>
