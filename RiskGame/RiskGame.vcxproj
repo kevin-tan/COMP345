@@ -148,7 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
+    <ClInclude Include="Hand.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
@@ -157,8 +159,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CardMain.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
     <ClCompile Include="DiceDriver.cpp" />
+    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />

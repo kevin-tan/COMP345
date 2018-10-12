@@ -1,23 +1,19 @@
 /*
  * Hand.h
- *  
+ *
  */
 
-#ifndef HAND_H_
-#define HAND_H_
+#pragma once
 
 #include <iostream>
 #include <vector>
 
-using namespace std;
+class Hand {
 
-class Hand{
+int timesExchanged = 1;
 
 public:
-
-    vector<int> hand;
+	std::vector<int> hand;
 	int exchange();
-	int timesExchanged = 1;
 
 };
-#endif /* HAND_H_ */

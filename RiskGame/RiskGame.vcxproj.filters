@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Player">
       <UniqueIdentifier>{4928b6e8-3eb3-42e7-aeec-ab008785ffe3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Deck">
+      <UniqueIdentifier>{c3686be9-6d1b-4d94-a453-ad076e5606eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Deck">
+      <UniqueIdentifier>{e2c2e792-eebe-464f-8c90-279a14e302ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -59,6 +65,12 @@
     </ClInclude>
     <ClInclude Include="PlayerAbstract.h">
       <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Header Files\Deck</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>Header Files\Deck</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +103,15 @@
     </ClCompile>
     <ClCompile Include="PlayerDriver.cpp">
       <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
+      <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="CardMain.cpp">
+      <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>Source Files\Deck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
