@@ -5,18 +5,19 @@ Player::Player(std::string name) {
 	this->name = name;
 	countries = std::vector<Vertex>();
 	dice_rolling_facility = DiceRollingFacility();
+	hand = Hand();
 }
 
 void Player::reinforce() {
-	std::cout << "Player's reinforce() method has been called." << std::endl;
+	std::cout << "Printing from inside Player's reinforce() method." << std::endl;
 }
 
 void Player::attack() {
-	std::cout << "Player's attack() method has been called." << std::endl;
+	std::cout << "Printing from inside Player's attack() method." << std::endl;
 }
 
 void Player::fortify() {
-	std::cout << "Player's fortify() method has been called." << std::endl;
+	std::cout << "Printing from inside Player's fortify() method." << std::endl;
 }
 
 std::vector<Vertex> Player::getCountries() {
@@ -30,4 +31,12 @@ std::string Player::getName() {
 void Player::add_country(Vertex& country, Map& map) {
 	countries.push_back(country);
 	map.set_country_owner(this, country);
+}
+
+DiceRollingFacility& Player::getDiceRollingFacility() {
+	return dice_rolling_facility;
+}
+
+Hand& Player::getHand() {
+	return hand;
 }

@@ -4,26 +4,27 @@
  */
 
 #include "stdafx.h"
-#include "Deck.h"
 #include <vector>
+#include "Deck.h"
 
-Deck::Deck(int numberOfCountries) {
+Deck::Deck(int number_of_countries) {
+	number_of_exchanges = 0;
+	
+	deck_cards.resize(number_of_countries);
 
-	deck.resize(numberOfCountries);
-
-	for (int i = 0; i < numberOfCountries / 3; i++) {
-		deck[i] = 1;
+	for (int i = 0; i < number_of_countries / 3; i++) {
+		deck_cards[i] = "Infantry";
 	}
-	for (int i = numberOfCountries / 3; i < numberOfCountries / 3 * 2; i++) {
-		deck[i] = 2;
+	for (int i = number_of_countries / 3; i < number_of_countries / 3 * 2; i++) {
+		deck_cards[i] = "Artillery";
 	}
-	for (int i = numberOfCountries / 3 * 2; i < numberOfCountries; i++) {
-		deck[i] = 3;
+	for (int i = number_of_countries / 3 * 2; i < number_of_countries; i++) {
+		deck_cards[i] = "Cavalry";
 	}
 }
 
-void Deck::draw(std::vector<int>& hand) {
-	int randIndex = rand() % deck.size();
-	hand.push_back(deck[randIndex]);
-	deck.erase(deck.begin() + randIndex);
+void Deck::draw(std::vector<std::string>& hand_cards) {
+	int randIndex = rand() % deck_cards.size();
+	hand_cards.push_back(deck_cards[randIndex]);
+	deck_cards.erase(deck_cards.begin() + randIndex);
 }

@@ -66,10 +66,10 @@
     <ClInclude Include="PlayerAbstract.h">
       <Filter>Header Files\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Deck.h">
+    <ClInclude Include="Hand.h">
       <Filter>Header Files\Deck</Filter>
     </ClInclude>
-    <ClInclude Include="Hand.h">
+    <ClInclude Include="Deck.h">
       <Filter>Header Files\Deck</Filter>
     </ClInclude>
   </ItemGroup>
@@ -104,13 +104,13 @@
     <ClCompile Include="PlayerDriver.cpp">
       <Filter>Source Files\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Deck.cpp">
-      <Filter>Source Files\Deck</Filter>
-    </ClCompile>
     <ClCompile Include="CardMain.cpp">
       <Filter>Source Files\Deck</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
+      <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Deck</Filter>
     </ClCompile>
   </ItemGroup>

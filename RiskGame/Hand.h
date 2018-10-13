@@ -10,10 +10,7 @@
 
 class Hand {
 
-int timesExchanged = 1;
-
 public:
-	std::vector<int> hand;
-	int exchange();
-
+	std::vector<std::string> hand_cards;
+	int exchange(int& number_of_exchanges);
 };

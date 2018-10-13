@@ -4,8 +4,8 @@
  */
 
 #include "stdafx.h"
-#include "Hand.h"
-#include "Deck.h"
+//#include "Hand.h"
+//#include "deck_cards.h"
 #include <ctime>
 
 using namespace std;

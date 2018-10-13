@@ -1,7 +1,2 @@
-﻿  Map.cpp
-  MapLoader.cpp
-  MapLoaderDriver.cpp
-  Player.cpp
-  PlayerDriver.cpp
-  Generating Code...
+﻿  Player.cpp
   RiskGame.vcxproj -> D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe

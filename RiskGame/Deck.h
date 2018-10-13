@@ -11,7 +11,10 @@
 class Deck {
 
 public:
-	std::vector<int> deck;
-	Deck(int numberOfCountries);
-	void draw(std::vector<int>&);
+	Deck(int number_of_countries);
+	
+	std::vector<std::string> deck_cards;
+	int number_of_exchanges;
+	
+	void draw(std::vector<std::string>& hand_cards);
 };

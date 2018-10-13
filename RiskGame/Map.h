@@ -38,7 +38,7 @@ class Map
 
 public:
 	Map() = default;
-	Graph get_graph();
+	Graph& get_graph();
 
 	// Return the list of continents for this map
 	std::unordered_set<std::string> get_continents() const;
@@ -50,7 +50,7 @@ public:
 	void print_all_vertices(const Graph& graph) const;
 
 	// Add territory node
-	Vertex add_territory(const std::string territory);
+	Vertex& add_territory(const std::string territory);
 	// Add continent to the territory node
 	void add_continent_to_territory(Vertex& territory, const std::string continent);
 	// Add adjency territory node to the territory node
@@ -67,5 +67,5 @@ public:
 	void set_country_owner(PlayerAbstract* player, Vertex& vertex);
 
 	// Temporary for driver
-	Graph generate_map(std::vector<std::string>);
+	Graph& generate_map(std::vector<std::string>);
 };

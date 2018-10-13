@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 
-Graph Map::generate_map(std::vector<std::string> map_info) {
+Graph& Map::generate_map(std::vector<std::string> map_info) {
 	using namespace boost;
 	using namespace std;
 
@@ -52,7 +52,7 @@ Graph Map::generate_map(std::vector<std::string> map_info) {
 	return graph;
 }
 
-Graph Map::get_graph() {
+Graph& Map::get_graph() {
 	return graph;
 }
 
@@ -68,15 +68,15 @@ std::vector<Vertex> Map::get_adjacent_countries(const Vertex& vertex) const {
 	return adj_nodes;
 }
 
-Vertex Map::find_country_vertex(std::string const country)  {
+Vertex Map::find_country_vertex(std::string const country) {
 	for (auto i = vertices(graph); i.first != i.second; ++i.first) {
-		if (graph[*i.first].country.compare(country) == 0) 
+		if (graph[*i.first].country.compare(country) == 0)
 			return *i.first;
 	}
 	return NULL_VERTEX;
 }
 
-Vertex Map::add_territory(const std::string territory) {
+Vertex& Map::add_territory(const std::string territory) {
 	Vertex node = find_country_vertex(territory);
 	if (node == NULL_VERTEX) {
 		node = boost::add_vertex(graph);
@@ -94,11 +94,14 @@ void Map::add_continent_to_territory(Vertex& territory, const std::string contin
 		if (continents.count(continent)) {
 			graph[territory].continent = continent;
 		} else {
-			throw "Continent does not exist cannot create graph";
+			throw std::exception(
+				("Continent \'" + continent + "\' does not exist in the [Continents] header. Cannot create graph").
+				c_str());
 		}
 	} else {
-		graph = Graph();
-		throw "Country node exists with a continent already. Cannot create graph.";
+		throw std::exception(
+			("Territory \'" + graph[territory].country + "\' exists with a continent already (" + graph[territory].
+				continent + "). Cannot create graph.").c_str());
 	}
 }
 
@@ -159,12 +162,18 @@ void Map::print_all_edges(const Graph& graph) const {
 }
 
 void Map::print_all_vertices(const Graph& graph) const {
-	// Index map to get the index of the current vertex in the vector set
 	IndexMap index = get(boost::vertex_index, graph);
-
-	std::cout << "vertices(g) = " << std::endl;
-	for (auto pair = vertices(graph); pair.first != pair.second; ++pair.first)
-		std::cout << index[*pair.first] << " : " << graph[*pair.first].country << " with continent " << graph[*pair.first].continent << std::endl;
+	for (auto pair = vertices(graph); pair.first != pair.second; ++pair.first) {
+		std::cout << index[*pair.first] << " : " << graph[*pair.first].country << " with continent " << graph[*pair.
+			first].continent << " and adjacencies: ";
+		std::vector<Vertex> v_adj = get_adjacent_countries(*pair.first);
+		for (int i = 0; i < v_adj.size(); i++) {
+			std::cout << graph[v_adj[i]].country;
+			if (i < v_adj.size() - 1)
+				std::cout << ", ";
+		}
+		std::cout << std::endl;
+	}
 	std::cout << std::endl;
 }
 
