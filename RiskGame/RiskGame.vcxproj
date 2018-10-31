@@ -159,17 +159,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CardMain.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
-    <ClCompile Include="DiceDriver.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />
-    <ClCompile Include="MapLoaderDriver.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerDriver.cpp" />
     <ClCompile Include="RiskGame.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

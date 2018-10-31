@@ -83,29 +83,14 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="MapDriver.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="MapLoader.cpp">
-      <Filter>Source Files\MapLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="MapLoaderDriver.cpp">
       <Filter>Source Files\MapLoader</Filter>
     </ClCompile>
     <ClCompile Include="DiceRollingFacility.cpp">
       <Filter>Source Files\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="DiceDriver.cpp">
-      <Filter>Source Files\Dice</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerDriver.cpp">
-      <Filter>Source Files\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CardMain.cpp">
-      <Filter>Source Files\Deck</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
       <Filter>Source Files\Deck</Filter>
