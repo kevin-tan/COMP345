@@ -113,6 +113,9 @@
     <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Deck</Filter>
     </ClCompile>
+    <ClCompile Include="AttackDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -7,7 +7,8 @@
 #include <boost/graph/named_function_params.hpp>
 
 // Defining properties for Graph provided by Boost
-struct VertexProperty {
+struct VertexProperty
+{
 	// Vertex info
 	std::string continent;
 	std::string country;
@@ -19,9 +20,9 @@ struct VertexProperty {
 
 // Define the type of Graph and its properties we want
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-	boost::directedS,
-	VertexProperty,
-	boost::no_property> Graph;
+                              boost::directedS,
+                              VertexProperty,
+                              boost::no_property> Graph;
 // Type aliasing with Vertex for vertex_descriptor
 typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
 // Type aliasing for the Vertex IndexMap
@@ -33,21 +34,16 @@ class Map
 	const char DELIM = ',';
 	const signed int NULL_VERTEX = -1;
 	Graph graph;
+	std::vector<Vertex> countries;
 	std::unordered_set<std::string> continents;
-	// Helper method to find the node
 
 public:
-	Map() = default;
-	Graph& get_graph();
+	Map();
+	Graph& get_graph() { return graph; }
+	std::vector<Vertex>& get_countries() { return countries; }
 
 	// Return the list of continents for this map
 	std::unordered_set<std::string> get_continents() const;
-	// Print all the connected nodes with edges in given continent
-	void print_subgraph_continent(const Graph& graph, std::string continent) const;
-	// Print all edges in the graph
-	void print_all_edges(const Graph& graph) const;
-	// Print all the node in the graph
-	void print_all_vertices(const Graph& graph) const;
 
 	// Add territory node
 	Vertex& add_territory(const std::string territory);
@@ -62,10 +58,9 @@ public:
 	Vertex find_country_vertex(std::string country);
 	// Get adjencency node for vertex
 	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
-	void traverse_edges(const Vertex& vertex) const;
 	// Set player that currently owns country
 	void set_country_owner(PlayerAbstract* player, Vertex& vertex);
 
-	// Temporary for driver
-	Graph& generate_map(std::vector<std::string>);
+	void traverse_edges(const Vertex& vertex) const;
+	void randomize();
 };
