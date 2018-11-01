@@ -9,41 +9,31 @@
 
 using namespace std;
 
-void mapDriver()
-{
+void mapDriver() {
 	int next;
 	int choice;
 
 	cout << "Would you like to enter your own file (1) or proceed with pre-made test cases (2)?" << endl;
 	cin >> choice;
 
-	if (choice == 1)
-	{
+	if (choice == 1) {
 		//Enter your own map
 		string given_map_file;
 		cout << "Enter map file: " << endl;
 		cin >> given_map_file;
-		try
-		{
+		try {
 			Map given_map = read_map_file(given_map_file);
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
-	}
-	else if (choice == 2)
-	{
+	} else if (choice == 2) {
 		//Invalid map (territory belonging to two continents)
 		string territory_two_continents_map_file = "TerritoryTwoContinents.map";
 		cout << "Running invalid test case #1 (Territory belongs to two continents)" << "\nOpening " <<
 			territory_two_continents_map_file << " ..." << endl;
-		try
-		{
+		try {
 			Map territory_two_continents = read_map_file(territory_two_continents_map_file);
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
 		cout << "Move to next case: " << endl;
@@ -55,12 +45,9 @@ void mapDriver()
 		cout << "Running invalid test case #2 (Map file cannot be read/does not exist)" << "\nOpening " << map_file_dne
 			<<
 			" ..." << endl;
-		try
-		{
+		try {
 			Map dne_map = read_map_file(map_file_dne);
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
 		cout << "Move to next case: " << endl;
@@ -72,12 +59,9 @@ void mapDriver()
 		cout << "Running invalid test case #3 (Continents section cannot be parsed)" << "\nOpening " <<
 			invalid_continents_map_file <<
 			" ..." << endl;
-		try
-		{
+		try {
 			Map invalid_continents = read_map_file(invalid_continents_map_file);
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
 		cout << "Move to next case: " << endl;
@@ -90,12 +74,9 @@ void mapDriver()
 			"\nOpening "
 			<< invalid_territories_map_file <<
 			" ..." << endl;
-		try
-		{
+		try {
 			Map invalid_territories = read_map_file(invalid_territories_map_file);
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
 		cout << "Move to next case: " << endl;
@@ -105,16 +86,12 @@ void mapDriver()
 		//Valid map file
 		string valid_map_file = "World.map";
 		cout << "Running valid test case" << "\nOpening " << valid_map_file << " ..." << endl;
-		try
-		{
+		try {
 			Map valid_map = read_map_file(valid_map_file);
-			for (string c : valid_map.get_continents())
-			{
+			for (string c : valid_map.get_continents()) {
 				cout << c << endl;
 			}
-		}
-		catch (exception e)
-		{
+		} catch (exception e) {
 			cout << e.what() << endl;
 		}
 	}
@@ -122,8 +99,26 @@ void mapDriver()
 	cout << endl;
 }
 
-int main()
-{
+void test(int num_of_players, Player* players[], Graph& g, Map& map) {
+	for (int i = 0; i < num_of_players; i++) {
+		int size = 0;
+		for (Vertex v : players[i]->getCountries()) {
+			size += g[v].army_size;
+		}
+		cout << players[i]->getName() << " has " << size << " total number of armies." << endl;
+	}
+
+	for (Vertex v : map.get_countries()) {
+		if (map.get_graph()[v].player == nullptr) {
+			cout << "Player is not set for country " << g[v].country << endl;
+		} else {
+			cout << "Player " << g[v].player->getName() << " owns country " << g[v].country << " has " << g[v].army_size <<
+				" size." << endl;
+		}
+	}
+}
+
+int main() {
 	// Map
 	Map map = read_map_file("World.map");
 	map.randomize();
@@ -135,30 +130,53 @@ int main()
 	Player player_2("Neqqash");
 	Player player_3("Yaroslav");
 
-	Player* players[] = {&player_0, &player_1, &player_2, &player_3};
-
-	// Army to place
-	int armies = 30;
+	Player* players[] = { &player_0, &player_1, &player_2, &player_3 };
 	int num_of_players = 4;
 
-	for (int i = 0; i < map.get_countries().size(); i++)
-	{
-		map.get_graph()[map.get_countries()[i]].player = players[i % num_of_players];
+	for (int i = 0; i < map.get_countries().size(); i++) {
+		players[i % num_of_players]->add_country(map.get_countries()[i], map);
 	}
 
-	for (Vertex v : map.get_countries())
-	{
-		if (map.get_graph()[v].player == nullptr)
-		{
-			cout << "Player is not set for country " << map.get_graph()[v].country << endl;
-		}
-		else
-		{
-			cout << "Player " << map.get_graph()[v].player->getName() << " owns country " << map.get_graph()[v].country << endl;
+	for (int i = 0; i < num_of_players; i++) {
+		int armies = 30;
+		while (armies > 0) {
+			for (Vertex v : players[i]->getCountries()) {
+				if (armies > 0) {
+					g[v].army_size++;
+					armies--;
+				}
+			}
 		}
 	}
 
-	int x = 4;
+	test(num_of_players, players, g, map);
+
+	bool game_loop = true;
+	int turn = 0;
+	while (game_loop) {
+		// Print current player
+		cout << "Player " << players[turn % num_of_players]->getName() << " turn to play." << endl;;
+
+		// Player's attack phase choice
+		int attack_choice;
+		printf("Do you want to (0) attack or (1) skip your attack phase.\n");
+		cin >> attack_choice;
+		while (attack_choice != 0 || attack_choice != 1) {
+			cout << "Please choose either (0) attack or (1) to skip the attack phase." << endl;
+			cin >> attack_choice;
+		}
+
+		// Attack
+		if (attack_choice == 0) {
+			players[turn % num_of_players]->attack();
+		}
+
+		// Increment turn for next player
+		turn++;
+	}
+
+	int x = 0;
 	cin >> x;
+
 	return 0;
 }
