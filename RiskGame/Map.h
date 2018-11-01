@@ -1,10 +1,10 @@
 #pragma once
 
-#include "PlayerAbstract.h"
 #include <vector>
-#include <sstream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/named_function_params.hpp>
+
+class Player;
 
 // Defining properties for Graph provided by Boost
 struct VertexProperty
@@ -14,8 +14,8 @@ struct VertexProperty
 	std::string country;
 
 	// Player info
-	PlayerAbstract* player = nullptr;
-	int army_size = 0;
+	Player* player;
+	int army_size;
 };
 
 // Define the type of Graph and its properties we want
@@ -59,7 +59,7 @@ public:
 	// Get adjencency node for vertex
 	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
 	// Set player that currently owns country
-	void set_country_owner(PlayerAbstract* player, Vertex& vertex);
+	void set_country_owner(Player* player, Vertex& vertex);
 
 	void traverse_edges(const Vertex& vertex) const;
 	void randomize();

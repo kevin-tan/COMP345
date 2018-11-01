@@ -111,7 +111,7 @@ void Map::randomize()
 	std::shuffle(std::begin(countries), std::end(countries), std::default_random_engine{});
 }
 
-void Map::set_country_owner(PlayerAbstract* player, Vertex& vertex)
-{
+
+void Map::set_country_owner(Player* player, Vertex& vertex) {
 	graph[vertex].player = player;
 }
