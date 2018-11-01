@@ -105,17 +105,19 @@ void test(int num_of_players, Player* players[], Graph& g, Map& map) {
 		for (Vertex v : players[i]->get_countries()) {
 			size += g[v].army_size;
 		}
-		cout << players[i]->getName() << " has " << size << " total number of armies." << endl;
+		cout << players[i]->get_name() << " has " << size << " total number of armies." << endl;
 	}
 
 	for (Vertex v : map.get_countries()) {
 		if (map.get_graph()[v].player == nullptr) {
 			cout << "Player is not set for country " << g[v].country << endl;
 		} else {
-			cout << "Player " << g[v].player->getName() << " owns country " << g[v].country << " has " << g[v].army_size <<
+			cout << "Player " << g[v].player->get_name() << " owns country " << g[v].country << " has " << g[v].army_size <<
 				" size." << endl;
 		}
 	}
+
+	cout << endl;
 }
 
 int main() {
@@ -155,22 +157,32 @@ int main() {
 	int turn = 0;
 	while (game_loop) {
 		// Print current player
-		cout << "Player " << players[turn % num_of_players]->getName() << " turn to play." << endl;;
+		cout << "Turn: " << turn << endl;
+		cout << "Player " << players[turn % num_of_players]->get_name() << " turn to play." << endl;;
 
 		// Player's attack phase choice
 		int attack_choice;
-		printf("Do you want to (0) attack or (1) skip your attack phase.\n");
+		printf("Do you want to (0) attack or (1) skip your attack phase: ");
 		cin >> attack_choice;
-		while (attack_choice != 0 || attack_choice != 1) {
-			cout << "Please choose either (0) attack or (1) to skip the attack phase." << endl;
+		while (attack_choice != 0 && attack_choice != 1) {
+			cout << "Please choose either (0) attack or (1) to skip the attack phase: ";
 			cin >> attack_choice;
 		}
 
 		// Attack
 		if (attack_choice == 0) {
-			players[turn % num_of_players]->attack();
+			char r = 'y';
+			do {
+				players[turn % num_of_players]->attack(map);
+				cout << "Do you want to attack again? y/n: ";
+				cin >> r;
+			} while (r == 'y');
+			cout << "Stopping attack phase for player " << players[turn % num_of_players]->get_name() << endl;
+		} else {
+			cout << "Skipping attack phase..." << endl;
 		}
 
+		cout << endl;
 		// Increment turn for next player
 		turn++;
 	}

@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include "DiceRollingFacility.h"
+#include <functional>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ vector<int> DiceRollingFacility::rollDice(int numberOfDice) {
 	int roll;
 	vector <int> sortContainer;
 
+	// Should check for 1-3 dice
+
 	// Get values of dice and store in the Sorted Container/Update percentage array
 	for (int i = 0; i < numberOfDice; i++) {
 		// Update total number of dice rolled
@@ -34,7 +37,7 @@ vector<int> DiceRollingFacility::rollDice(int numberOfDice) {
 		addToPercentArr(roll);
 	}
 	// Sort container and return it
-	std::sort(sortContainer.begin(), sortContainer.end());
+	std::sort(sortContainer.begin(), sortContainer.end(), greater<int>());
 	return sortContainer;
 }
 
