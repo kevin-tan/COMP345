@@ -178,6 +178,6 @@ void Map::print_all_vertices(const Graph& graph) const {
 }
 
 
-void Map::set_country_owner(PlayerAbstract* player, Vertex& vertex) {
+void Map::set_country_owner(Player* player, Vertex& vertex) {
 	graph[vertex].player = player;
 }
