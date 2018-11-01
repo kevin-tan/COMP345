@@ -17,9 +17,9 @@ public:
 	void attack();
 	void fortify();
 
-	vector<Vertex> get_countries() const { return countries; };
-	DiceRollingFacility* get_dice_rolling_facility() { return &dice_rolling_facility; };
-	Hand* get_hand() { return &hand; };
+	vector<Vertex> get_countries() const;
+	DiceRollingFacility* get_dice_rolling_facility();
+	Hand* get_hand();
 	
 	void add_country(Vertex& country, Map& map);
 
