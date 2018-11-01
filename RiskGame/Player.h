@@ -20,9 +20,9 @@ public:
 	void attack(Map& map);
 	void fortify();
 
-	vector<Vertex> get_countries() const { return countries; };
-	DiceRollingFacility* get_dice_rolling_facility() { return &dice_rolling_facility; };
-	Hand* get_hand() { return &hand; };
+	vector<Vertex> get_countries() const;
+	DiceRollingFacility* get_dice_rolling_facility();
+	Hand* get_hand();
 	std::string get_name() { return name; }
 	
 	void add_country(Vertex& country, Map& map);

@@ -30,3 +30,17 @@ int Hand::exchange(Deck* deck) {
 
 	return deck->inc_number_of_exchanges() * 5;
 }
+
+vector<int> Hand::get_hand_cards() const { return hand_cards; }
+
+int Hand::get_hand_size() const { return hand_size; }
+
+int Hand::get_number_of_infantry() const { return hand_cards[0]; }
+
+int Hand::get_number_of_artillery() const { return hand_cards[1]; }
+
+int Hand::get_number_of_cavalry() const { return hand_cards[2]; }
+
+void Hand::inc_hand_size() { hand_size++; }
+
+void Hand::inc_hand_card(const int index) { hand_cards[index]++; }

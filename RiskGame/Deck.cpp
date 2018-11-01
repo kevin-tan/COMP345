@@ -33,3 +33,18 @@ void Deck::draw(Hand* hand) {
 		std::cout << "Deck is empty." << std::endl;
 	}
 }
+
+int Deck::get_number_of_exchanges() const { return number_of_exchanges; }
+
+vector<int> Deck::get_deck_cards() const { return deck_cards; }
+
+int Deck::get_deck_size() const { return deck_size; }
+
+int Deck::get_number_of_infantry() const { return deck_cards[0]; }
+
+int Deck::get_number_of_artillery() const { return deck_cards[1]; }
+
+int Deck::get_number_of_cavalry() const { return deck_cards[2]; }
+
+int Deck::inc_number_of_exchanges() { return ++number_of_exchanges; }
+
