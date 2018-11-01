@@ -18,9 +18,9 @@ public:
 	void attack();
 	void fortify();
 
-	std::vector<Vertex> getCountries();
-	DiceRollingFacility& getDiceRollingFacility();
-	Hand& getHand();
+	std::vector<Vertex> get_countries();
+	DiceRollingFacility* get_dice_rolling_facility();
+	Hand* get_hand();
 	
 	void add_country(Vertex& country, Map& map);
 };
