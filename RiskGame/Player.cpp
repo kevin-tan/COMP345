@@ -44,6 +44,7 @@ void Player::attack(Map& map) {
 	}
 
 	// Country choice and checking
+	cout << "Country choice: ";
 	int from_country_choice = input_check(from_countries);
 
 	// Printing adjacent countries to country choice
@@ -54,6 +55,7 @@ void Player::attack(Map& map) {
 	}
 
 	// Country to attack to
+	cout << "Country choice: ";
 	int to_country_choice = input_check(adj_countries);
 
 	// Attacker rolling chosen number dice for attack per army (army size - 1)
@@ -122,7 +124,7 @@ void Player::attack(Map& map) {
 		} else {
 			if (def_army_size == 0) {
 				int army_to_move = 0;
-				cout << "You've successfully defeated " << g[adj_countries[to_country_choice]].player->get_name() << " , how many armies would you like to move from " << g[from_countries[from_country_choice]].country << " : ";
+				cout << "You've successfully defeated " << g[adj_countries[to_country_choice]].player->get_name() << ", how many armies would you like to move from " << g[from_countries[from_country_choice]].country << " : ";
 				cin >> army_to_move;
 				while (army_to_move <= 0 || army_to_move >= atk_army_size) {
 					cout << "Please enter a number of armies from 1 to " << (atk_army_size - 1) << " : ";

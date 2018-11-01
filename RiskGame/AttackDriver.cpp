@@ -183,6 +183,7 @@ int main() {
 		}
 
 		cout << endl;
+
 		// Increment turn for next player
 		turn++;
 	}
