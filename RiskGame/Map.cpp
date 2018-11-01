@@ -52,6 +52,12 @@ Graph& Map::generate_map(std::vector<std::string> map_info) {
 	return graph;
 }
 
+void Map::operator=(Map& map) {
+	this->graph = map.graph;
+	this->continents = map.continents;
+	this->countries = map.countries;
+}
+
 Graph& Map::get_graph() {
 	return graph;
 }
@@ -81,6 +87,7 @@ Vertex& Map::add_territory(const std::string territory) {
 	if (node == NULL_VERTEX) {
 		node = boost::add_vertex(graph);
 		graph[node].country = territory;
+		countries.push_back(node);
 	}
 	return node;
 }
@@ -110,6 +117,7 @@ void Map::add_adjacency(Vertex& territory, const std::string adj_territory) {
 	if (adj_node == NULL_VERTEX) {
 		adj_node = boost::add_vertex(graph);
 		graph[adj_node].country = adj_territory;
+		countries.push_back(adj_node);
 	}
 	auto edge = boost::add_edge(territory, adj_node, graph);
 }

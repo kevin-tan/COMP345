@@ -13,6 +13,7 @@ using std::vector;
 
 class Deck {
 public:
+	Deck();
 	Deck(int number_of_countries);
 	void draw(Hand* hand);
 

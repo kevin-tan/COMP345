@@ -33,6 +33,7 @@ class Map
 	const char DELIM = ',';
 	const signed int NULL_VERTEX = -1;
 	Graph graph;
+	std::vector<Vertex> countries;
 	std::unordered_set<std::string> continents;
 	// Helper method to find the node
 
@@ -68,4 +69,8 @@ public:
 
 	// Temporary for driver
 	Graph& generate_map(std::vector<std::string>);
+
+	std::vector<Vertex>& get_countries() { return countries; }
+
+	void operator=(Map& map);
 };
