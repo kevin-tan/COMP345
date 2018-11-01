@@ -1,9 +1,3 @@
-﻿  Deck.cpp
-  Hand.cpp
-  Player.cpp
-  RiskGame.cpp
-d:\vs_dev\comp345\riskgame\riskgame.cpp(64): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\vs_dev\comp345\riskgame\riskgame.cpp(281): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
-  LINK : D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe not found or not built by the last incremental link; performing full link
-  RiskGame.vcxproj -> D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe
+﻿  Player.cpp
+c:\users\kevin tan\desktop\concordia\year 3\semester 7\comp345\project\risk\riskgame\riskgame\player.cpp(101): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  RiskGame.vcxproj -> C:\Users\Kevin Tan\Desktop\Concordia\Year 3\Semester 7\COMP345\Project\Risk\RiskGame\x64\Debug\RiskGame.exe

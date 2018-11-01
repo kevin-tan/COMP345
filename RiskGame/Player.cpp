@@ -81,6 +81,10 @@ void Player::attack(Map& map) {
 	}
 	vector<int> defend_rolls = dice_rolling_facility.rollDice(d_num_roll);
 
+	// Before attack
+	cout << "Country : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
+	cout << "Country : " << g[adj_countries[to_country_choice]].country << " owned by " << g[adj_countries[to_country_choice]].player->get_name() << " has " << g[adj_countries[to_country_choice]].army_size << " armies." << endl;
+
 	// Print the rolls
 	cout << "Attack rolls: ";
 	for (int v : attack_rolls) {
@@ -92,10 +96,6 @@ void Player::attack(Map& map) {
 		cout << v << " ";
 	}
 	cout << endl;
-
-	// Before attack
-	cout << "Country : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
-	cout << "Country : " << g[adj_countries[to_country_choice]].country << " owned by " << g[adj_countries[to_country_choice]].player->get_name() << " has " << g[adj_countries[to_country_choice]].army_size << " armies." << endl;
 
 	// Eliminating army phase
 	int max_army = attack_rolls.size() > defend_rolls.size() ? attack_rolls.size() : defend_rolls.size();
@@ -137,7 +137,7 @@ void Player::attack(Map& map) {
 	}
 
 	// After attack
-	cout << "\nCountry : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
+	cout << "Country : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
 	cout << "Country : " << g[adj_countries[to_country_choice]].country << " owned by " << g[adj_countries[to_country_choice]].player->get_name() << " has " << g[adj_countries[to_country_choice]].army_size << " armies." << endl;
 }
 
