@@ -14,8 +14,8 @@ struct VertexProperty
 	std::string country;
 
 	// Player info
-	Player* player;
-	int army_size;
+	Player* player = nullptr;
+	int army_size = 0;
 };
 
 // Define the type of Graph and its properties we want

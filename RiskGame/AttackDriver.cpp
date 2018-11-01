@@ -102,7 +102,7 @@ void mapDriver() {
 void test(int num_of_players, Player* players[], Graph& g, Map& map) {
 	for (int i = 0; i < num_of_players; i++) {
 		int size = 0;
-		for (Vertex v : players[i]->getCountries()) {
+		for (Vertex v : players[i]->get_countries()) {
 			size += g[v].army_size;
 		}
 		cout << players[i]->getName() << " has " << size << " total number of armies." << endl;
@@ -140,7 +140,7 @@ int main() {
 	for (int i = 0; i < num_of_players; i++) {
 		int armies = 30;
 		while (armies > 0) {
-			for (Vertex v : players[i]->getCountries()) {
+			for (Vertex v : players[i]->get_countries()) {
 				if (armies > 0) {
 					g[v].army_size++;
 					armies--;
