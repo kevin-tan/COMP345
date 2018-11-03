@@ -1,6 +1,3 @@
-﻿  Game.cpp
-d:\vs_dev\comp345\riskgame\game.cpp(64): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  GameDriver.cpp
+﻿  GameDriver.cpp
 d:\vs_dev\comp345\riskgame\gamedriver.cpp(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
   RiskGame.vcxproj -> D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe

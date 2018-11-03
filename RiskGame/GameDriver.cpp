@@ -17,5 +17,25 @@ int main() {
 
 	cout << "Deck size: " << game.get_game_deck()->get_deck_size() << endl;
 
+	for (int i = 0; i < game.get_game_players().size(); i++) {
+		cout << game.get_game_players()[i].get_name() << endl;
+	}
+
+	cout << "SHUFFLE:" << endl;
+	
+	for (int i = 0; i < game.get_game_players().size(); i++) {
+		cout << game.get_game_players()[i].get_name() << endl;
+	}
+
+	game.init_startup_phase();
+
+	cout << "COUNTRIES:" << endl;
+	
+	Graph& g = game.get_game_map()->get_graph();
+	for (Vertex v : game.get_game_map()->get_countries()) {
+		cout << "Player " << g[v].player->get_name() << " owns country " << g[v].country << " has " << g[v].army_size << " army unit(s)." << endl;
+
+	}
+
 	return 0;
 }
