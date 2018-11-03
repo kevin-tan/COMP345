@@ -10,6 +10,7 @@
 
 Hand::Hand() {
 	hand_cards = vector<int>(3);
+	hand_size = 0;
 }
 
 int Hand::exchange(Deck* deck) {
@@ -21,17 +22,21 @@ int Hand::exchange(Deck* deck) {
 
 	if (hand_cards[0] >= 3) {
 		hand_cards[0] -= 3;
+		hand_size -= 3;
 	}
 	else if (hand_cards[1] >= 3) {
 		hand_cards[1] -= 3;
+		hand_size -= 3;
 	}
 	else if (hand_cards[2] >= 3) {
 		hand_cards[2] -= 3;
+		hand_size -= 3;
 	}
 	else if (hand_cards[0] >= 1 && hand_cards[1] >= 1 && hand_cards[2] >= 1) {
 		hand_cards[0]--;
 		hand_cards[1]--;
 		hand_cards[2]--;
+		hand_size -= 3;
 	}
 	else {
 		return 0;
