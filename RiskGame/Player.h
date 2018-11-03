@@ -13,7 +13,7 @@ public:
 	Player();
 
 	// Override method
-	void reinforce();
+	void reinforce(Map& map, Deck& deck);
 	void attack();
 	void fortify();
 
@@ -22,10 +22,15 @@ public:
 	Hand* get_hand();
 	
 	void add_country(Vertex& country, Map& map);
+	int display_countries_and_armies(Map& map);
 
 private:
 	std::vector<Vertex> countries;
 	DiceRollingFacility dice_rolling_facility;
 	Hand hand;
+	
+	int armies_from_continents(Map& map);
+	int choose_country_to_add_army(Map& map, int total_army);
+	
 };
 
