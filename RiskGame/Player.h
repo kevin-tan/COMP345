@@ -26,5 +26,6 @@ public:
 	std::string get_name() { return name; }
 	
 	void add_country(Vertex& country, Map& map);
+	void remove_country(Vertex& country, Map& map);
 };
 

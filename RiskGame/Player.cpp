@@ -84,8 +84,21 @@ void Player::attack(Map& map) {
 	vector<int> defend_rolls = dice_rolling_facility.rollDice(d_num_roll);
 
 	// Before attack
+	Player* attacker = g[from_countries[from_country_choice]].player;
+	Player* defender = g[adj_countries[to_country_choice]].player;
 	cout << "Country : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
+	cout << "Attacker owns: ";
+	for (Vertex v : attacker->get_countries()) {
+		cout << g[v].country << " ";
+	}
+	cout << endl;
 	cout << "Country : " << g[adj_countries[to_country_choice]].country << " owned by " << g[adj_countries[to_country_choice]].player->get_name() << " has " << g[adj_countries[to_country_choice]].army_size << " armies." << endl;
+	cout << "Defender owns: ";
+	for (Vertex v : defender->get_countries()) {
+		cout << g[v].country << " ";
+	}
+	cout << endl;
+
 
 	// Print the rolls
 	cout << "Attack rolls: ";
@@ -132,7 +145,9 @@ void Player::attack(Map& map) {
 				}
 				atk_army_size -= army_to_move;
 				def_army_size = army_to_move;
-				this->add_country(adj_countries[to_country_choice], map);
+				Vertex defeated_country = adj_countries[to_country_choice];
+				g[defeated_country].player->remove_country(defeated_country, map);
+				this->add_country(defeated_country, map);
 			}
 			elimination_phase = false;
 		}
@@ -140,7 +155,17 @@ void Player::attack(Map& map) {
 
 	// After attack
 	cout << "Country : " << g[from_countries[from_country_choice]].country << " owned by " << g[from_countries[from_country_choice]].player->get_name() << " has " << g[from_countries[from_country_choice]].army_size << " armies." << endl;
+	cout << "Attacker owns: ";
+	for (Vertex v : attacker->get_countries()) {
+		cout << g[v].country << " ";
+	}
+	cout << endl;
 	cout << "Country : " << g[adj_countries[to_country_choice]].country << " owned by " << g[adj_countries[to_country_choice]].player->get_name() << " has " << g[adj_countries[to_country_choice]].army_size << " armies." << endl;
+	cout << "Defender owns: ";
+	for (Vertex v : defender->get_countries()) {
+		cout << g[v].country << " ";
+	}
+	cout << endl;
 }
 
 void Player::fortify() {
@@ -156,4 +181,9 @@ Hand* Player::get_hand() { return &hand; }
 void Player::add_country(Vertex& country, Map& map) {
 	countries.push_back(country);
 	map.set_country_owner(this, country);
+}
+
+void Player::remove_country(Vertex& country, Map& map) {
+	countries.erase(std::remove(countries.begin(), countries.end(), country), countries.end());;
+	map.set_country_owner(nullptr, country);
 }
