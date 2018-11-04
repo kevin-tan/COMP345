@@ -14,10 +14,6 @@ void Map::operator=(Map& map) {
 	this->countries = map.countries;
 }
 
-Graph& Map::get_graph() {
-	return graph;
-}
-
 std::unordered_set<std::string> Map::get_continents() const {
 	return continents;
 }

@@ -62,16 +62,12 @@ public:
 	std::vector<Vertex> get_adjacent_countries(const Vertex& vertex) const;
 	// Set player that currently owns country
 	void set_country_owner(Player* player, Vertex& vertex);
-
-	// Temporary for driver
-	Graph& generate_map(std::vector<std::string>);
 	
 	// Get list of countries that belong to one continent
 	std::vector<std::string> get_countries_in_continent(const Graph& graph, std::string const continent) const;
 
-	std::vector<Vertex>& get_countries() { return countries; }
-
 	void operator=(Map& map);
+
 	void traverse_edges(const Vertex& vertex) const;
 	void randomize();
 };

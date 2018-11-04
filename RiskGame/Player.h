@@ -9,7 +9,7 @@ class Player
 {
 public:
 	Player();
-	Player(string name);
+	Player(std::string name);
 
 	// Override method
 	void reinforce(Map& map, Deck& deck);
@@ -23,7 +23,7 @@ public:
 	vector<Vertex> get_countries() const;
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();
-	string get_name() const;
+	std::string get_name() const;
 	
 	void add_country(Vertex& country, Map& map);
 	int display_countries_and_armies(Map& map);
@@ -33,7 +33,7 @@ private:
 	std::vector<Vertex> countries;
 	DiceRollingFacility dice_rolling_facility;
 	Hand hand;
-	string name;
+	std::string name;
 	
 	int armies_from_continents(Map& map);
 	int choose_country_to_add_army(Map& map, int total_army);

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
 
+using std::string;
+
 static int input_check(vector<Vertex> v) {
 	int t = 0;
 	using namespace std;
@@ -167,6 +169,7 @@ void Player::attack(Map& map) {
 	}
 	cout << endl;
 }
+
 void Player::reinforce(Map& map, Deck& deck) {
 	if (countries.size() == 0) {
 		std::cout << "\nYou don't have countries to reinforce!";
