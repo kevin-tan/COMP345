@@ -15,10 +15,6 @@ Player::Player(string name) {
 	this->name = name;
 }
 
-void Player::reinforce() {
-	std::cout << "Printing from inside Player " << name << "'s reinforce() method." << std::endl;
-}
-
 void Player::reinforce(Map& map, Deck& deck) {
 	if (countries.size() == 0) {
 		std::cout << "\nYou don't have countries to reinforce!";
@@ -60,11 +56,15 @@ void Player::reinforce(Map& map, Deck& deck) {
 	}
 }
 
-void Player::attack() {
+void Player::part3_reinforce() {
+	std::cout << "Printing from inside Player " << name << "'s reinforce() method." << std::endl;
+}
+
+void Player::part3_attack() {
 	std::cout << "Printing from inside Player " << name << "'s attack() method." << std::endl;
 }
 
-void Player::fortify() {
+void Player::part3_fortify() {
 	std::cout << "Printing from inside Player " << name << "'s fortify() method." << std::endl;
 }
 

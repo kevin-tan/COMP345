@@ -81,6 +81,4 @@ public:
 	std::vector<Vertex>& get_countries() { return countries; }
 
 	void operator=(Map& map);
-
-	
 };
