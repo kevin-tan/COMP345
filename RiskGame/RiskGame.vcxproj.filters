@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Deck">
       <UniqueIdentifier>{e2c2e792-eebe-464f-8c90-279a14e302ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{8613010a-be52-496f-965b-104ab49f71cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{6a0dbf46-28b3-4ad2-8738-17514820b95f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -69,6 +75,9 @@
     <ClInclude Include="Deck.h">
       <Filter>Header Files\Deck</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,6 +103,15 @@
     </ClCompile>
     <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDriver.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ReinforcementDriver.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

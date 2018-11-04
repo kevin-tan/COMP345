@@ -8,6 +8,9 @@
 #include "Deck.h"
 #include "Hand.h"
 
+Deck::Deck() {
+}
+
 Deck::Deck(int number_of_countries) {
 	number_of_exchanges = 0;
 	deck_size = number_of_countries;
@@ -29,8 +32,7 @@ void Deck::draw(Hand* hand) {
 		hand->inc_hand_size();
 		deck_cards[randIndex]--;
 		deck_size--;
-	}
-	else {
+	} else {
 		std::cout << "Deck is empty." << std::endl;
 	}
 }
