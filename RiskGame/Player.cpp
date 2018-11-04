@@ -150,7 +150,7 @@ int Player::choose_country_to_add_army(Map& map, int total_army) {
 	
 	for (Vertex v : countries) {
 		if ((index_chosen - 1) == index) {
-			map.add_army_to_country(map.get_graph(), map.get_graph()[v].country, army);
+			map.add_armies(v, army);
 			break;
 		}
 		index++;

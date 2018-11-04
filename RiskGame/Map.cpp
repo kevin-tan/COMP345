@@ -208,12 +208,3 @@ std::vector<std::string> Map::get_countries_in_continent(const Graph& graph, std
 		lst.push_back(s);
 	return lst;
 }
-	// Add army to the country
-void Map::add_army_to_country(Graph& graph, std::string country, int army) {
-		Vertex temp = find_country_vertex(country);
-		if (graph[temp].army_size < 0)
-			graph[temp].army_size = army;
-		else
-			graph[temp].army_size += army;
-}
-
