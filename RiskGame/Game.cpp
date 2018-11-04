@@ -167,7 +167,7 @@ void Game::distribute_armies() {
 				cout << "How many units would you like to place?" << endl;
 				int army_selection;
 				cin >> army_selection;
-				while (army_selection < 0 || army_selection > remaining_armies[i]) {
+				while (army_selection < 1 || army_selection > remaining_armies[i]) {
 					cout << "Invalid number of units. Input must be between 1-" << remaining_armies[i] << endl;
 					cin >> army_selection;
 				}
