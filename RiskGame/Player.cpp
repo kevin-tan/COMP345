@@ -45,19 +45,9 @@ void Player::fortify(Map& map) {
 	string to_country_choice;
 	cin >> to_country_choice;
 
-	//validate source/target country
-	
-
 	//select number of armies to move and validate that number of armies is > 1 but less than source country - 1
 	int moveArmies;
-	for(1 < moveArmies < g[[from_countries[from_country_choice]].army_size - 1])
-	{
-	cin >> moveArmies;
-	}
-	else{
-		cout << "Invalid number of armies moved." << endl;
-		exit(0);
-	}
+	cin << moveArmies; 
 
 	//assign number of armies after fortification
 	int armiesFrom = g[from_countries[from_country_choice]].army_size;
