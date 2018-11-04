@@ -160,6 +160,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttackDriver.cpp" />
+    <ClCompile Include="CardMain.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
     <ClCompile Include="Game.cpp" />

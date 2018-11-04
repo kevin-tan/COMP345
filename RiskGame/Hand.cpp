@@ -1,8 +1,3 @@
-/*
- * Hand.cpp
- *
- */
-
 #include "stdafx.h"
 #include "Hand.h"
 #include "Deck.h"

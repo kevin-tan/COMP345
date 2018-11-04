@@ -1,8 +1,3 @@
-/*
- * Deck.h
- *
- */
-
 #pragma once
 
 #include <iostream>

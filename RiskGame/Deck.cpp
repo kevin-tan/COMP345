@@ -32,8 +32,7 @@ void Deck::draw(Hand* hand) {
 		hand->inc_hand_size();
 		deck_cards[randIndex]--;
 		deck_size--;
-	}
-	else {
+	} else {
 		std::cout << "Deck is empty." << std::endl;
 	}
 }

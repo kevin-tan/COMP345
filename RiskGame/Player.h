@@ -5,9 +5,6 @@
 #include "Hand.h"
 #include "boost/format.hpp"
 
-using std::string;
-using std::vector;
-
 class Player
 {
 public:
@@ -16,7 +13,7 @@ public:
 
 	// Override method
 	void reinforce(Map& map, Deck& deck);
-	void attack();
+	void attack(Map& map);
 	void fortify();
 
 	void part3_reinforce();
@@ -40,5 +37,6 @@ private:
 	
 	int armies_from_continents(Map& map);
 	int choose_country_to_add_army(Map& map, int total_army);
+	void remove_country(Vertex& country, Map& map);
 };
 
