@@ -21,9 +21,10 @@ public:
 	vector<Vertex> get_countries() const;
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();
-	string get_name();
+	string get_name() const;
 	
 	void add_country(Vertex& country, Map& map);
+	void clear_countries_temp();
 
 private:
 	std::vector<Vertex> countries;

@@ -3,6 +3,7 @@
 
 using std::cout;
 using std::endl;
+using std::cin;
 
 int main() {
 	Game game;
@@ -14,28 +15,34 @@ int main() {
 	//TODO Need to provide verification that a connected graph map was loaded (i think?)
 
 	cout << "Number of players created: " << game.get_game_players().size() << endl;
-
 	cout << "Deck size: " << game.get_game_deck()->get_deck_size() << endl;
 
+	cout << "\nPlayers created: " << endl;
 	for (int i = 0; i < game.get_game_players().size(); i++) {
-		cout << game.get_game_players()[i].get_name() << endl;
+		cout << "Player " << game.get_game_players()[i]->get_name() << endl;
 	}
-
-	cout << "SHUFFLE:" << endl;
-	
-	for (int i = 0; i < game.get_game_players().size(); i++) {
-		cout << game.get_game_players()[i].get_name() << endl;
-	}
+	cout << endl;
 
 	game.init_startup_phase();
 
-	cout << "COUNTRIES:" << endl;
-	
+	cout << "Shuffled order of players: " << endl;
+
+	for (int i = 0; i < game.get_game_players().size(); i++) {
+		cout << "Player " << game.get_game_players()[i]->get_name() << endl;
+	}
+
+	cout << "\nAll countries have been assigned to one and only one player: " << endl;
+
 	Graph& g = game.get_game_map()->get_graph();
 	for (Vertex v : game.get_game_map()->get_countries()) {
-		cout << "Player " << g[v].player->get_name() << " owns country " << g[v].country << " has " << g[v].army_size << " army unit(s)." << endl;
-
+		cout << g[v].country << " is owned solely by player " << g[v].player->get_name() << " where " << g[v].army_size << " army units are placed." << endl;
 	}
+
+	int mainloop;
+	cout << "\nProceed to main game loop?" << endl;
+	cin >> mainloop;
+
+	game.init_main_game_loop();
 
 	return 0;
 }
