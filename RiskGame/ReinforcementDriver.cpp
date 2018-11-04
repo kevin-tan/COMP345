@@ -48,14 +48,14 @@ int main() {
 		delete player;
 		player = new Player();
 	} while (choice != 0);
-	
+
 	return 0;
 }
 
 
 void no_countries_no_cards(Map& map, Deck& deck, Player* player) {
 	display_player_data(map, deck, player);
-	player->reinforce(map,deck);
+	player->reinforce(map, deck);
 }
 
 void four_countries_no_cards(Map& map, Deck& deck, Player* player) {
