@@ -14,7 +14,7 @@ struct VertexProperty {
 
 	// Player info
 	Player* player;
-	int army_size;
+	int army_size = 0;
 };
 
 // Define the type of Graph and its properties we want
