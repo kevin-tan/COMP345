@@ -1,3 +1,5 @@
 .vs/*
 Debug/**
 RiskGame/Debug/**
+RiskGame/x64/Debug/**
+x64/Debug/**
