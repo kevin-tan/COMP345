@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "DiceRollingFacility.h"
 #include "Hand.h"
+#include "boost/format.hpp"
 
 using std::string;
 using std::vector;
