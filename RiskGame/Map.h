@@ -71,8 +71,16 @@ public:
 
 	// Temporary for driver
 	Graph& generate_map(std::vector<std::string>);
+	
+	// Get list of countries that belong to one continent
+	std::vector<std::string> get_countries_in_continent(const Graph& graph, std::string const continent) const;
+
+	// Add army to the country
+	void add_army_to_country(Graph& graph, std::string country, int army);
 
 	std::vector<Vertex>& get_countries() { return countries; }
 
 	void operator=(Map& map);
+
+	
 };

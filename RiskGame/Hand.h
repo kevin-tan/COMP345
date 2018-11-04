@@ -24,6 +24,8 @@ public:
 
 	void inc_hand_size();
 	void inc_hand_card(int index);
+	bool can_exchange() const;
+	void display_hand() const;
 
 private:
 	//0:Infantry; 1:Artillery; 2:Cavalry

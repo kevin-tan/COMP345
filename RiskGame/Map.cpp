@@ -193,3 +193,27 @@ void Map::print_all_vertices(const Graph& graph) const {
 void Map::set_country_owner(Player* player, Vertex& vertex) {
 	graph[vertex].player = player;
 }
+	// Get list of countries that belong to one continent
+std::vector<std::string> Map::get_countries_in_continent(const Graph& graph, std::string const continent) const {
+	using namespace std;
+	set<string> temp;
+	vector<string> lst;
+	auto pairs = edges(graph);
+	for (auto i = pairs.first; i != pairs.second; ++i) {
+		if (graph[source(*i, graph)].continent.compare(continent) == 0) {
+			temp.insert(graph[source(*i, graph)].country);
+		}
+	}
+	for (string s : temp)
+		lst.push_back(s);
+	return lst;
+}
+	// Add army to the country
+void Map::add_army_to_country(Graph& graph, std::string country, int army) {
+		Vertex temp = find_country_vertex(country);
+		if (graph[temp].army_size < 0)
+			graph[temp].army_size = army;
+		else
+			graph[temp].army_size += army;
+}
+
