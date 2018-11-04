@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include <cstdlib>
 #include <time.h>
 
@@ -17,7 +17,7 @@ void two_continents_five_cards(Map&, Deck&, Player*);
 
 int main() {
 	srand(time(0));
-	Map map = read_map_file("World.map");
+	Map map = read_map_file("Maps/World.map");
 	Deck deck(42);
 	Player *player = new Player();
 	int choice;
