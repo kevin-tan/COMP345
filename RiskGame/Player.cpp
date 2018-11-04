@@ -22,7 +22,7 @@ void Player::fortify(Map& map) {
 	std::cout << "Printing from inside Player's fortify() method." << std::endl;
 
 	//print players countries and armies
-	cout << "Select a country to move army from: " << endl;
+	cout << "Select a country to move army from: " << "/n" << endl;
 	int i = 0;
 	vector<Vertex> from_countries = vector<Vertex>();
 	for (Vertex v : countries) {
@@ -30,30 +30,40 @@ void Player::fortify(Map& map) {
 			i++;
 	}
 
+	//select country to move army from 
+	string from_country_choice;
+	cin >> from_country_choice;
+
 	//print adjacent countries
-	cout << "Select an adjacent country to move army to: " << endl;
+	cout << "Select an adjacent country to move army to: " << "/n" << endl;
 	vector<Vertex> adj_countries = map.get_adjacent_countries(from_countries[from_country_choice]);
 	for (int i = 0; i < adj_countries.size(); i++) {
 		cout << "  (" << i << ")  " << g[adj_countries[i]].country << endl;
 	}
 	
-	//select country to move army from 
-	int from_country_choice = input_check(from_countries);
-	cin >> from_country_choice;
-
 	//select country to move army to
-	int to_country_choice = input_check(adj_countries);
+	string to_country_choice;
 	cin >> to_country_choice;
 
-	//select number of armies to move
+	//validate source/target country
+	
+
+	//select number of armies to move and validate that number of armies is > 1 but less than source country - 1
 	int moveArmies;
+	for(1 < moveArmies < g[[from_countries[from_country_choice]].army_size - 1])
+	{
 	cin >> moveArmies;
+	}
+	else{
+		cout << "Invalid number of armies moved." << endl;
+		exit(0);
+	}
 
 	//assign number of armies after fortification
-	int armiesFrom = from_country_choice[from_countries - 1]->g[v].army_size;
-	int armiesTo = to_country_choice[adj_countries]->g[v].army_size;
-	from_countries[from_country_choice]->g[v].army_size (armiesFrom - moveArmies);
-	adj_countries[to_country_choice]->g[v].army_size (armiesTo + moveArmies);
+	int armiesFrom = g[from_countries[from_country_choice]].army_size;
+	int armiesTo = g[adj_countries[to_country_choice]].army_size;
+	from_countries[from_country_choice]->g[v].army_size(armiesFrom - moveArmies);
+	adj_countries[to_country_choice]->g[v].army_size(armiesTo + moveArmies);
 }
 
 vector<Vertex> Player::get_countries() const { return countries; }
