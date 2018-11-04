@@ -96,8 +96,8 @@ void Map::add_continents(const std::string continent) {
 	continents.insert(continent);
 }
 
-void Map::add_army(Vertex& vertex) {
-	graph[vertex].army_size++;
+void Map::add_armies(Vertex& vertex, int armies) {
+	graph[vertex].army_size += armies;
 }
 
 void Map::add_continent_to_territory(Vertex& territory, const std::string continent) {

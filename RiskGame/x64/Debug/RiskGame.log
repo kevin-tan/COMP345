@@ -1,24 +1,14 @@
 ﻿  Game.cpp
-d:\vs_dev\comp345\riskgame\game.cpp(74): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-d:\vs_dev\comp345\riskgame\game.cpp(122): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
-          with
-          [
-              _Rep=std::chrono::system_clock::rep
-          ]
+d:\vs_dev\comp345\riskgame\game.cpp(76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 d:\vs_dev\comp345\riskgame\game.cpp(128): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-d:\vs_dev\comp345\riskgame\game.cpp(139): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+d:\vs_dev\comp345\riskgame\game.cpp(134): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
-              _Ty=int
+              _Rep=std::chrono::system_clock::rep
           ]
-d:\vs_dev\comp345\riskgame\game.cpp(140): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-d:\vs_dev\comp345\riskgame\game.cpp(184): warning C4715: 'Game::get_number_of_armies': not all control paths return a value
+d:\vs_dev\comp345\riskgame\game.cpp(212): warning C4715: 'Game::get_number_of_armies': not all control paths return a value
   RiskGame.vcxproj -> D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe

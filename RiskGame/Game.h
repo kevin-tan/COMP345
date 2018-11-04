@@ -27,8 +27,9 @@ private:
 	void shuffle_players();
 	void distribute_countries();
 	void distribute_armies();
+	void place_initial_armies(vector<int>& remaining_armies);
+	bool armies_remain(vector<int>& remaining_armies);
 	int get_number_of_armies();
-	int get_country_armies(int player_i, int selection);
 	Player* check_win_condition();
 	void player0_win();
 };

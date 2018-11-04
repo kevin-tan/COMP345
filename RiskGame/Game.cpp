@@ -13,7 +13,6 @@ using std::vector;
 using std::string;
 using std::exception;
 using std::default_random_engine;
-
 using std::shuffle;
 using std::begin;
 using std::end;
@@ -88,14 +87,18 @@ void Game::init_startup_phase() {
 void Game::init_main_game_loop() {
 	Player* winner = check_win_condition();
 	int next_turn;
+	int proceed;
 	while (winner == nullptr) {
 		for (Player* player : game_players) {
 			player->reinforce();
+			cin >> proceed;
 			player->attack();
+			cin >> proceed;
 			player->fortify();
+			cin >> proceed;
 		}
-		
-		cout << "Press 1 to explicitly give all countries to player 0: " << endl;
+
+		cout << "Press 1 to explicitly give all countries to first player: " << endl;
 		cin >> next_turn;
 
 		if (next_turn == 1) {
@@ -108,7 +111,7 @@ void Game::init_main_game_loop() {
 	exit(0);
 }
 
-std::vector<Player*> Game::get_game_players() const{
+std::vector<Player*> Game::get_game_players() const {
 	return game_players;
 }
 
@@ -137,36 +140,59 @@ void Game::distribute_countries() {
 }
 
 void Game::distribute_armies() {
-	vector<int> empty_countries;
-	empty_countries.push_back(game_players[0]->get_countries().size());
-	empty_countries.push_back(game_players[1]->get_countries().size());
-	
-	for (int i = 0; i < get_number_of_armies(); i++) {
-		for (int j = 0; j < game_players.size(); j++) {
-			cout << "Player " + game_players[j]->get_name() << "'s turn to place an army unit.\nSelect an option from the list below: " << endl;
-			int option_number = 0;
-			for (Vertex v : game_players[j]->get_countries()) {
-				cout << "[" << option_number++ << "] " << game_map.get_graph()[v].country << "(" << game_map.get_graph()[v].army_size << " army unit(s))" << endl;
-			}
+	//Conducts round robin placement of armies
+	//Initially places 1 army on each of player's owned territories
+	vector<int> remaining_armies(game_players.size(), get_number_of_armies());
+	cout << "-------------------------\nPlacing initial armies...\n-------------------------\n" << endl;
+	place_initial_armies(remaining_armies);
 
-			int selection;
-			cin >> selection;
-			while (selection < 0 || selection >= game_players[j]->get_countries().size() || ((game_players[j]->get_countries().size() - i) <= empty_countries[j] && get_country_armies(j, selection) != 0)) {
-				if (selection < 0 || selection >= game_players[j]->get_countries().size()) {
-					cout << "Invalid selection. Please enter a valid selection (0-" << game_players[j]->get_countries().size() - 1 << "):" << endl;
+	cout << "--------------------------------------------\nProceeding to round-robin army placement...\n--------------------------------------------\n" << endl;
+	while (armies_remain(remaining_armies)) {
+		for (int i = 0; i < game_players.size(); i++) {
+			if (remaining_armies[i] != 0) {
+				cout << "Player " + game_players[i]->get_name() << "'s turn to place army units on one of their territories.\nSelect an option from the list below: " << endl;
+				cout << remaining_armies[i] << " army units remain..." << endl;
+				int option_number = 0;
+				for (Vertex v : game_players[i]->get_countries()) {
+					cout << "[" << option_number++ << "] " << game_map.get_graph()[v].country << "(" << game_map.get_graph()[v].army_size << " army unit(s))" << endl;
+				}
+
+				int selection;
+				cin >> selection;
+				while (selection < 0 || selection >= game_players[i]->get_countries().size()) {
+					cout << "Invalid selection. Please enter a valid selection (0-" << game_players[i]->get_countries().size() - 1 << "):" << endl;
 					cin >> selection;
 				}
-				else if (((game_players[j]->get_countries().size() - i) <= empty_countries[j] && get_country_armies(j, selection) != 0)) {
-					cout << "Invalid selection. Please place at least one army on all of your owned territories" << endl;
-					cin >> selection;
+
+				cout << "How many units would you like to place?" << endl;
+				int army_selection;
+				cin >> army_selection;
+				while (army_selection < 0 || army_selection > remaining_armies[i]) {
+					cout << "Invalid number of units. Input must be between 1-" << remaining_armies[i] << endl;
+					cin >> army_selection;
 				}
-			}
-			game_map.add_army(game_players[j]->get_countries()[selection]);
-			if (get_country_armies(j, selection) == 1) {
-				empty_countries[j]--;
+
+				game_map.add_armies(game_players[i]->get_countries()[selection], army_selection);
+				remaining_armies[i] -= army_selection;
 			}
 		}
 	}
+}
+
+void Game::place_initial_armies(vector<int>& remaining_armies) {
+	for (int i = 0; i < game_players.size(); i++) {
+		for (Vertex v : game_players[i]->get_countries()) {
+			game_map.add_armies(v, 1);
+			remaining_armies[i]--;
+		}
+	}
+}
+
+bool Game::armies_remain(vector<int>& remaining_armies) {
+	for (int i : remaining_armies) {
+		if (i != 0) { return true; }
+	}
+	return false;
 }
 
 int Game::get_number_of_armies() {
@@ -182,10 +208,6 @@ int Game::get_number_of_armies() {
 	case 6:
 		return 20;
 	}
-}
-
-int Game::get_country_armies(const int player_i, const int selection) {
-	return game_map.get_graph()[game_players[player_i]->get_countries()[selection]].army_size;
 }
 
 Player* Game::check_win_condition() {

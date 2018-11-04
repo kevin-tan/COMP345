@@ -59,7 +59,7 @@ public:
 	// Add continent to the set of continents for this map
 	void add_continents(const std::string continent);
 
-	void add_army(Vertex& vertex);
+	void add_armies(Vertex& vertex, int armies);
 
 	// Get the node for country
 	Vertex find_country_vertex(std::string country);
