@@ -14,7 +14,7 @@ struct VertexProperty {
 
 	// Player info
 	Player* player;
-	int army_size;
+	int army_size = 0;
 };
 
 // Define the type of Graph and its properties we want
@@ -33,6 +33,7 @@ class Map
 	const char DELIM = ',';
 	const signed int NULL_VERTEX = -1;
 	Graph graph;
+	std::vector<Vertex> countries;
 	std::unordered_set<std::string> continents;
 	// Helper method to find the node
 
@@ -58,6 +59,8 @@ public:
 	// Add continent to the set of continents for this map
 	void add_continents(const std::string continent);
 
+	void add_armies(Vertex& vertex, int armies);
+
 	// Get the node for country
 	Vertex find_country_vertex(std::string country);
 	// Get adjencency node for vertex
@@ -68,4 +71,8 @@ public:
 
 	// Temporary for driver
 	Graph& generate_map(std::vector<std::string>);
+
+	std::vector<Vertex>& get_countries() { return countries; }
+
+	void operator=(Map& map);
 };

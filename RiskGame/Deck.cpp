@@ -8,6 +8,9 @@
 #include "Deck.h"
 #include "Hand.h"
 
+Deck::Deck() {
+}
+
 Deck::Deck(int number_of_countries) {
 	number_of_exchanges = 0;
 	deck_size = number_of_countries;

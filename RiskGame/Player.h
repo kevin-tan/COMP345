@@ -11,6 +11,7 @@ class Player
 {
 public:
 	Player();
+	Player(string name);
 
 	// Override method
 	void reinforce();
@@ -20,12 +21,15 @@ public:
 	vector<Vertex> get_countries() const;
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();
+	string get_name() const;
 	
 	void add_country(Vertex& country, Map& map);
+	void clear_countries_temp();
 
 private:
 	std::vector<Vertex> countries;
 	DiceRollingFacility dice_rolling_facility;
 	Hand hand;
+	string name;
 };
 

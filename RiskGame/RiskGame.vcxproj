@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\CPP Libs\boost_1_68_0\boost_1_68_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
@@ -160,6 +162,8 @@
   <ItemGroup>
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameDriver.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />

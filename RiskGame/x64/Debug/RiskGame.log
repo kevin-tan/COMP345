@@ -1,9 +1,14 @@
-﻿  Deck.cpp
-  Hand.cpp
-  Player.cpp
-  RiskGame.cpp
-d:\vs_dev\comp345\riskgame\riskgame.cpp(64): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\vs_dev\comp345\riskgame\riskgame.cpp(281): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
-  LINK : D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe not found or not built by the last incremental link; performing full link
+﻿  Game.cpp
+d:\vs_dev\comp345\riskgame\game.cpp(76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\vs_dev\comp345\riskgame\game.cpp(128): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+d:\vs_dev\comp345\riskgame\game.cpp(134): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+d:\vs_dev\comp345\riskgame\game.cpp(212): warning C4715: 'Game::get_number_of_armies': not all control paths return a value
   RiskGame.vcxproj -> D:\VS_Dev\COMP345\x64\Debug\RiskGame.exe
