@@ -15,7 +15,7 @@ public:
 	// Override method
 	void reinforce();
 	void attack();
-	void fortify();
+	void fortify(Map& map);
 
 	vector<Vertex> get_countries() const;
 	DiceRollingFacility* get_dice_rolling_facility();
