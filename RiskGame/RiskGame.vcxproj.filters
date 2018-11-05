@@ -43,11 +43,11 @@
     <Filter Include="Header Files\Deck">
       <UniqueIdentifier>{e2c2e792-eebe-464f-8c90-279a14e302ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game">
-      <UniqueIdentifier>{8613010a-be52-496f-965b-104ab49f71cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{6a0dbf46-28b3-4ad2-8738-17514820b95f}</UniqueIdentifier>
+      <UniqueIdentifier>{2db6af3f-8720-4951-8f76-b10f1c1f730c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{78f94535-6a6c-4c18-aacf-91997fe99067}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +78,9 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerAbstract.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -104,14 +107,38 @@
     <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Deck</Filter>
     </ClCompile>
+    <ClCompile Include="FortificationDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReinforcementDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MapDriver.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="DiceDriver.cpp">
+      <Filter>Source Files\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="CardMain.cpp">
+      <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameDriver.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="ReinforcementDriver.cpp">
-      <Filter>Source Files\Player</Filter>
+    <ClCompile Include="MapLoaderDriver.cpp">
+      <Filter>Source Files\MapLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,5 +146,9 @@
     <None Include="World.map" />
     <None Include="World1.map" />
     <None Include="World2.map" />
+    <None Include="Maps\InvalidContinents.map" />
+    <None Include="Maps\InvalidTerritories.map" />
+    <None Include="Maps\TerritoryTwoContinents.map" />
+    <None Include="Maps\World.map" />
   </ItemGroup>
 </Project>

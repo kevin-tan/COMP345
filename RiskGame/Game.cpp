@@ -17,7 +17,7 @@ using std::shuffle;
 using std::begin;
 using std::end;
 using std::to_string;
-using std::filesystem::directory_iterator;
+using std::experimental::filesystem::directory_iterator;
 using std::chrono::system_clock;
 
 void Game::init_game_players() {
@@ -39,7 +39,7 @@ void Game::init_game_players() {
 
 void Game::init_game_map() {
 	vector<string> map_files;
-
+	
 	//Reads files in directory
 	for (const auto p : directory_iterator("Maps")) {
 		map_files.push_back(p.path().string());

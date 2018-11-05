@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +159,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAbstract.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -163,15 +167,21 @@
     <ClCompile Include="AttackDriver.cpp" />
     <ClCompile Include="CardMain.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="DiceDriver.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
+    <ClCompile Include="FortificationDriver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameDriver.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="MapLoaderDriver.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerDriver.cpp" />
     <ClCompile Include="ReinforcementDriver.cpp" />
     <ClCompile Include="RiskGame.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -181,6 +191,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="Maps\InvalidContinents.map" />
+    <None Include="Maps\InvalidTerritories.map" />
+    <None Include="Maps\TerritoryTwoContinents.map" />
+    <None Include="Maps\World.map" />
     <None Include="World.map" />
     <None Include="World1.map" />
     <None Include="World2.map" />
