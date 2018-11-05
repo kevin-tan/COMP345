@@ -14,7 +14,7 @@ public:
 	// Override method
 	void reinforce(Map& map, Deck& deck);
 	void attack(Map& map);
-	void fortify();
+	void fortify(Map& map);
 
 	void part3_reinforce();
 	void part3_attack();

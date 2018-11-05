@@ -170,11 +170,80 @@ void Player::attack(Map& map) {
 	cout << endl;
 }
 
+void Player::fortify(Map& map) {
+	using namespace std;
+
+	Graph& g = map.get_graph();
+	std::cout << "Printing from inside Player's fortify() method." << std::endl;
+
+	//print players countries and armies
+	cout << "Select a country to move army from: " << endl;
+	int i = 0;
+	int adj_counter = 0;
+	vector<Vertex> from_countries = vector<Vertex>();
+	for (Vertex v : countries) {
+		if (g[v].army_size >= 2) {
+			for (Vertex adj : map.get_adjacent_countries(v)) {
+				if (g[adj].player == this) {
+					adj_counter++;
+				}
+			}
+			if (adj_counter > 0) {
+				cout << "Country: " << i << " " << g[v].country << " - Number of armies: " << g[v].army_size << endl;
+				from_countries.push_back(v);
+				i++;
+			}
+		}
+	}
+
+	//select country to move army from 
+	int from_country_choice = input_check(from_countries);
+
+	//print adjacent countries
+	cout << "Select an adjacent country to move army to: " << endl;
+	vector<Vertex> player_owned_adj = vector<Vertex>();
+	vector<Vertex> adj_countries = map.get_adjacent_countries(from_countries[from_country_choice]);
+	int j = 0;
+	for (Vertex v : adj_countries) {
+		if (g[v].player == this) {
+			cout << "Country: " << j << " " << g[v].country << " - Number of armies: " << g[v].army_size << endl;
+			player_owned_adj.push_back(v);
+			j++;
+		}
+	}
+
+	//select country to move army to
+	int to_country_choice = input_check(player_owned_adj);
+
+	// Get army sizes
+	int armies_from = g[from_countries[from_country_choice]].army_size;
+	int armies_to = g[player_owned_adj[to_country_choice]].army_size;
+
+	//select number of armies to move and validate that number of armies is > 1 but less than source country - 1
+	cout << "Please input number of armies from 1 to " << armies_from - 1 << " : ";
+	int move_armies;
+	cin >> move_armies;
+	while (move_armies < 0 || move_armies > armies_from - 1) {
+		cout << "Please input number of armies from 1 to " << armies_from - 1 << " : ";
+		cin >> move_armies;
+	}
+
+	//assign number of armies after fortification
+	int& from_country_army = g[from_countries[from_country_choice]].army_size;
+	int& to_country_army = g[player_owned_adj[to_country_choice]].army_size;
+
+	from_country_army = armies_from - move_armies;
+	to_country_army = armies_to + move_armies;
+
+	cout << "Player has moved " << move_armies << " from country " << g[from_countries[from_country_choice]].country << " to country " << g[player_owned_adj[to_country_choice]].country << endl;
+	cout << "Country " << g[from_countries[from_country_choice]].country << " now has " << from_country_army << " armies" << endl;
+	cout << "Country " << g[player_owned_adj[to_country_choice]].country << " now has " << to_country_army << " armies" << endl;
+}
+
 void Player::reinforce(Map& map, Deck& deck) {
 	if (countries.size() == 0) {
 		std::cout << "\nYou don't have countries to reinforce!";
-	}
-	else {
+	} else {
 		int total_army, country_armies, continent_armies, exchange_armies = 0;
 		std::string want_change;
 
@@ -239,7 +308,7 @@ void Player::add_country(Vertex& country, Map& map) {
 }
 
 // Get amries from all the continents owned by the player
-int Player::armies_from_continents(Map& map){
+int Player::armies_from_continents(Map& map) {
 	int armies = 0;
 	std::vector<std::string> continent_countries;
 	std::vector<std::string> owned_countries;
@@ -256,7 +325,7 @@ int Player::armies_from_continents(Map& map){
 		// Check if continent_countries is a substet of owned_coutries
 		std::sort(owned_countries.begin(), owned_countries.end());
 		std::sort(continent_countries.begin(), continent_countries.end());
-		
+
 		if (includes(owned_countries.begin(), owned_countries.end(), continent_countries.begin(), continent_countries.end())) {
 			if (continent.compare("Asia") == 0)
 				armies += 7;
@@ -289,7 +358,7 @@ int Player::choose_country_to_add_army(Map& map, int total_army) {
 	do {
 		std::cin >> index_chosen;
 		if (index_chosen > index || index_chosen < 1) {
-			std::cout << "The index must be more than zero and less than " << (index+1) << "!\nEnter new value:";
+			std::cout << "The index must be more than zero and less than " << (index + 1) << "!\nEnter new value:";
 		}
 	} while (index_chosen > index || index_chosen < 1);
 	index = 0;
@@ -302,7 +371,7 @@ int Player::choose_country_to_add_army(Map& map, int total_army) {
 			std::cout << "Number of units should be more than zero and less than " << (total_army + 1) << "!\nEnter new value:";
 		}
 	} while (army < 1 || army > total_army);
-	
+
 	for (Vertex v : countries) {
 		if ((index_chosen - 1) == index) {
 			map.add_armies(v, army);
@@ -312,7 +381,7 @@ int Player::choose_country_to_add_army(Map& map, int total_army) {
 	}
 	return total_army - army;
 }
-	// Print all counties and corresponding units
+// Print all counties and corresponding units
 int Player::display_countries_and_armies(Map& map) {
 	int index = 0;
 	std::cout << "\nCountries and armies that you possess:\n\n";
