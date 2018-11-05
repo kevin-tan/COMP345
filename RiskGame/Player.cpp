@@ -174,7 +174,6 @@ void Player::fortify(Map& map) {
 	using namespace std;
 
 	Graph& g = map.get_graph();
-	std::cout << "Printing from inside Player's fortify() method." << std::endl;
 
 	//print players countries and armies
 	cout << "Select a country to move army from: " << endl;
