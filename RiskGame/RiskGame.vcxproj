@@ -159,7 +159,6 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerAbstract.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -181,7 +180,6 @@
     <ClCompile Include="PlayerDriver.cpp" />
     <ClCompile Include="ReinforcementDriver.cpp" />
     <ClCompile Include="RiskGame.cpp" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
