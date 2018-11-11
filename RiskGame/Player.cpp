@@ -279,18 +279,6 @@ void Player::reinforce(Map& map, Deck& deck) {
 	}
 }
 
-void Player::part3_reinforce() {
-	std::cout << "Printing from inside Player " << name << "'s reinforce() method." << std::endl;
-}
-
-void Player::part3_attack() {
-	std::cout << "Printing from inside Player " << name << "'s attack() method." << std::endl;
-}
-
-void Player::part3_fortify() {
-	std::cout << "Printing from inside Player " << name << "'s fortify() method." << std::endl;
-}
-
 vector<Vertex> Player::get_countries() const { return countries; }
 
 DiceRollingFacility* Player::get_dice_rolling_facility() { return &dice_rolling_facility; }

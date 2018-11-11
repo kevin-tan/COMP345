@@ -49,6 +49,9 @@
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{78f94535-6a6c-4c18-aacf-91997fe99067}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Drivers">
+      <UniqueIdentifier>{d9ab8fac-fa5f-4f1e-b991-3a39b28d61da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -83,9 +86,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RiskGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -103,15 +103,6 @@
     </ClCompile>
     <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Deck</Filter>
-    </ClCompile>
-    <ClCompile Include="FortificationDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReinforcementDriver.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game</Filter>
@@ -133,6 +124,21 @@
     </ClCompile>
     <ClCompile Include="MapLoaderDriver.cpp">
       <Filter>Source Files\MapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackDriver.cpp">
+      <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="FortificationDriver.cpp">
+      <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="ReinforcementDriver.cpp">
+      <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="RiskGame.cpp">
+      <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="PhaseObserverDriver.cpp">
+      <Filter>Source Files\Drivers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

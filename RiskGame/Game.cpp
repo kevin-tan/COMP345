@@ -90,11 +90,11 @@ void Game::init_main_game_loop() {
 	int proceed;
 	while (winner == nullptr) {
 		for (Player* player : game_players) {
-			player->part3_reinforce();
+			player->reinforce(game_map, game_deck);
 			cin >> proceed;
-			player->part3_attack();
+			player->attack(game_map);
 			cin >> proceed;
-			player->part3_fortify();
+			player->fortify(game_map);
 			cin >> proceed;
 		}
 

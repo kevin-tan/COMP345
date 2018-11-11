@@ -16,10 +16,6 @@ public:
 	void attack(Map& map);
 	void fortify(Map& map);
 
-	void part3_reinforce();
-	void part3_attack();
-	void part3_fortify();
-
 	vector<Vertex> get_countries() const;
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();

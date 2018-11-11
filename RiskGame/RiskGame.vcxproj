@@ -176,6 +176,7 @@
     <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MapLoaderDriver.cpp" />
+    <ClCompile Include="PhaseObserverDriver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDriver.cpp" />
     <ClCompile Include="ReinforcementDriver.cpp" />
