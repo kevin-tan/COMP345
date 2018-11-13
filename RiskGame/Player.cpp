@@ -166,7 +166,7 @@ void Player::attack(Game* game) {
 						cout << "How many armies would you like to move from " << g[from_countries[from_country_choice]].country << " (1 to " << (atk_army_size - 1) << "): ";
 						cin >> army_to_move;
 						while (army_to_move <= 0 || army_to_move >= atk_army_size) {
-							cout << "Please enter a number of armies from 1 to " << (atk_army_size - 1) << " : ";
+							cout << "Please enter a number of armies from 1 to " << (atk_army_size - 1) << ": ";
 							cin >> army_to_move;
 						}
 						atk_army_size -= army_to_move;
