@@ -281,7 +281,7 @@ void Player::fortify(Game* game) {
 		phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(from_country_army) + " armies!\nCountry " + g[player_owned_adj[to_country_choice]].country + " now has " + std::to_string(to_country_army) + " armies!\n");
 		game->notify_all();
 	} else {
-		phase_state.append("Player " + name + " skipped fortifying phase.\n");
+		phase_state.append("Player " + name + " sipped fortifying phase.\n");
 	}
 	phase_state.append("Player " + name + " fortify phase terminating.\n");
 	game->notify_all();
