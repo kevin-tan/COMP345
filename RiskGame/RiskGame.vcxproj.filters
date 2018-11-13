@@ -52,6 +52,18 @@
     <Filter Include="Source Files\Drivers">
       <UniqueIdentifier>{d9ab8fac-fa5f-4f1e-b991-3a39b28d61da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\PhaseViewer">
+      <UniqueIdentifier>{46a2a587-985c-4c19-9c09-dd6e979a11a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PhaseViewer">
+      <UniqueIdentifier>{f31d27b5-d8d3-4224-a036-1ce982e9ab14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Patterns">
+      <UniqueIdentifier>{9ed4d91d-c9bf-4db2-bbf3-c7e9a1b88de4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Patterns">
+      <UniqueIdentifier>{51038eb2-a48e-4ea9-b9a3-7ead65146b5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -80,6 +92,15 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseObserver.h">
+      <Filter>Header Files\PhaseViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +160,15 @@
     </ClCompile>
     <ClCompile Include="PhaseObserverDriver.cpp">
       <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="PhaseObserver.cpp">
+      <Filter>Source Files\PhaseViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Source Files\Patterns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

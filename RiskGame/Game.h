@@ -2,10 +2,11 @@
 
 #include "Player.h"
 #include "Deck.h"
+#include "Subject.h"
 
-class Game
-{
+class Game : public ISubject {
 public:
+	Game();
 	void init_game_players();
 	void init_game_map();
 	void init_game_deck();

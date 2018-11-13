@@ -158,8 +158,11 @@
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +179,8 @@
     <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MapLoaderDriver.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PhaseObserver.cpp" />
     <ClCompile Include="PhaseObserverDriver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDriver.cpp" />
@@ -187,6 +192,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

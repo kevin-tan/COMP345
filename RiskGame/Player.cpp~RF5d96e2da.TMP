@@ -33,9 +33,9 @@ void Player::attack(Game* game) {
 	using namespace std;
 	int atk = 0;
 
-	// Initialize phase
-	string phase_state = "Player " + name + ": attack phase.\n";
-	game->set_state(&phase_state);
+	string& phase_state = game->get_state();
+
+	phase_state = "Player " + name + ": attack phase.\n";
 	game->notify_all();
 
 	do {
@@ -180,9 +180,9 @@ void Player::fortify(Game* game) {
 
 	Map* map = game->get_game_map();
 
-	// Initialize phase
-	string phase_state = "Player " + name + ": fortify phase.\n";
-	game->set_state(&phase_state);
+	std::string phase_state = game->get_state();
+	phase_state = "Player " + name + ": fortify phase.\n";
+
 	game->notify_all();
 
 	Graph& g = map->get_graph();
@@ -206,7 +206,7 @@ void Player::fortify(Game* game) {
 			}
 		}
 	}
-	cout << "Country choice: ";
+
 	//select country to move army from 
 	int from_country_choice = input_check(from_countries);
 	phase_state.append("Player " + name + " chose country " + g[from_countries[from_country_choice]].country + " to move armies from!\n");
@@ -224,7 +224,7 @@ void Player::fortify(Game* game) {
 			j++;
 		}
 	}
-	cout << "Country choice: ";
+
 	//select country to move army to
 	int to_country_choice = input_check(player_owned_adj);
 
@@ -260,10 +260,8 @@ void Player::fortify(Game* game) {
 
 void Player::reinforce(Game* game) {
 	Map* map = game->get_game_map();
-
-	// Initialize phase
-	string phase_state = "Player " + name + ": reinforce phase.\n";
-	game->set_state(&phase_state);
+	std::string phase_state = game->get_state();
+	phase_state = "Player " + name + ": reinforce phase.\n";
 	game->notify_all();
 
 	if (countries.size() == 0) {
@@ -304,7 +302,7 @@ void Player::reinforce(Game* game) {
 
 		// Place armies on the map
 		do {
-			total_army = choose_country_to_add_army(game, total_army, &phase_state);
+			total_army = choose_country_to_add_army(*map, total_army);
 		} while (total_army != 0);
 		display_countries_and_armies(*map);
 		std::cout << "\nYou have successfully placed all the units\n";
@@ -365,15 +363,15 @@ int Player::armies_from_continents(Map& map) {
 	return armies;
 }
 // Add army to the country 
-int Player::choose_country_to_add_army(Game* game, int total_army, string* phase_state) {
+int Player::choose_country_to_add_army(Game* game, int total_army) {
 
-	Map* map = game->get_game_map();
+	std::string phate_state = 
 
 	int index, index_chosen, army;
 
 	// Print all the options
 	std::cout << "\nNumber of units that you can place is: " << total_army;
-	index = display_countries_and_armies(*map);
+	index = display_countries_and_armies(map);
 
 	// Choose country to add army
 	std::cout << "\nChoose index of the country to which you would like to add armies: ";
@@ -385,8 +383,8 @@ int Player::choose_country_to_add_army(Game* game, int total_army, string* phase
 	} while (index_chosen > index || index_chosen < 1);
 	index = 0;
 
-	phase_state->append("Player " + name + " chose country " + map->get_graph()[countries[index_chosen - 1]].country + " to add armies to.\n");
-	game->notify_all();
+	phase_state.append("Player " + name + " chose country " + map.get_graph()[countries[index_chosen - 1]].country + " to add armies to.\n");
+	this->notify_all();
 
 	// Choose how many units to add
 	std::cout << "How many units you want to add: ";
@@ -397,12 +395,12 @@ int Player::choose_country_to_add_army(Game* game, int total_army, string* phase
 		}
 	} while (army < 1 || army > total_army);
 
-	phase_state->append("Player " + name + " reinforced country " + map->get_graph()[countries[index_chosen - 1]].country + " with " + std::to_string(army) + " armies.\n");
-	game->notify_all();
+	phase_state.append("Player " + name + " reinforced country " + map.get_graph()[countries[index_chosen - 1]].country + " with " + std::to_string(army) + " armies.\n");
+	this->notify_all();
 
 	for (Vertex v : countries) {
 		if ((index_chosen - 1) == index) {
-			map->add_armies(v, army);
+			map.add_armies(v, army);
 			break;
 		}
 		index++;

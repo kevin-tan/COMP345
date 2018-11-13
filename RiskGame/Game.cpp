@@ -5,6 +5,7 @@
 #include <chrono>
 #include "MapLoader.h"
 #include "Game.h"
+#include "PhaseObserver.h"
 
 using std::cin;
 using std::cout;
@@ -19,6 +20,11 @@ using std::end;
 using std::to_string;
 using std::experimental::filesystem::directory_iterator;
 using std::chrono::system_clock;
+
+Game::Game() {
+	// Init phase viewer
+	this->ISubject::add_listener(new PhaseObserver(this));
+}
 
 void Game::init_game_players() {
 	//Gets number of players and initializes player objects.
@@ -39,7 +45,7 @@ void Game::init_game_players() {
 
 void Game::init_game_map() {
 	vector<string> map_files;
-	
+
 	//Reads files in directory
 	for (const auto p : directory_iterator("Maps")) {
 		map_files.push_back(p.path().string());
@@ -63,8 +69,7 @@ void Game::init_game_map() {
 			Map map = read_map_file(map_files[index]);
 			game_map = map;
 			break;
-		}
-		catch (exception e) {
+		} catch (exception e) {
 			cout << e.what() << "\nPlease select another map.\n" << endl;
 		}
 	}
@@ -78,9 +83,7 @@ void Game::init_game_deck() {
 
 void Game::init_startup_phase() {
 	shuffle_players();
-
 	distribute_countries();
-
 	distribute_armies();
 }
 
@@ -90,12 +93,9 @@ void Game::init_main_game_loop() {
 	int proceed;
 	while (winner == nullptr) {
 		for (Player* player : game_players) {
-			player->reinforce(game_map, game_deck);
-			cin >> proceed;
-			player->attack(game_map);
-			cin >> proceed;
-			player->fortify(game_map);
-			cin >> proceed;
+			player->reinforce(this);
+			player->attack(this);
+			player->fortify(this);
 		}
 
 		cout << "Press 1 to explicitly give all countries to first player: " << endl;
@@ -227,4 +227,12 @@ void Game::player0_win() {
 	for (int i = 0; i < game_map.get_countries().size(); i++) {
 		game_players[0]->add_country(game_map.get_countries()[i], game_map);
 	}
+}
+
+ISubject::~ISubject() {
+	for (IObserver* ob : *observers) {
+		delete ob;
+	}
+	delete observers;
+	delete phase_state;
 }
