@@ -15,7 +15,7 @@ static int input_check(vector<Vertex> v) {
 	return t;
 }
 
-Player::Player(){
+Player::Player() {
 	countries = std::vector<Vertex>();
 	dice_rolling_facility = DiceRollingFacility();
 	hand = Hand();
@@ -47,10 +47,18 @@ void Player::attack(Game* game) {
 		int i = 0;
 		vector<Vertex> from_countries = vector<Vertex>();
 		for (Vertex v : countries) {
+			int count = 0;
 			if (g[v].army_size >= 2) {
-				from_countries.push_back(v);
-				cout << "  (" << i << ")  " << g[v].country << endl;
-				i++;
+				for (Vertex adj : map->get_adjacent_countries(v)) {
+					if (g[adj].player != this) {
+						count++;
+					}
+				}
+				if (count > 0) {
+					from_countries.push_back(v);
+					cout << "  (" << i << ")  " << g[v].country << endl;
+					i++;
+				}
 			}
 		}
 
@@ -62,15 +70,21 @@ void Player::attack(Game* game) {
 
 		// Printing adjacent countries to country choice
 		cout << "Select an adjacent country to attack to: " << endl;
+		vector<Vertex> adj_countries_to_atk = vector<Vertex>();
 		vector<Vertex> adj_countries = map->get_adjacent_countries(from_countries[from_country_choice]);
-		for (int i = 0; i < adj_countries.size(); i++) {
-			cout << "  (" << i << ")  " << g[adj_countries[i]].country << endl;
+		int c = 0;
+		for (Vertex v : adj_countries) {
+			if (g[v].player != this) {
+				cout << "  (" << c << ")  " << g[v].country << endl;
+				adj_countries_to_atk.push_back(v);
+				c++;
+			}
 		}
 
 		// Country to attack to
 		cout << "Country choice: ";
-		int to_country_choice = input_check(adj_countries);
-		phase_state.append("Player " + name + " chose " + g[adj_countries[to_country_choice]].country + " to attack.\n");
+		int to_country_choice = input_check(adj_countries_to_atk);
+		phase_state.append("Player " + name + " chose " + g[adj_countries_to_atk[to_country_choice]].country + " to attack.\n");
 		game->notify_all();
 
 		// Attacker rolling chosen number dice for attack per army (army size - 1)
@@ -89,10 +103,10 @@ void Player::attack(Game* game) {
 		vector<int> attack_rolls = dice_rolling_facility.rollDice(a_num_roll);
 
 		// Defender rolling chosen number dice for attack per army (army size)
-		const int number_of_defends = g[adj_countries[to_country_choice]].army_size;
+		const int number_of_defends = g[adj_countries_to_atk[to_country_choice]].army_size;
 		int d_max_dice = number_of_defends >= 2 ? 2 : number_of_defends;
 		int d_num_roll = 0;
-		Player* p = g[adj_countries[to_country_choice]].player;
+		Player* p = g[adj_countries_to_atk[to_country_choice]].player;
 		cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << "): ";
 		cin >> d_num_roll;
 		while (d_num_roll <= 0 || d_num_roll > d_max_dice) {
@@ -106,7 +120,7 @@ void Player::attack(Game* game) {
 
 		// Before attack
 		Player* attacker = g[from_countries[from_country_choice]].player;
-		Player* defender = g[adj_countries[to_country_choice]].player;
+		Player* defender = g[adj_countries_to_atk[to_country_choice]].player;
 
 		// Eliminating army phase
 		int max_army = attack_rolls.size() > defend_rolls.size() ? attack_rolls.size() : defend_rolls.size();
@@ -115,7 +129,7 @@ void Player::attack(Game* game) {
 		while (elimination_phase) {
 			// Ref to army size of attacker and defender
 			int& atk_army_size = g[from_countries[from_country_choice]].army_size;
-			int& def_army_size = g[adj_countries[to_country_choice]].army_size;
+			int& def_army_size = g[adj_countries_to_atk[to_country_choice]].army_size;
 			const int atk_army_size_before = atk_army_size;
 
 			if (d_index < defend_rolls.size() && a_index < attack_rolls.size()) {
@@ -142,7 +156,7 @@ void Player::attack(Game* game) {
 			} else {
 				if (def_army_size == 0) {
 					int army_to_move = 0;
-					phase_state.append("Attacking Player " + name + " successfully took over country " + g[adj_countries[to_country_choice]].country + " from Player " + p->get_name() + "!\nPlayer " + name + " now owns country " + g[adj_countries[to_country_choice]].country + "\n");
+					phase_state.append("Attacking Player " + name + " successfully took over country " + g[adj_countries_to_atk[to_country_choice]].country + " from Player " + p->get_name() + "!\nPlayer " + name + " now owns country " + g[adj_countries_to_atk[to_country_choice]].country + "\n");
 					game->notify_all();
 					cout << "How many armies would you like to move from " << g[from_countries[from_country_choice]].country << " (1 to " << (atk_army_size - 1) << "): ";
 					cin >> army_to_move;
@@ -152,13 +166,13 @@ void Player::attack(Game* game) {
 					}
 					atk_army_size -= army_to_move;
 					def_army_size = army_to_move;
-					Vertex defeated_country = adj_countries[to_country_choice];
+					Vertex defeated_country = adj_countries_to_atk[to_country_choice];
 					g[defeated_country].player->remove_country(defeated_country, *map);
 					this->add_country(defeated_country, *map);
 
-					phase_state.append("Player " + name + " moved " + std::to_string(army_to_move) + " army units from country " + g[from_countries[from_country_choice]].country + " to " + g[adj_countries[to_country_choice]].country + "!\n");
+					phase_state.append("Player " + name + " moved " + std::to_string(army_to_move) + " army units from country " + g[from_countries[from_country_choice]].country + " to " + g[adj_countries_to_atk[to_country_choice]].country + "!\n");
 					phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
-					phase_state.append("Country " + g[adj_countries[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
+					phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
 					game->notify_all();
 				}
 				elimination_phase = false;
