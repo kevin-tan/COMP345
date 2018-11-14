@@ -102,6 +102,18 @@
     <ClInclude Include="PhaseObserver.h">
       <Filter>Header Files\PhaseViewer</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerStrategy.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Benevolent.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -168,6 +180,15 @@
       <Filter>Source Files\Patterns</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStrategy.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="Benevolent.cpp">
       <Filter>Source Files\Patterns</Filter>
     </ClCompile>
   </ItemGroup>

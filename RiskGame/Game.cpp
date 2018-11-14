@@ -6,6 +6,8 @@
 #include "MapLoader.h"
 #include "Game.h"
 #include "PhaseObserver.h"
+#include "Human.h"
+#include "Benevolent.h"
 
 using std::cin;
 using std::cout;
@@ -38,7 +40,7 @@ void Game::init_game_players() {
 	}
 
 	for (int i = 0; i < number_of_players; i++) {
-		Player* p = new Player(to_string(i));
+		Player* p = new Player(to_string(i), new Benevolent());
 		game_players.push_back(p);
 	}
 }
