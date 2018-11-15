@@ -3,6 +3,7 @@
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/named_function_params.hpp>
+#include "Subject.h"
 
 class Player;
 
@@ -29,7 +30,7 @@ typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
 typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
 typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 
-class Map
+class Map : public ISubject
 {
 	const char DELIM = ',';
 	const signed int NULL_VERTEX = -1;
