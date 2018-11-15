@@ -6,4 +6,5 @@ class PhaseObserver : public IObserver {
 public:
 	PhaseObserver(ISubject* subject);
 	void update() override;
+	~PhaseObserver();
 };
