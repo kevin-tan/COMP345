@@ -71,7 +71,8 @@ void Game::init_game_map() {
 			Map map = read_map_file(map_files[index]);
 			game_map = map;
 			break;
-		} catch (exception e) {
+		}
+		catch (exception e) {
 			cout << e.what() << "\nPlease select another map.\n" << endl;
 		}
 	}
@@ -90,27 +91,13 @@ void Game::init_startup_phase() {
 }
 
 void Game::init_main_game_loop() {
-	Player* winner = check_win_condition();
-	int next_turn;
-	int proceed;
-	while (winner == nullptr) {
+	while (true) {
 		for (Player* player : game_players) {
 			player->reinforce(this);
 			player->attack(this);
 			player->fortify(this);
 		}
-
-		cout << "Press 1 to explicitly give all countries to first player: " << endl;
-		cin >> next_turn;
-
-		if (next_turn == 1) {
-			player0_win();
-		}
-		winner = check_win_condition();
 	}
-
-	cout << "GAME OVER" << "\n\nPlayer " << winner->get_name() << " wins!!";
-	exit(0);
 }
 
 std::vector<Player*> Game::get_game_players() const {
@@ -212,13 +199,8 @@ int Game::get_number_of_armies() {
 	}
 }
 
-Player* Game::check_win_condition() {
-	for (Player* p : game_players) {
-		if (p->get_countries().size() == game_map.get_countries().size()) {
-			return p;
-		}
-	}
-	return nullptr;
+bool Game::check_win_condition(Player* player) {
+	return player->get_countries().size() == game_map.get_countries().size();
 }
 
 void Game::player0_win() {
@@ -230,4 +212,3 @@ void Game::player0_win() {
 		game_players[0]->add_country(game_map.get_countries()[i], game_map);
 	}
 }
-
