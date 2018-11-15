@@ -27,3 +27,10 @@ void ISubject::notify_all() {
 		ob->update();
 	}
 }
+ISubject::~ISubject() {
+	for (IObserver* ob : *observers) {
+		delete ob;
+	}
+	delete observers;
+	delete phase_state;
+}

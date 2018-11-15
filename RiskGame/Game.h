@@ -7,6 +7,7 @@
 class Game : public ISubject {
 public:
 	Game();
+	~Game();
 	void init_game_players();
 	void init_game_map();
 	void init_game_deck();

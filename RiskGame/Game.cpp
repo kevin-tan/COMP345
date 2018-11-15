@@ -26,6 +26,8 @@ Game::Game() {
 	this->ISubject::add_listener(new PhaseObserver(this));
 }
 
+Game::~Game() = default;
+
 void Game::init_game_players() {
 	//Gets number of players and initializes player objects.
 	cout << "Enter number of players (2-6 players)" << endl;
@@ -229,10 +231,3 @@ void Game::player0_win() {
 	}
 }
 
-ISubject::~ISubject() {
-	for (IObserver* ob : *observers) {
-		delete ob;
-	}
-	delete observers;
-	delete phase_state;
-}

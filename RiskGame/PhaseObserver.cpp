@@ -7,11 +7,9 @@ void PhaseObserver::update() {
 	cout << subject->get_state() << endl;
 }
 
-IObserver::~IObserver() {
-	delete subject;
-}
+PhaseObserver::~PhaseObserver() = default;
 
-PhaseObserver::PhaseObserver(ISubject* subject) : IObserver(subject){
+PhaseObserver::PhaseObserver(ISubject* subject) : IObserver(subject) {
 	// No-op
 }
 
