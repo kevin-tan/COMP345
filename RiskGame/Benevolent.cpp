@@ -14,13 +14,13 @@ void Benevolent::execute_reinforce(Game* game, Player* player) {
 
 	int total_army, country_armies, continent_armies, exchange_armies = 0;
 
-	//Countries bonus
+	// Countries bonus
 	if (player->get_countries().size() / 3 <= 3)
 		country_armies = 3;
 	else
 		country_armies = player->get_countries().size() / 3;
 
-	//Continent bonus
+	// Continent bonus
 	continent_armies = player->armies_from_continents(map);
 
 	// Get part of reinforcement from the card exchange

@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Benevolent.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="AttackDriver.cpp" />
     <ClCompile Include="Benevolent.cpp" />
     <ClCompile Include="CardMain.cpp" />

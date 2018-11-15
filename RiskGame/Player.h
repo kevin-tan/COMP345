@@ -27,6 +27,7 @@ public:
 	void clear_countries_temp();
 	void remove_country(Vertex& country, Map& map);
 	int armies_from_continents(Map* map);
+	bool is_human();
 
 private:
 	std::vector<Vertex> countries;

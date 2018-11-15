@@ -8,6 +8,7 @@
 #include "PhaseObserver.h"
 #include "Human.h"
 #include "Benevolent.h"
+#include "Aggressive.h"
 
 using std::cin;
 using std::cout;
@@ -40,7 +41,7 @@ void Game::init_game_players() {
 	}
 
 	for (int i = 0; i < number_of_players; i++) {
-		Player* p = new Player(to_string(i), new Benevolent());
+		Player* p = new Player(to_string(i), new Aggressive());
 		game_players.push_back(p);
 	}
 }

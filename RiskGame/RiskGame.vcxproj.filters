@@ -114,6 +114,9 @@
     <ClInclude Include="Benevolent.h">
       <Filter>Header Files\Patterns</Filter>
     </ClInclude>
+    <ClInclude Include="Aggressive.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -189,6 +192,9 @@
       <Filter>Source Files\Patterns</Filter>
     </ClCompile>
     <ClCompile Include="Benevolent.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="Aggressive.cpp">
       <Filter>Source Files\Patterns</Filter>
     </ClCompile>
   </ItemGroup>

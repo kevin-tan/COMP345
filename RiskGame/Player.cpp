@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Game.h"
+#include "Human.h"
 
 using std::string;
 
@@ -92,4 +93,13 @@ int Player::armies_from_continents(Map* map) {
 		continent_countries.clear();
 	}
 	return armies;
+}
+
+bool Player::is_human() {
+	Human* h = dynamic_cast<Human*> (player_strategy.get_strategy());
+	if(h != nullptr) {
+		return true;
+	}
+
+	return false;
 }
