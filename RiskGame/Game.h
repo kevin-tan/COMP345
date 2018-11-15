@@ -20,6 +20,8 @@ public:
 	Map* get_game_map();
 	Deck* get_game_deck();
 
+	bool check_win_condition(Player* player);
+
 private:
 	std::vector<Player*> game_players;
 	Map game_map;
@@ -32,6 +34,5 @@ private:
 	void place_initial_armies(vector<int>& remaining_armies);
 	bool armies_remain(vector<int>& remaining_armies);
 	int get_number_of_armies();
-	Player* check_win_condition();
 	void player0_win();
 };
