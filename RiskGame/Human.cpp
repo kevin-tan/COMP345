@@ -228,6 +228,13 @@ void Human::execute_attack(Game* game, Player* player) {
 						phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
 						game->notify_all();
+
+						// Check if conquer led to win condition
+						if (game->check_win_condition(player)) {
+							game->notify_all();
+							cout << "GAME OVER" << "\n\nPlayer " << player->get_name() << " wins!!";
+							exit(0);
+						}
 					}
 					elimination_phase = false;
 				}

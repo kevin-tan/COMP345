@@ -147,6 +147,12 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							phase_state.append("Player " + player->get_name() + " moved 1 army unit(s) from country " + source.country + " to " + target.country + "!\n");
 							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+						
+							if (game->check_win_condition(player)) {
+								game->notify_all();
+								cout << "GAME OVER" << "\n\nPlayer " << player->get_name() << " wins!!";
+								exit(0);
+							}
 						}
 						elimination_phase = false;
 					}
