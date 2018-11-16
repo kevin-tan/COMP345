@@ -4,14 +4,16 @@
 #include "DiceRollingFacility.h"
 #include "Hand.h"
 #include "boost/format.hpp"
-#include "PlayerStrategy.h"
+#include "Strategy.h"
 
 class Game;
 
 class Player{
 public:
 	Player();
-	Player(std::string name, PlayerStrategy player_strategy);
+	Player(std::string name, Strategy* strategy);
+
+	~Player();
 
 	// Override method
 	void reinforce(Game* game);
@@ -22,7 +24,7 @@ public:
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();
 	std::string get_name() const;
-	PlayerStrategy get_player_strategy();
+	void set_strategy(Strategy* strategy);
 
 	void add_country(Vertex& country, Map& map);
 	void clear_countries_temp();
@@ -32,9 +34,9 @@ public:
 
 private:
 	std::vector<Vertex> countries;
-	DiceRollingFacility dice_rolling_facility;
-	Hand hand;
+	DiceRollingFacility* dice_rolling_facility;
+	Hand* hand;
 	std::string name;
-	PlayerStrategy player_strategy;
+	Strategy* strategy;
 };
 

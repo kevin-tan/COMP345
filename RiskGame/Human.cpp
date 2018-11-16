@@ -245,6 +245,7 @@ void Human::execute_attack(Game* game, Player* player) {
 						atk_army_size -= army_to_move;
 						def_army_size = army_to_move;
 						Vertex defeated_country = adj_countries_to_atk[to_country_choice];
+						Player* defeated_player = g[defeated_country].player;
 						g[defeated_country].player->remove_country(defeated_country, *map);
 						player->add_country(defeated_country, *map);
 						phase_state.append("Player " + player->get_name() + " moved " + std::to_string(army_to_move) + " army units from country " + g[from_countries[from_country_choice]].country + " to " + g[adj_countries_to_atk[to_country_choice]].country + "!\n");
@@ -252,10 +253,14 @@ void Human::execute_attack(Game* game, Player* player) {
 						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
 						game->notify_all();
 
+						if (game->check_player_eliminated(defeated_player)) {
+							phase_state.append("Player " + defeated_player->get_name() + " has been eliminated. They have been removed from the game.");
+						}
+
 						// Check if conquer led to win condition
 						if (game->check_win_condition(player)) {
+							phase_state.append("\n\n\nGAME OVER!\n\nPlayer " + player->get_name() + " wins!!");
 							game->notify_all();
-							cout << "GAME OVER" << "\n\nPlayer " << player->get_name() << " wins!!";
 							exit(0);
 						}
 					}

@@ -21,6 +21,7 @@ public:
 	Deck* get_game_deck();
 
 	bool check_win_condition(Player* player);
+	bool check_player_eliminated(Player* player);
 
 private:
 	std::vector<Player*> game_players;

@@ -144,18 +144,17 @@ void Game::init_main_game_loop() {
 					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 				}
 
-				//TODO Something very broken happens with what I did in set_strategy and this heap allocation... but pretty sure everything else is good
 				for(Player* p : game_players) {
 					if(p->get_name() == input_name) {
 						switch (strategy) {
 						case 0:
-							p->get_player_strategy().set_strategy(new Human());
+							p->set_strategy(new Human());
 							break;
 						case 1:
-							p->get_player_strategy().set_strategy(new Aggressive());
+							p->set_strategy(new Aggressive());
 							break;
 						case 2:
-							p->get_player_strategy().set_strategy(new Benevolent());
+							p->set_strategy(new Benevolent());
 							break;
 						}
 					}
@@ -266,6 +265,24 @@ int Game::get_number_of_armies() {
 
 bool Game::check_win_condition(Player* player) {
 	return player->get_countries().size() == game_map.get_countries().size();
+}
+
+bool Game::check_player_eliminated(Player* player) {
+	if(player->get_countries().size() == 0) {  // NOLINT
+		for(Player* p : game_players) {
+			if(p == player) {
+				delete p;
+				p = nullptr;
+				break;
+			}
+		}
+
+		game_players.erase(std::remove(game_players.begin(), game_players.end(), player), game_players.end());
+
+		return true;
+	}
+		
+	return false;
 }
 
 void Game::player0_win() {

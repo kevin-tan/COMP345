@@ -78,6 +78,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 
 				if (target.player->is_human()) {
 					// Defender rolling chosen number dice for attack per army (army size)
+					game->notify_all();
 					int d_max_dice = target.army_size >= 2 ? 2 : target.army_size;
 					int d_num_roll = 0;
 					Player* p = target.player;
@@ -148,15 +149,21 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							atk_army_size--;
 							def_army_size = 1;
 
+							Player* defeated_player = target.player;
+
 							target.player->remove_country(v, *game->get_game_map());
 							player->add_country(v, *game->get_game_map());
 							phase_state.append("Player " + player->get_name() + " moved 1 army unit(s) from country " + source.country + " to " + target.country + "!\n");
 							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
 
+							if(game->check_player_eliminated(defeated_player)) {
+								phase_state.append("Player " + defeated_player->get_name() + " has been eliminated. They have been removed from the game.");
+							}
+
 							if (game->check_win_condition(player)) {
+								phase_state.append("\n\n\nGAME OVER!\n\nPlayer " + player->get_name() + " wins!!");
 								game->notify_all();
-								cout << "GAME OVER" << "\n\nPlayer " << player->get_name() << " wins!!";
 								exit(0);
 							}
 						}
