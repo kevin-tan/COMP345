@@ -9,6 +9,7 @@ PlayerStrategy::PlayerStrategy(Strategy* init_strategy) {
 }
 
 void PlayerStrategy::set_strategy(Strategy* strategy) {
+	delete this->strategy;
 	this->strategy = strategy;
 }
 

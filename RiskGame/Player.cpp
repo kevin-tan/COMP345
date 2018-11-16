@@ -42,6 +42,10 @@ string Player::get_name() const {
 	return name;
 }
 
+PlayerStrategy Player::get_player_strategy() {
+	return player_strategy;
+}
+
 void Player::add_country(Vertex& country, Map& map) {
 	countries.push_back(country);
 	map.set_country_owner(this, country);

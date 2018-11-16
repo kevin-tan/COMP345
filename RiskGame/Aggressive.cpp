@@ -12,7 +12,6 @@ void Aggressive::execute_reinforce(Game* game, Player* player) {
 	// Initialize phase
 	string phase_state = "Player " + player->get_name() + ": reinforce phase.\n";
 	game->set_state(&phase_state);
-	game->notify_all();
 
 	int total_army, country_armies, continent_armies, exchange_armies = 0;
 
@@ -46,7 +45,7 @@ void Aggressive::execute_reinforce(Game* game, Player* player) {
 
 	map->add_armies(strongest, total_army);
 
-	phase_state.append("Player " + player->get_name() + " reinforced country " + map->get_graph()[strongest].country + " with " + std::to_string(total_army) + " army unit(s).\n");
+	phase_state.append("Player " + player->get_name() + " reinforced country " + map->get_graph()[strongest].country + " with " + std::to_string(total_army) + " army unit(s). Country " + map->get_graph()[strongest].country + " now has " + std::to_string(map->get_graph()[strongest].army_size) + " army unit(s)\n");
 	phase_state.append("Player " + player->get_name() + " reinforcement phase terminating.\n");
 	game->notify_all();
 }
@@ -59,16 +58,14 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 	phase_state.append("Player " + player->get_name() + " chose to attack.\n");
 
 	Vertex attack_source = strongest_country(game, player->get_countries());
-	auto source = game->get_game_map()->get_graph()[attack_source];
-
-	phase_state.append("Player " + player->get_name() + " chose " + source.country + " to attack from.\n");
+	auto& source = game->get_game_map()->get_graph()[attack_source];
 
 	for (Vertex v : game->get_game_map()->get_adjacent_countries(attack_source)) {
-		auto target = game->get_game_map()->get_graph()[v];
+		auto& target = game->get_game_map()->get_graph()[v];
 		if (target.player != player) {
 			// Aggressive player attacks as much as possible
-			//TODO FIX
 			while (source.army_size > 1 && game->get_game_map()->get_graph()[v].player != player) {
+				phase_state.append("Player " + player->get_name() + " chose " + source.country + " to attack from.\n");
 				phase_state.append("Player " + player->get_name() + " chose " + target.country + " to attack.\n");
 
 				int a_max_dice = source.army_size - 1 >= 3 ? 3 : source.army_size - 1;
@@ -81,8 +78,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 
 				if (target.player->is_human()) {
 					// Defender rolling chosen number dice for attack per army (army size)
-					const int number_of_defends = target.army_size;
-					int d_max_dice = number_of_defends >= 2 ? 2 : number_of_defends;
+					int d_max_dice = target.army_size >= 2 ? 2 : target.army_size;
 					int d_num_roll = 0;
 					Player* p = target.player;
 					cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << "): ";
@@ -118,19 +114,29 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 						if (defend_rolls[d_index] > attack_rolls[a_index]) {
 							phase_state.append("Defender Player " + target.player->get_name() + " beat the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 							phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
+
 							atk_army_size--;
+							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
 						}
 						else if (defend_rolls[d_index] == attack_rolls[a_index]) {
 							phase_state.append("Defender Player " + target.player->get_name() + " matched the attacker " + player->get_name() + " with a roll of " + std::to_string(attack_rolls[a_index]) + "!\n");
 							phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
 							// Other player dice will not matter, exit elimination phase
+
 							atk_army_size--;
+							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+
 							elimination_phase = false;
 						}
 						else {
 							phase_state.append("Defender Player " + target.player->get_name() + " lost to the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 							phase_state.append("Defender Player " + target.player->get_name() + " has lost an army!\n");
+
 							def_army_size--;
+							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
 						}
 						d_index++;
 						a_index++;
@@ -147,7 +153,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							phase_state.append("Player " + player->get_name() + " moved 1 army unit(s) from country " + source.country + " to " + target.country + "!\n");
 							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
-						
+
 							if (game->check_win_condition(player)) {
 								game->notify_all();
 								cout << "GAME OVER" << "\n\nPlayer " << player->get_name() << " wins!!";
@@ -167,22 +173,52 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 }
 
 void Aggressive::execute_fortify(Game* game, Player* player) {
-	//TODO tougher than i thought
-	//TODO possibly just look at every territory+adjacenecy and find most optimal combination ... that shouldn't be as complicated
-
 	// Initialize phase
-	// string phase_state = "Player " + player->get_name() + ": fortify phase.\n";
-	// game->set_state(&phase_state);
-	//
-	// Vertex target = strongest_country(game, player->get_countries());
-	// Vertex source = strongest_country(game, game->get_game_map()->get_adjacent_countries(target));
-	//
-	// while(game->get_game_map()->get_graph()[source].army_size == 1) {
-	// 	for(Vertex adjacency : game->get_game_map()->get_adjacent_countries(target)) {
-	// 		if()
-	// 	}
-	// }
+	string phase_state = "Player " + player->get_name() + ": fortify phase.\n";
+	game->set_state(&phase_state);
 
+	Vertex target = NULL;
+	Vertex source = NULL;
+
+	int strongest_fortify = 0;
+	for (Vertex v : player->get_countries()) {
+		for (Vertex adjacency : game->get_game_map()->get_adjacent_countries(v)) {
+			auto target_node = game->get_game_map()->get_graph()[v];
+			auto source_node = game->get_game_map()->get_graph()[adjacency];
+			if (source_node.player == player && source_node.army_size > 1 && target_node.army_size > 1 && target_node.army_size + source_node.army_size > strongest_fortify) {
+				strongest_fortify = target_node.army_size + source_node.army_size;
+				target = target_node.army_size > source_node.army_size ? v : adjacency;
+				source = target_node.army_size > source_node.army_size ? adjacency : v;
+			}
+		}
+	}
+
+	if(target == NULL && source == NULL) {
+		phase_state.append("Player " + player->get_name() + " skipped fortifying phase.\n");
+		game->notify_all();
+	}
+	else {
+
+		auto& source_node = game->get_game_map()->get_graph()[source];
+		auto& target_node = game->get_game_map()->get_graph()[target];
+
+		phase_state.append("Player " + player->get_name() + " chose country " + source_node.country + " to move armies from!\n");
+		phase_state.append("Player " + player->get_name() + " chose country " + target_node.country + " to move armies to!\n");
+
+		int move_armies = source_node.army_size - 1;
+		int& target_army = target_node.army_size;
+		int& source_army = source_node.army_size;
+		
+		target_army += move_armies;
+		source_army -= move_armies;
+
+		phase_state.append("Player " + player->get_name() + " chose to move " + std::to_string(move_armies) + " from country " + source_node.country + "!\n");
+		phase_state.append("Country " + target_node.country + " now has " + std::to_string(target_node.army_size) + " armies!\nCountry " + source_node.country + " now has " + std::to_string(source_node.army_size) + " armies!\n");
+		game->notify_all();
+	}
+
+	phase_state.append("Player " + player->get_name() + " fortify phase terminating.\n");
+	game->notify_all();
 }
 
 Vertex Aggressive::strongest_country(Game* game, vector<Vertex> countries) {
