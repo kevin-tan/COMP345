@@ -3,7 +3,7 @@
 #include "Subject.h"
 
 IObserver::IObserver(ISubject* subject) : subject(subject) {
-	// No-op
+	subject->add_listener(this);
 }
 IObserver::~IObserver() {
 	delete subject;

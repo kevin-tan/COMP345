@@ -26,7 +26,7 @@ using std::chrono::system_clock;
 
 Game::Game() {
 	// Init phase viewer
-	this->ISubject::add_listener(new PhaseObserver(this));
+	new PhaseObserver(this);
 }
 
 Game::~Game() = default;
