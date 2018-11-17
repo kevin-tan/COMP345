@@ -152,21 +152,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Aggressive.h" />
+    <ClInclude Include="Benevolent.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameStatsViewer.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Strategy.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aggressive.cpp" />
     <ClCompile Include="AttackDriver.cpp" />
+    <ClCompile Include="Benevolent.cpp" />
     <ClCompile Include="CardMain.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceDriver.cpp" />
@@ -174,7 +181,11 @@
     <ClCompile Include="FortificationDriver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameDriver.cpp" />
+    <ClCompile Include="GameStatsDriver.cpp" />
+    <ClCompile Include="GameStatsViewer.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="Human.cpp" />
+    <ClCompile Include="ISubject.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapDriver.cpp" />
     <ClCompile Include="MapLoader.cpp" />
