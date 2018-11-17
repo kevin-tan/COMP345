@@ -7,39 +7,54 @@ using std::string;
 
 Player::Player() {
 	countries = std::vector<Vertex>();
-	dice_rolling_facility = DiceRollingFacility();
-	hand = Hand();
+	dice_rolling_facility = new DiceRollingFacility();
+	hand = new Hand();
 	name = "";
 }
 
-Player::Player(string name, PlayerStrategy player_strategy) {
+Player::Player(string name, Strategy* strategy) {
 	countries = std::vector<Vertex>();
-	dice_rolling_facility = DiceRollingFacility();
-	hand = Hand();
+	dice_rolling_facility = new DiceRollingFacility();
+	hand = new Hand();
 	this->name = name;
-	this->player_strategy = player_strategy;
+	this->strategy = strategy;
+}
+
+Player::~Player() {
+	delete dice_rolling_facility;
+	delete hand;
+	delete strategy;
+
+	dice_rolling_facility = nullptr;
+	hand = nullptr;
+	strategy = nullptr;
 }
 
 void Player::reinforce(Game* game) {
-	player_strategy.execute_reinforcement_strategy(game, this);
+	strategy->execute_reinforce(game, this);
 }
 
 void Player::attack(Game* game) {
-	player_strategy.execute_attack_strategy(game, this);
+	strategy->execute_attack(game, this);
 }
 
 void Player::fortify(Game* game) {
-	player_strategy.execute_fortify_strategy(game, this);
+	strategy->execute_fortify(game, this);
 }
 
 vector<Vertex> Player::get_countries() const { return countries; }
 
-DiceRollingFacility* Player::get_dice_rolling_facility() { return &dice_rolling_facility; }
+DiceRollingFacility* Player::get_dice_rolling_facility() { return dice_rolling_facility; }
 
-Hand* Player::get_hand() { return &hand; }
+Hand* Player::get_hand() { return hand; }
 
 string Player::get_name() const {
 	return name;
+}
+
+void Player::set_strategy(Strategy* strategy) {
+	delete this->strategy;
+	this->strategy = strategy;
 }
 
 void Player::add_country(Vertex& country, Map& map) {
@@ -96,10 +111,5 @@ int Player::armies_from_continents(Map* map) {
 }
 
 bool Player::is_human() {
-	Human* h = dynamic_cast<Human*> (player_strategy.get_strategy());
-	if(h != nullptr) {
-		return true;
-	}
-
-	return false;
+	return dynamic_cast<Human*> (strategy) != nullptr;
 }

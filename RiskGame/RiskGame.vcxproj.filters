@@ -117,6 +117,9 @@
     <ClInclude Include="Aggressive.h">
       <Filter>Header Files\Patterns</Filter>
     </ClInclude>
+    <ClInclude Include="GameStatsViewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -196,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="Aggressive.cpp">
       <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatsDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatsViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISubject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

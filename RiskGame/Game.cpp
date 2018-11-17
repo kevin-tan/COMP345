@@ -26,7 +26,7 @@ using std::chrono::system_clock;
 
 Game::Game() {
 	// Init phase viewer
-	new PhaseObserver(this);
+	this->ISubject::add_listener(new PhaseObserver(this));
 }
 
 Game::~Game() = default;
@@ -42,9 +42,32 @@ void Game::init_game_players() {
 		cin >> number_of_players;
 	}
 
+	cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player" << endl;
+
+	int strategy;
+
 	for (int i = 0; i < number_of_players; i++) {
-		Player* p = new Player(to_string(i), new Aggressive());
-		game_players.push_back(p);
+		cout << "\nPlayer " << i << " strategy option: " << endl;
+		cin >> strategy;
+		while (strategy < 0 || strategy > 2) {
+			cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
+		}
+
+		Player* p;
+		switch (strategy) {
+		case 0:
+			p = new Player(to_string(i), new Human());
+			game_players.push_back(p);
+			break;
+		case 1:
+			p = new Player(to_string(i), new Aggressive());
+			game_players.push_back(p);
+			break;
+		case 2:
+			p = new Player(to_string(i), new Benevolent());
+			game_players.push_back(p);
+			break;
+		}
 	}
 }
 
@@ -74,8 +97,7 @@ void Game::init_game_map() {
 			Map map = read_map_file(map_files[index]);
 			game_map = map;
 			break;
-		}
-		catch (exception e) {
+		} catch (exception e) {
 			cout << e.what() << "\nPlease select another map.\n" << endl;
 		}
 	}
@@ -94,11 +116,49 @@ void Game::init_startup_phase() {
 }
 
 void Game::init_main_game_loop() {
+	int change_strategy;
 	while (true) {
 		for (Player* player : game_players) {
 			player->reinforce(this);
 			player->attack(this);
 			player->fortify(this);
+
+			cout << "Would you like to change a player's strategy? (Press 1)" << endl;
+			cin >> change_strategy;
+
+			string input_name = "";
+			if (change_strategy == 1) {
+				cout << "Enter player name: " << endl;
+				cin >> input_name;
+				while (std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
+					cout << "Invalid name. Re-enter player name: " << endl;
+					cin >> input_name;
+				}
+
+				int strategy;
+				cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player" << endl;
+				cout << "\nPlayer " << input_name << " strategy option: " << endl;
+				cin >> strategy;
+				while (strategy < 0 || strategy > 2) {
+					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
+				}
+
+				for (Player* p : game_players) {
+					if (p->get_name() == input_name) {
+						switch (strategy) {
+						case 0:
+							p->set_strategy(new Human());
+							break;
+						case 1:
+							p->set_strategy(new Aggressive());
+							break;
+						case 2:
+							p->set_strategy(new Benevolent());
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -204,6 +264,24 @@ int Game::get_number_of_armies() {
 
 bool Game::check_win_condition(Player* player) {
 	return player->get_countries().size() == game_map.get_countries().size();
+}
+
+bool Game::check_player_eliminated(Player* player) {
+	if (player->get_countries().size() == 0) {  // NOLINT
+		for (Player* p : game_players) {
+			if (p == player) {
+				delete p;
+				p = nullptr;
+				break;
+			}
+		}
+
+		game_players.erase(std::remove(game_players.begin(), game_players.end(), player), game_players.end());
+
+		return true;
+	}
+
+	return false;
 }
 
 void Game::player0_win() {

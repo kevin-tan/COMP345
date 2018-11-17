@@ -8,6 +8,7 @@ class ISubject{
 protected:
 	ISubject();
 	std::string* phase_state;
+
 	std::vector<IObserver*> observers;
 public:
 	virtual ~ISubject();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "algorithm"
 #include "Subject.h"
+
 ISubject::ISubject() : phase_state(nullptr) {
 }
 
@@ -13,7 +14,6 @@ void ISubject::set_state(std::string* state){
 }
 
 void ISubject::add_listener(IObserver* ob) {
-	std::cout << observers.size();
 	observers.push_back(ob);
 }
 
