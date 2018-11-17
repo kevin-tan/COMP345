@@ -47,7 +47,7 @@ void Game::init_game_players() {
 	int strategy;
 
 	for (int i = 0; i < number_of_players; i++) {
-		cout << "\nPlayer " << i << " strategy option: " << endl;
+		cout << "\nPlayer "<< i << " strategy option: " << endl;
 		cin >> strategy;
 		while (strategy < 0 || strategy > 2) {
 			cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
@@ -97,7 +97,8 @@ void Game::init_game_map() {
 			Map map = read_map_file(map_files[index]);
 			game_map = map;
 			break;
-		} catch (exception e) {
+		}
+		catch (exception e) {
 			cout << e.what() << "\nPlease select another map.\n" << endl;
 		}
 	}
@@ -122,15 +123,15 @@ void Game::init_main_game_loop() {
 			player->reinforce(this);
 			player->attack(this);
 			player->fortify(this);
-
+			
 			cout << "Would you like to change a player's strategy? (Press 1)" << endl;
 			cin >> change_strategy;
 
 			string input_name = "";
-			if (change_strategy == 1) {
+			if(change_strategy == 1) {
 				cout << "Enter player name: " << endl;
 				cin >> input_name;
-				while (std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
+				while(std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
 					cout << "Invalid name. Re-enter player name: " << endl;
 					cin >> input_name;
 				}
@@ -143,8 +144,8 @@ void Game::init_main_game_loop() {
 					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 				}
 
-				for (Player* p : game_players) {
-					if (p->get_name() == input_name) {
+				for(Player* p : game_players) {
+					if(p->get_name() == input_name) {
 						switch (strategy) {
 						case 0:
 							p->set_strategy(new Human());
@@ -158,7 +159,7 @@ void Game::init_main_game_loop() {
 						}
 					}
 				}
-			}
+			} 
 		}
 	}
 }
@@ -267,9 +268,9 @@ bool Game::check_win_condition(Player* player) {
 }
 
 bool Game::check_player_eliminated(Player* player) {
-	if (player->get_countries().size() == 0) {  // NOLINT
-		for (Player* p : game_players) {
-			if (p == player) {
+	if(player->get_countries().size() == 0) {  // NOLINT
+		for(Player* p : game_players) {
+			if(p == player) {
 				delete p;
 				p = nullptr;
 				break;
@@ -280,7 +281,7 @@ bool Game::check_player_eliminated(Player* player) {
 
 		return true;
 	}
-
+		
 	return false;
 }
 

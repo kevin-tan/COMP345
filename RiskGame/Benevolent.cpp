@@ -37,8 +37,6 @@ void Benevolent::execute_reinforce(Game* game, Player* player) {
 	}
 	total_army = country_armies + continent_armies + exchange_armies;
 
-	//TODO annoying case where 1 country is super weak and gets spammed
-	//TODO calling weakest_countries method constantly is probably super inefficient
 	while (total_army != 0) {
 		vector<Vertex> weak_countries = weakest_countries(game, player);
 		for (Vertex v : weak_countries) {
@@ -92,8 +90,11 @@ void Benevolent::execute_fortify(Game* game, Player* player) {
 				int adjacency_armies = total_armies - weak_country_armies;
 				int move_armies = adj_country.army_size - adjacency_armies;
 
-				weak.army_size = weak_country_armies;
-				adj_country.army_size = adjacency_armies;
+				int& weak_army = weak.army_size;
+				int& adj_army = adj_country.army_size;
+				
+				weak_army = weak_country_armies;
+				adj_army = adjacency_armies;
 
 				phase_state.append("Player " + player->get_name() + " chose to move " + std::to_string(move_armies) + " from country " + adj_country.country + "!\n");
 				phase_state.append("Country " + adj_country.country + " now has " + std::to_string(adjacency_armies) + " armies!\nCountry " + weak.country + " now has " + std::to_string(weak_country_armies) + " armies!\n");

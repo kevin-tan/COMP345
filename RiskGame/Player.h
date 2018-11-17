@@ -8,7 +8,7 @@
 
 class Game;
 
-class Player {
+class Player{
 public:
 	Player();
 	Player(std::string name, Strategy* strategy);
@@ -39,3 +39,4 @@ private:
 	std::string name;
 	Strategy* strategy;
 };
+

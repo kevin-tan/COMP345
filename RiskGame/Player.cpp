@@ -24,7 +24,7 @@ Player::~Player() {
 	delete dice_rolling_facility;
 	delete hand;
 	delete strategy;
-
+	
 	dice_rolling_facility = nullptr;
 	hand = nullptr;
 	strategy = nullptr;

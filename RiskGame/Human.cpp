@@ -93,6 +93,7 @@ void Human::execute_attack(Game* game, Player* player) {
 		while (atk == 1) {
 			Map* map = game->get_game_map();
 			Graph& g = game->get_game_map()->get_graph();
+
 			// Printing countries for player
 			cout << "Select a country to attack from: " << endl;
 			int i = 0;
@@ -154,20 +155,30 @@ void Human::execute_attack(Game* game, Player* player) {
 			vector<int> attack_rolls = player->get_dice_rolling_facility()->rollDice(a_num_roll);
 
 			// Defender rolling chosen number dice for attack per army (army size)
-			const int number_of_defends = g[adj_countries_to_atk[to_country_choice]].army_size;
-			int d_max_dice = number_of_defends >= 2 ? 2 : number_of_defends;
-			int d_num_roll = 0;
+			vector<int> defend_rolls;
 			Player* p = g[adj_countries_to_atk[to_country_choice]].player;
-			cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << "): ";
-			cin >> d_num_roll;
-			while (d_num_roll <= 0 || d_num_roll > d_max_dice) {
-				cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << ") only: ";
-				cin >> d_num_roll;
-			}
 
-			phase_state.append("Defending Player " + p->get_name() + " chose " + std::to_string(d_num_roll) + " dices to roll.\n");
-			game->notify_all();
-			vector<int> defend_rolls = player->get_dice_rolling_facility()->rollDice(d_num_roll);
+			if (g[adj_countries_to_atk[to_country_choice]].player->is_human()) {
+				const int number_of_defends = g[adj_countries_to_atk[to_country_choice]].army_size;
+				int d_max_dice = number_of_defends >= 2 ? 2 : number_of_defends;
+				int d_num_roll = 0;
+				
+				cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << "): ";
+				cin >> d_num_roll;
+				while (d_num_roll <= 0 || d_num_roll > d_max_dice) {
+					cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << ") only: ";
+					cin >> d_num_roll;
+				}
+
+				phase_state.append("Defending Player " + p->get_name() + " chose " + std::to_string(d_num_roll) + " dices to roll.\n");
+				game->notify_all();
+				vector<int> defend_rolls = player->get_dice_rolling_facility()->rollDice(d_num_roll);
+			} else {
+				int d_max_dice = g[adj_countries_to_atk[to_country_choice]].army_size >= 2 ? 2 : g[adj_countries_to_atk[to_country_choice]].army_size;
+				phase_state.append("Defending Player " + p->get_name() + " chose " + std::to_string(d_max_dice) + " dice to roll.\n");
+
+				defend_rolls = player->get_dice_rolling_facility()->rollDice(d_max_dice);
+			}
 
 			// Before attack
 			Player* attacker = g[from_countries[from_country_choice]].player;
@@ -187,22 +198,35 @@ void Human::execute_attack(Game* game, Player* player) {
 					if (defend_rolls[d_index] > attack_rolls[a_index]) {
 						phase_state.append("Defender Player " + p->get_name() + " beat the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 						phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
-						game->notify_all();
+						
 						atk_army_size--;
+						phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
+						
+						game->notify_all();
 					}
 					else if (defend_rolls[d_index] == attack_rolls[a_index]) {
 						phase_state.append("Defender Player " + p->get_name() + " matched the attacker " + player->get_name() + " with a roll of " + std::to_string(attack_rolls[a_index]) + "!\n");
 						phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
-						game->notify_all();
-						// Other player dice will not matter, exit elimination phase
+						
 						atk_army_size--;
+						phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
+						
+						game->notify_all();
+						
+						// Other player dice will not matter, exit elimination phase
 						elimination_phase = false;
 					}
 					else {
 						phase_state.append("Defender Player " + p->get_name() + " lost to the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 						phase_state.append("Defender Player " + p->get_name() + " has lost an army!\n");
-						game->notify_all();
+						
 						def_army_size--;
+						phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
+
+						game->notify_all();
 					}
 					d_index++;
 					a_index++;
@@ -221,13 +245,24 @@ void Human::execute_attack(Game* game, Player* player) {
 						atk_army_size -= army_to_move;
 						def_army_size = army_to_move;
 						Vertex defeated_country = adj_countries_to_atk[to_country_choice];
+						Player* defeated_player = g[defeated_country].player;
 						g[defeated_country].player->remove_country(defeated_country, *map);
 						player->add_country(defeated_country, *map);
 						phase_state.append("Player " + player->get_name() + " moved " + std::to_string(army_to_move) + " army units from country " + g[from_countries[from_country_choice]].country + " to " + g[adj_countries_to_atk[to_country_choice]].country + "!\n");
 						phase_state.append("Country " + g[from_countries[from_country_choice]].country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
 						game->notify_all();
-						map->notify_all();
+
+						if (game->check_player_eliminated(defeated_player)) {
+							phase_state.append("Player " + defeated_player->get_name() + " has been eliminated. They have been removed from the game.");
+						}
+
+						// Check if conquer led to win condition
+						if (game->check_win_condition(player)) {
+							phase_state.append("\n\n\nGAME OVER!\n\nPlayer " + player->get_name() + " wins!!");
+							game->notify_all();
+							exit(0);
+						}
 					}
 					elimination_phase = false;
 				}
