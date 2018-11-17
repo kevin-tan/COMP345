@@ -9,6 +9,7 @@
 #include "Human.h"
 #include "Benevolent.h"
 #include "Aggressive.h"
+#include "GameStatsViewer.h"
 
 using std::cin;
 using std::cout;
@@ -96,6 +97,7 @@ void Game::init_game_map() {
 
 			Map map = read_map_file(map_files[index]);
 			game_map = map;
+			game_map.add_listener(new GameStatsViewer(&game_map));
 			break;
 		}
 		catch (exception e) {
@@ -271,14 +273,12 @@ bool Game::check_player_eliminated(Player* player) {
 	if(player->get_countries().size() == 0) {  // NOLINT
 		for(Player* p : game_players) {
 			if(p == player) {
+				game_players.erase(std::remove(game_players.begin(), game_players.end(), player), game_players.end());
 				delete p;
 				p = nullptr;
 				break;
 			}
 		}
-
-		game_players.erase(std::remove(game_players.begin(), game_players.end(), player), game_players.end());
-
 		return true;
 	}
 		

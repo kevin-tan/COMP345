@@ -27,8 +27,12 @@ void ISubject::notify_all() {
 	}
 }
 ISubject::~ISubject() {
-	for (int i = 0; i < observers.size(); ++i)
+	for (int i = 0; i < observers.size(); ++i) {
+		delete observers[i];
 		observers[i] = nullptr;
-	if (phase_state != nullptr)
+	}
+	if (phase_state != nullptr) {
+		delete phase_state;
 		phase_state = nullptr;
+	}
 }

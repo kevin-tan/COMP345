@@ -164,12 +164,14 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							if (game->check_win_condition(player)) {
 								phase_state.append("\n\n\nGAME OVER!\n\nPlayer " + player->get_name() + " wins!!");
 								game->notify_all();
+								game->get_game_map()->notify_all();
 								exit(0);
 							}
 						}
 						elimination_phase = false;
 					}
 					game->notify_all();
+					game->get_game_map()->notify_all();
 				}
 			}
 

@@ -99,6 +99,7 @@ void Benevolent::execute_fortify(Game* game, Player* player) {
 				phase_state.append("Player " + player->get_name() + " chose to move " + std::to_string(move_armies) + " from country " + adj_country.country + "!\n");
 				phase_state.append("Country " + adj_country.country + " now has " + std::to_string(adjacency_armies) + " armies!\nCountry " + weak.country + " now has " + std::to_string(weak_country_armies) + " armies!\n");
 				game->notify_all();
+				game->get_game_map()->notify_all();
 
 				success = true;
 				break;
@@ -113,7 +114,6 @@ void Benevolent::execute_fortify(Game* game, Player* player) {
 
 	phase_state.append("Player " + player->get_name() + " fortify phase terminating.\n");
 	game->notify_all();
-
 }
 
 vector<Vertex> Benevolent::weakest_countries(Game* game, Player* player) {

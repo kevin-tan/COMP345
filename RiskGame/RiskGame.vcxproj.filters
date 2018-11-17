@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Patterns">
       <UniqueIdentifier>{51038eb2-a48e-4ea9-b9a3-7ead65146b5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameViewer">
+      <UniqueIdentifier>{d18f426c-2667-4c59-8af8-e15a0017a88e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameViewer">
+      <UniqueIdentifier>{94df0d85-3048-4cdf-afad-bb9efedb5af3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -115,7 +121,7 @@
       <Filter>Header Files\Patterns</Filter>
     </ClInclude>
     <ClInclude Include="GameStatsViewer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,14 +200,14 @@
     <ClCompile Include="Aggressive.cpp">
       <Filter>Source Files\Patterns</Filter>
     </ClCompile>
-    <ClCompile Include="GameStatsDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStatsViewer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ISubject.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatsDriver.cpp">
+      <Filter>Source Files\Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatsViewer.cpp">
+      <Filter>Source Files\GameViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
