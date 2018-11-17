@@ -48,7 +48,7 @@ void Game::init_game_players() {
 	int strategy;
 
 	for (int i = 0; i < number_of_players; i++) {
-		cout << "\nPlayer "<< i << " strategy option: " << endl;
+		cout << "\nPlayer " << i << " strategy option: " << endl;
 		cin >> strategy;
 		while (strategy < 0 || strategy > 2) {
 			cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
@@ -99,8 +99,7 @@ void Game::init_game_map() {
 			game_map = map;
 			game_map.add_listener(new GameStatsViewer(&game_map));
 			break;
-		}
-		catch (exception e) {
+		} catch (exception e) {
 			cout << e.what() << "\nPlease select another map.\n" << endl;
 		}
 	}
@@ -125,15 +124,15 @@ void Game::init_main_game_loop() {
 			player->reinforce(this);
 			player->attack(this);
 			player->fortify(this);
-			
+
 			cout << "Would you like to change a player's strategy? (Press 1)" << endl;
 			cin >> change_strategy;
 
 			string input_name = "";
-			if(change_strategy == 1) {
+			if (change_strategy == 1) {
 				cout << "Enter player name: " << endl;
 				cin >> input_name;
-				while(std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
+				while (std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
 					cout << "Invalid name. Re-enter player name: " << endl;
 					cin >> input_name;
 				}
@@ -146,8 +145,8 @@ void Game::init_main_game_loop() {
 					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 				}
 
-				for(Player* p : game_players) {
-					if(p->get_name() == input_name) {
+				for (Player* p : game_players) {
+					if (p->get_name() == input_name) {
 						switch (strategy) {
 						case 0:
 							p->set_strategy(new Human());
@@ -161,7 +160,7 @@ void Game::init_main_game_loop() {
 						}
 					}
 				}
-			} 
+			}
 		}
 	}
 }
@@ -202,34 +201,38 @@ void Game::distribute_armies() {
 	place_initial_armies(remaining_armies);
 
 	cout << "--------------------------------------------\nProceeding to round-robin army placement...\n--------------------------------------------\n" << endl;
+
 	while (armies_remain(remaining_armies)) {
 		for (int i = 0; i < game_players.size(); i++) {
 			if (remaining_armies[i] != 0) {
-				cout << "Player " + game_players[i]->get_name() << "'s turn to place army units on one of their territories.\nSelect an option from the list below: " << endl;
-				cout << remaining_armies[i] << " army units remain..." << endl;
-				int option_number = 0;
-				for (Vertex v : game_players[i]->get_countries()) {
-					cout << "[" << option_number++ << "] " << game_map.get_graph()[v].country << "(" << game_map.get_graph()[v].army_size << " army unit(s))" << endl;
-				}
+				if (game_players[i]->is_human()) {
 
-				int selection;
-				cin >> selection;
-				while (selection < 0 || selection >= game_players[i]->get_countries().size()) {
-					cout << "Invalid selection. Please enter a valid selection (0-" << game_players[i]->get_countries().size() - 1 << "):" << endl;
+					cout << "Player " + game_players[i]->get_name() << "'s turn to place an army unit on one of their territories.\nSelect an option from the list below: " << endl;
+					cout << remaining_armies[i] << " army units remain..." << endl;
+					int option_number = 0;
+					for (Vertex v : game_players[i]->get_countries()) {
+						cout << "[" << option_number++ << "] " << game_map.get_graph()[v].country << "(" << game_map.get_graph()[v].army_size << " army unit(s))" << endl;
+					}
+
+					int selection;
 					cin >> selection;
-				}
+					while (selection < 0 || selection >= game_players[i]->get_countries().size()) {
+						cout << "Invalid selection. Please enter a valid selection (0-" << game_players[i]->get_countries().size() - 1 << "):" << endl;
+						cin >> selection;
+					}
 
-				cout << "How many units would you like to place?" << endl;
-				int army_selection;
-				cin >> army_selection;
-				while (army_selection < 1 || army_selection > remaining_armies[i]) {
-					cout << "Invalid number of units. Input must be between 1-" << remaining_armies[i] << endl;
-					cin >> army_selection;
+					game_map.add_armies(game_players[i]->get_countries()[selection], 1);
+					remaining_armies[i]--;
+				} else {
+					cout << "Player " + game_players[i]->get_name() << "'s turn to place an army unit on one of their territories." << endl;
+					Vertex random_country = game_players[i]->get_countries()[rand() % game_players[i]->get_countries().size()];
+					game_map.add_armies(random_country, 1);
+					cout << "Player " + game_players[i]->get_name() << " added an army unit to " <<  game_map.get_graph()[random_country].country << endl;
+					remaining_armies[i]--;
+					cout << remaining_armies[i] << " army units remain..." << endl;
 				}
-
-				game_map.add_armies(game_players[i]->get_countries()[selection], army_selection);
-				remaining_armies[i] -= army_selection;
 			}
+			cout << endl;
 		}
 	}
 }
@@ -270,9 +273,9 @@ bool Game::check_win_condition(Player* player) {
 }
 
 bool Game::check_player_eliminated(Player* player) {
-	if(player->get_countries().size() == 0) {  // NOLINT
-		for(Player* p : game_players) {
-			if(p == player) {
+	if (player->get_countries().size() == 0) {  // NOLINT
+		for (Player* p : game_players) {
+			if (p == player) {
 				game_players.erase(std::remove(game_players.begin(), game_players.end(), player), game_players.end());
 				delete p;
 				p = nullptr;
@@ -281,7 +284,7 @@ bool Game::check_player_eliminated(Player* player) {
 		}
 		return true;
 	}
-		
+
 	return false;
 }
 
