@@ -126,6 +126,12 @@
     <ClInclude Include="GameMode.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Cheater.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyFactory.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -215,12 +221,15 @@
     <ClCompile Include="GameMode.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Cheater.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyFactory.cpp">
+      <Filter>Source Files\Patterns</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="World.map" />
-    <None Include="World1.map" />
-    <None Include="World2.map" />
     <None Include="Maps\InvalidContinents.map" />
     <None Include="Maps\InvalidTerritories.map" />
     <None Include="Maps\TerritoryTwoContinents.map" />

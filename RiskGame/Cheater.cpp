@@ -35,7 +35,12 @@ void Cheater::execute_attack(Game* game, Player* player) {
 			vector<Vertex> temp = player->get_countries();
 			it = find(temp.begin(), temp.end(), adjacent);
 			if (it == temp.end()) {
-				game->get_game_map()->get_graph()[adjacent].player->remove_country(adjacent, *(game->get_game_map()));
+				Player* p = game->get_game_map()->get_graph()[adjacent].player;
+				std::string name = p->get_name();
+				p->remove_country(adjacent, *(game->get_game_map()));
+				if (game->check_player_eliminated(p)) {
+					phase_state.append("Player " + name + " has been eliminated. They have been removed from the game.");
+				}
 				player->add_country(adjacent, *(game->get_game_map()));
 				phase_state.append(game->get_game_map()->get_graph()[adjacent].country + ", ");
 			}
@@ -43,6 +48,13 @@ void Cheater::execute_attack(Game* game, Player* player) {
 	}
 	phase_state.at(phase_state.length() - 2) = '.';
 	phase_state.append("\nPlayer " + player->get_name() + " has conquered all neighboring countries.\n");
+
+	if (game->check_win_condition(player)) {
+		game->notify_all();
+		game->get_game_map()->notify_all();
+		game->get_running() = false;
+		return;
+	}
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 	game->get_game_map()->notify_all();
@@ -69,4 +81,8 @@ void Cheater::execute_fortify(Game * game, Player * player){
 	phase_state.append("\nPlayer " + player->get_name() + " fortify phase terminating.\n");
 	game->notify_all();
 	game->get_game_map()->notify_all();
+}
+
+std::string Cheater::get_strategy_name(){
+	return "Cheater";
 }

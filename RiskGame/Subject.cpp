@@ -31,8 +31,4 @@ ISubject::~ISubject() {
 		delete observers[i];
 		observers[i] = nullptr;
 	}
-	if (phase_state != nullptr) {
-		delete phase_state;
-		phase_state = nullptr;
-	}
 }

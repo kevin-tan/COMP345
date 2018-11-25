@@ -5,6 +5,10 @@
 #include "Human.h"
 #include "Benevolent.h"
 #include "Aggressive.h"
+#include "Cheater.h"
+#include "StrategyFactory.h"
+
+using std::experimental::filesystem::directory_iterator;
 
 GameMode::GameMode() {
 }
@@ -40,7 +44,7 @@ void GameMode::init_game_mode() {
 
 		// Set up map selections
 		vector<std::string> map_files;
-		for (const auto p : std::experimental::filesystem::directory_iterator("Maps")) {
+		for (const auto p : directory_iterator("Maps")) {
 			map_files.push_back(p.path().string());
 		}
 
@@ -58,30 +62,28 @@ void GameMode::init_game_mode() {
 		int player_size = get_input(2, 4, "Select number of players to be played (2-4): ");
 
 		int strategy = 0;
-		vector<Player*> players;
+		vector<std::string> player_strategy;
 		cout << "Strategy options\n[0] Random player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater" << endl;
 		for (int i = 0; i < player_size; i++) {
-			cout << "\nPlayer " << i << " strategy option: " << endl;
+			cout << "\nPlayer " << i << " strategy option: ";
 			cin >> strategy;
-			while (strategy < 0 || strategy > 2) {
+			while (strategy < 0 || strategy > 3) {
 				cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
+				cin >> strategy;
 			}
 
-			if (strategy == 0) strategy = rand() % 3 + 1;
+			if (strategy == 0) strategy = rand() % 3 + 1; // Replace with Random()
 
 			Player* p;
 			switch (strategy) {
 			case 1:
-				p = new Player(to_string(i), new Aggressive());
-				players.push_back(p);
+				player_strategy.push_back("Aggressive");
 				break;
 			case 2:
-				p = new Player(to_string(i), new Benevolent());
-				players.push_back(p);
+				player_strategy.push_back("Benevolent");
 				break;
 			case 3:
-				p = new Player(to_string(i), new Benevolent()); // Cheater
-				players.push_back(p);
+				player_strategy.push_back("Cheater");
 				break;
 			}
 		}
@@ -92,22 +94,39 @@ void GameMode::init_game_mode() {
 		// Max turn selection
 		int max_turns = get_input(3, 50, "Select number of turns for game to be considered draw (3-50): ");
 
+		string results;
+		for (int i = 0; i < game_size; i++) {
+			results.append("\tGame " + std::to_string((i+1)));
+		}
+		
 		// Set up the games per map
 		for (int i = 0; i < map_selection.size(); i++) {
-			for (int i = 0; i < game_size; i++) {
-
+			results.append("\nMap " + std::to_string((i + 1)));
+			for (int j = 0; j < game_size; j++) {
+				vector<Player*> p;
+				for (int z = 0; z < player_size; z++) {
+					p.push_back(new Player(std::to_string(z), StrategyFactory::createStrategy(player_strategy[z])));
+				}
+				Game game(p, map_selection[i]);
+				game.init_game_deck();
+				game.init_startup_phase();
+				results.append("\t" + game.init_main_game_loop(max_turns));
 			}
 		}
 
-
-		cout << "M : " << endl;
-		cout << "P : ";
-		for (int i = 0; i < players.size(); i++) {
-			cout << typeid(players[i]).name() << " ";
+		cout << "M : ";
+		for (int i = 0; i < map_size; i++) {
+			cout << map_selection[i] << " ";
 		}
+		cout << endl;
+		cout << "P : ";
+		for (int i = 0; i < player_strategy.size(); i++) {
+			cout << player_strategy[i] << " ";
+		}
+		cout << endl;
 		cout << "G : " << game_size << endl;
 		cout << "D : " << max_turns << endl;
 
-
+		cout << results;
 	}
 }

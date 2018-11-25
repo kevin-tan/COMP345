@@ -9,7 +9,7 @@ public:
 	void execute_reinforce(Game* game, Player* player) override;
 	void execute_attack(Game* game, Player* player) override;
 	void execute_fortify(Game* game, Player* player) override;
-
+	std::string get_strategy_name() override;
 private:
 	vector<Vertex> weakest_countries(Game* game, Player* player);
 };

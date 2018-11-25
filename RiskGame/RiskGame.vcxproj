@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Aggressive.h" />
     <ClInclude Include="Benevolent.h" />
+    <ClInclude Include="Cheater.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
     <ClInclude Include="Game.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Strategy.h" />
+    <ClInclude Include="StrategyFactory.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -176,6 +178,7 @@
     <ClCompile Include="AttackDriver.cpp" />
     <ClCompile Include="Benevolent.cpp" />
     <ClCompile Include="CardMain.cpp" />
+    <ClCompile Include="Cheater.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DiceDriver.cpp" />
     <ClCompile Include="DiceRollingFacility.cpp" />
@@ -205,6 +208,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StrategyFactory.cpp" />
     <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +217,6 @@
     <None Include="Maps\InvalidTerritories.map" />
     <None Include="Maps\TerritoryTwoContinents.map" />
     <None Include="Maps\World.map" />
-    <None Include="World.map" />
-    <None Include="World1.map" />
-    <None Include="World2.map" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

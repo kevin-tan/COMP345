@@ -24,7 +24,7 @@ Player::~Player() {
 	delete dice_rolling_facility;
 	delete hand;
 	delete strategy;
-	
+
 	dice_rolling_facility = nullptr;
 	hand = nullptr;
 	strategy = nullptr;
@@ -50,6 +50,10 @@ Hand* Player::get_hand() { return hand; }
 
 string Player::get_name() const {
 	return name;
+}
+
+std::string Player::get_strategy_name() {
+	return strategy->get_strategy_name();
 }
 
 void Player::set_strategy(Strategy* strategy) {

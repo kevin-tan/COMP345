@@ -24,6 +24,7 @@ public:
 	DiceRollingFacility* get_dice_rolling_facility();
 	Hand* get_hand();
 	std::string get_name() const;
+	std::string get_strategy_name();
 	void set_strategy(Strategy* strategy);
 
 	void add_country(Vertex& country, Map& map);

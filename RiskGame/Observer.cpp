@@ -5,5 +5,4 @@
 IObserver::IObserver(ISubject* subject) : subject(subject) {
 }
 IObserver::~IObserver() {
-	delete subject;
 }

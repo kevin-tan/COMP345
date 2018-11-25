@@ -48,8 +48,7 @@ void Benevolent::execute_reinforce(Game* game, Player* player) {
 				total_army--;
 				phase_state.append("Player " + player->get_name() + " reinforced country " + map->get_graph()[v].country + " with 1 army.\n");
 				game->notify_all();
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -84,15 +83,15 @@ void Benevolent::execute_fortify(Game* game, Player* player) {
 			if (adj_country.player == player && adj_country.army_size - weak.army_size > 1) {
 				phase_state.append("Player " + player->get_name() + " chose country " + adj_country.country + " to move armies from!\n");
 				phase_state.append("Player " + player->get_name() + " chose country " + weak.country + " to move armies to!\n");
-				
-				int total_armies= adj_country.army_size + weak.army_size;
+
+				int total_armies = adj_country.army_size + weak.army_size;
 				int weak_country_armies = total_armies / 2;
 				int adjacency_armies = total_armies - weak_country_armies;
 				int move_armies = adj_country.army_size - adjacency_armies;
 
 				int& weak_army = weak.army_size;
 				int& adj_army = adj_country.army_size;
-				
+
 				weak_army = weak_country_armies;
 				adj_army = adjacency_armies;
 
@@ -114,6 +113,10 @@ void Benevolent::execute_fortify(Game* game, Player* player) {
 
 	phase_state.append("Player " + player->get_name() + " fortify phase terminating.\n");
 	game->notify_all();
+}
+
+std::string Benevolent::get_strategy_name() {
+	return "Benevolent";
 }
 
 vector<Vertex> Benevolent::weakest_countries(Game* game, Player* player) {

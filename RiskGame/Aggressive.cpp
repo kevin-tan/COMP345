@@ -93,8 +93,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 					game->notify_all();
 
 					defend_rolls = player->get_dice_rolling_facility()->rollDice(d_num_roll);
-				}
-				else {
+				} else {
 					int d_max_dice = target.army_size >= 2 ? 2 : target.army_size;
 					phase_state.append("Defending Player " + target.player->get_name() + " chose " + std::to_string(d_max_dice) + " dice to roll.\n");
 
@@ -119,8 +118,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							atk_army_size--;
 							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
-						}
-						else if (defend_rolls[d_index] == attack_rolls[a_index]) {
+						} else if (defend_rolls[d_index] == attack_rolls[a_index]) {
 							phase_state.append("Defender Player " + target.player->get_name() + " matched the attacker " + player->get_name() + " with a roll of " + std::to_string(attack_rolls[a_index]) + "!\n");
 							phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
 							// Other player dice will not matter, exit elimination phase
@@ -130,8 +128,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
 
 							elimination_phase = false;
-						}
-						else {
+						} else {
 							phase_state.append("Defender Player " + target.player->get_name() + " lost to the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 							phase_state.append("Defender Player " + target.player->get_name() + " has lost an army!\n");
 
@@ -141,8 +138,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 						}
 						d_index++;
 						a_index++;
-					}
-					else {
+					} else {
 						if (def_army_size == 0) {
 							phase_state.append("Attacking Player " + player->get_name() + " successfully took over country " + target.country + " from Player " + target.player->get_name() + "!\nPlayer " + player->get_name() + " now owns country " + target.country + "\n");
 
@@ -150,6 +146,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							def_army_size = 1;
 
 							Player* defeated_player = target.player;
+							std::string name = defeated_player->get_name();
 
 							target.player->remove_country(v, *game->get_game_map());
 							player->add_country(v, *game->get_game_map());
@@ -157,15 +154,15 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 							phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
 							phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
 
-							if(game->check_player_eliminated(defeated_player)) {
-								phase_state.append("Player " + defeated_player->get_name() + " has been eliminated. They have been removed from the game.");
+							if (game->check_player_eliminated(defeated_player)) {
+								phase_state.append("Player " + name + " has been eliminated. They have been removed from the game.");
 							}
 
 							if (game->check_win_condition(player)) {
-								phase_state.append("\n\n\nGAME OVER!\n\nPlayer " + player->get_name() + " wins!!");
 								game->notify_all();
 								game->get_game_map()->notify_all();
-								exit(0);
+								game->get_running() = false;
+								return;
 							}
 						}
 						elimination_phase = false;
@@ -202,11 +199,10 @@ void Aggressive::execute_fortify(Game* game, Player* player) {
 		}
 	}
 
-	if(target == NULL && source == NULL) {
+	if (target == NULL && source == NULL) {
 		phase_state.append("Player " + player->get_name() + " skipped fortifying phase.\n");
 		game->notify_all();
-	}
-	else {
+	} else {
 
 		auto& source_node = game->get_game_map()->get_graph()[source];
 		auto& target_node = game->get_game_map()->get_graph()[target];
@@ -217,7 +213,7 @@ void Aggressive::execute_fortify(Game* game, Player* player) {
 		int move_armies = source_node.army_size - 1;
 		int& target_army = target_node.army_size;
 		int& source_army = source_node.army_size;
-		
+
 		target_army += move_armies;
 		source_army -= move_armies;
 
@@ -228,6 +224,10 @@ void Aggressive::execute_fortify(Game* game, Player* player) {
 
 	phase_state.append("Player " + player->get_name() + " fortify phase terminating.\n");
 	game->notify_all();
+}
+
+std::string Aggressive::get_strategy_name() {
+	return "Aggressive";
 }
 
 Vertex Aggressive::strongest_country(Game* game, vector<Vertex> countries) {
