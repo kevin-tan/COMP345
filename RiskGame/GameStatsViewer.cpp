@@ -38,9 +38,13 @@ void GameStatsViewer::get_game_stats() const {
 	}
 	else {
 		
-		std::cout << boost::format("%+16s %+32s %+20s\n") % "Player" % "Countries owned" % "Percentage";
+		std::cout << boost::format("%+16s %+32s %+20s %20s\n") % "Player" % "Countries owned" % "Percentage" % "Armies owned";
 		for (Player* p : list_of_players) {
-			std::cout << boost::format("%+16s %+25s %25.2f\n") % p->get_name() % p->get_countries().size() % (p->get_countries().size() * 100 / (double)numb_of_countries);
+			int armies_owned = 0;
+			for (Vertex v : p->get_countries()) {
+				armies_owned += g[v].army_size;
+			}
+			std::cout << boost::format("%+16s %+25s %25.2f %18.0f\n") % p->get_name() % p->get_countries().size() % (p->get_countries().size() * 100 / (double)numb_of_countries) % armies_owned;
 		}
 
 	}

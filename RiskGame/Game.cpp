@@ -10,6 +10,7 @@
 #include "Benevolent.h"
 #include "Aggressive.h"
 #include "GameStatsViewer.h"
+#include "Cheater.h"
 
 using std::cin;
 using std::cout;
@@ -43,14 +44,14 @@ void Game::init_game_players() {
 		cin >> number_of_players;
 	}
 
-	cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player" << endl;
+	cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater computer player" << endl;
 
 	int strategy;
 
 	for (int i = 0; i < number_of_players; i++) {
 		cout << "\nPlayer " << i << " strategy option: " << endl;
 		cin >> strategy;
-		while (strategy < 0 || strategy > 2) {
+		while (strategy < 0 || strategy > 3) {
 			cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 		}
 
@@ -68,6 +69,9 @@ void Game::init_game_players() {
 			p = new Player(to_string(i), new Benevolent());
 			game_players.push_back(p);
 			break;
+		case 3:
+			p = new Player(to_string(i), new Cheater());
+			game_players.push_back(p);
 		}
 	}
 }
@@ -138,10 +142,10 @@ void Game::init_main_game_loop() {
 				}
 
 				int strategy;
-				cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player" << endl;
+				cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater computer player" << endl;
 				cout << "\nPlayer " << input_name << " strategy option: " << endl;
 				cin >> strategy;
-				while (strategy < 0 || strategy > 2) {
+				while (strategy < 0 || strategy > 3) {
 					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 				}
 
@@ -157,6 +161,8 @@ void Game::init_main_game_loop() {
 						case 2:
 							p->set_strategy(new Benevolent());
 							break;
+						case 3:
+							p->set_strategy(new Cheater());
 						}
 					}
 				}
