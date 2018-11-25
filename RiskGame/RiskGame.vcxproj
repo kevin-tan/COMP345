@@ -157,6 +157,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DiceRollingFacility.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameStatsViewer.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Human.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="FortificationDriver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameDriver.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameStatsDriver.cpp" />
     <ClCompile Include="GameStatsViewer.cpp" />
     <ClCompile Include="Hand.cpp" />

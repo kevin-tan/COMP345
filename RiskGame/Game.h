@@ -8,12 +8,13 @@ class Game : public ISubject {
 public:
 	Game();
 	~Game();
+
+	void init_gamemode();
+	void init_tourney();
 	void init_game_players();
 	void init_game_map();
 	void init_game_deck();
-
 	void init_startup_phase();
-
 	void init_main_game_loop();
 
 	std::vector<Player*> get_game_players() const;

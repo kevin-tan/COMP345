@@ -118,49 +118,11 @@ void Game::init_startup_phase() {
 }
 
 void Game::init_main_game_loop() {
-	int change_strategy;
 	while (true) {
 		for (Player* player : game_players) {
 			player->reinforce(this);
 			player->attack(this);
 			player->fortify(this);
-
-			cout << "Would you like to change a player's strategy? (Press 1)" << endl;
-			cin >> change_strategy;
-
-			string input_name = "";
-			if (change_strategy == 1) {
-				cout << "Enter player name: " << endl;
-				cin >> input_name;
-				while (std::stoi(input_name) < 0 || std::stoi(input_name) >= game_players.size()) {
-					cout << "Invalid name. Re-enter player name: " << endl;
-					cin >> input_name;
-				}
-
-				int strategy;
-				cout << "Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player" << endl;
-				cout << "\nPlayer " << input_name << " strategy option: " << endl;
-				cin >> strategy;
-				while (strategy < 0 || strategy > 2) {
-					cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
-				}
-
-				for (Player* p : game_players) {
-					if (p->get_name() == input_name) {
-						switch (strategy) {
-						case 0:
-							p->set_strategy(new Human());
-							break;
-						case 1:
-							p->set_strategy(new Aggressive());
-							break;
-						case 2:
-							p->set_strategy(new Benevolent());
-							break;
-						}
-					}
-				}
-			}
 		}
 	}
 }
@@ -227,7 +189,7 @@ void Game::distribute_armies() {
 					cout << "Player " + game_players[i]->get_name() << "'s turn to place an army unit on one of their territories." << endl;
 					Vertex random_country = game_players[i]->get_countries()[rand() % game_players[i]->get_countries().size()];
 					game_map.add_armies(random_country, 1);
-					cout << "Player " + game_players[i]->get_name() << " added an army unit to " <<  game_map.get_graph()[random_country].country << endl;
+					cout << "Player " + game_players[i]->get_name() << " added an army unit to " << game_map.get_graph()[random_country].country << endl;
 					remaining_armies[i]--;
 					cout << remaining_armies[i] << " army units remain..." << endl;
 				}
