@@ -47,10 +47,10 @@ void Human::execute_reinforce(Game* game, Player* player) {
 
 		// Get part of reinforcement from the card exchange
 		if (player->get_hand()->get_hand_size() >= 5) {
-			std::cout << "You have more than 4 cards in your hand, time to exchange" << std::endl;
+			std::cout << "You have more than 5 cards in your hand, time to exchange" << std::endl;
 			while (player->get_hand()->get_hand_size() >= 5)
 				exchange_armies += player->get_hand()->exchange(game->get_game_deck());
-			phase_state.append("Phase " + player->get_name() + " has more than 5 cards, auto-exchanging for armies.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
+			phase_state.append("Player " + player->get_name() + " has more than 5 cards, auto-exchanging for armies.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
 			game->notify_all();
 		}
 		if (player->get_hand()->can_exchange()) {
@@ -58,7 +58,7 @@ void Human::execute_reinforce(Game* game, Player* player) {
 			std::cin >> want_change;
 			if (want_change.compare("y") == 0 || want_change.compare("Y") == 0) {
 				exchange_armies += player->get_hand()->exchange(game->get_game_deck());
-				phase_state.append("Phase " + player->get_name() + " chose to exchange cards more cards.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
+				phase_state.append("Player " + player->get_name() + " chose to exchange their cards.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
 				game->notify_all();
 			}
 		}
@@ -212,9 +212,6 @@ void Human::execute_attack(Game* game, Player* player) {
 						phase_state.append("Country " + g[adj_countries_to_atk[to_country_choice]].country + " now has " + std::to_string(def_army_size) + " armies!\n");
 
 						game->notify_all();
-
-						// Other player dice will not matter, exit elimination phase
-						elimination_phase = false;
 					} else {
 						phase_state.append("Defender Player " + p->get_name() + " lost to the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
 						phase_state.append("Defender Player " + p->get_name() + " has lost an army!\n");

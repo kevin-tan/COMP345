@@ -167,6 +167,7 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Strategy.h" />
     <ClInclude Include="StrategyFactory.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="PhaseObserverDriver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDriver.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="ReinforcementDriver.cpp" />
     <ClCompile Include="RiskGame.cpp" />
     <ClCompile Include="stdafx.cpp">
