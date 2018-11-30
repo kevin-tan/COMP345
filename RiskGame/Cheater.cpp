@@ -21,6 +21,7 @@ void Cheater::execute_reinforce(Game * game, Player * player) {
 }
 
 void Cheater::execute_attack(Game* game, Player* player) {
+	bool conquered = false;
 	// Initialize phase
 	string phase_state = "Player " + player->get_name() + ": attack phase.\n";
 	game->set_state(&phase_state);
@@ -43,6 +44,7 @@ void Cheater::execute_attack(Game* game, Player* player) {
 				}
 				player->add_country(adjacent, *(game->get_game_map()));
 				phase_state.append(game->get_game_map()->get_graph()[adjacent].country + ", ");
+				conquered = true;
 			}
 		}
 	}
@@ -55,6 +57,11 @@ void Cheater::execute_attack(Game* game, Player* player) {
 		game->get_running() = false;
 		return;
 	}
+	if (conquered) {
+		game->get_game_deck()->draw(player->get_hand());
+		phase_state.append("Player " + player->get_name() + " was awarded a card.\n");
+	}
+
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 	game->get_game_map()->notify_all();

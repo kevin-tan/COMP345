@@ -51,6 +51,7 @@ void Aggressive::execute_reinforce(Game* game, Player* player) {
 }
 
 void Aggressive::execute_attack(Game* game, Player* player) {
+	bool conquered = false;
 	// Initialize phase
 	string phase_state = "Player " + player->get_name() + ": attack phase.\n";
 	game->set_state(&phase_state);
@@ -137,6 +138,7 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 						a_index++;
 					} else {
 						if (def_army_size == 0) {
+							conquered = true;
 							phase_state.append("Attacking Player " + player->get_name() + " successfully took over country " + target.country + " from Player " + target.player->get_name() + "!\nPlayer " + player->get_name() + " now owns country " + target.country + "\n");
 
 							atk_army_size--;
@@ -171,6 +173,11 @@ void Aggressive::execute_attack(Game* game, Player* player) {
 
 		}
 	}
+	if (conquered) {
+		game->get_game_deck()->draw(player->get_hand());
+		phase_state.append("Player " + player->get_name() + " was awarded a card.\n");
+	}
+
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 }

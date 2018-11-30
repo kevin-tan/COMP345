@@ -77,6 +77,7 @@ void Human::execute_reinforce(Game* game, Player* player) {
 }
 
 void Human::execute_attack(Game* game, Player* player) {
+	bool conquered = false;
 	int atk = 0;
 
 	// Initialize phase
@@ -226,6 +227,7 @@ void Human::execute_attack(Game* game, Player* player) {
 					a_index++;
 				} else {
 					if (def_army_size == 0) {
+						conquered = true;
 						int army_to_move = 0;
 						phase_state.append("Attacking Player " + player->get_name() + " successfully took over country " + g[adj_countries_to_atk[to_country_choice]].country + " from Player " + p->get_name() + "!\nPlayer " + player->get_name() + " now owns country " + g[adj_countries_to_atk[to_country_choice]].country + "\n");
 						game->notify_all();
@@ -273,6 +275,11 @@ void Human::execute_attack(Game* game, Player* player) {
 	} else {
 		phase_state.append("Player " + player->get_name() + " chose to skip attack phase.\n");
 	}
+	if(conquered) {
+		game->get_game_deck()->draw(player->get_hand());
+		phase_state.append("Player " + player->get_name() + " was awarded a card.\n");
+	}
+
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 }

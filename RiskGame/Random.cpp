@@ -64,6 +64,7 @@ void Random::execute_reinforce(Game* game, Player* player) {
 }
 
 void Random::execute_attack(Game* game, Player* player) {
+	bool conquered = false;
 	// Initialize phase
 	string phase_state = "Player " + player->get_name() + ": attack phase.\n";
 	game->set_state(&phase_state);
@@ -74,13 +75,18 @@ void Random::execute_attack(Game* game, Player* player) {
 		// For all attack sources, find valid attack sources (army size is more than 1)
 		auto& source = game->get_game_map()->get_graph()[attack_source];
 		if (source.army_size >= 1) {
-			// Pick random attack target
-			srand(time(0));
-			int rand_country_index = rand() % game->get_game_map()->get_adjacent_countries(attack_source).size();
-			Vertex rand_target = game->get_game_map()->get_adjacent_countries(attack_source)[rand_country_index];
-			auto& target = game->get_game_map()->get_graph()[rand_target];
+			if (!owns_all_adjacencies(game, player, attack_source)) {
+				// Pick random attack target
+				srand(time(0));
+				int rand_country_index = rand() % game->get_game_map()->get_adjacent_countries(attack_source).size();
+				Vertex rand_target = game->get_game_map()->get_adjacent_countries(attack_source)[rand_country_index];
 
-			if (target.player != player) {
+				while(game->get_game_map()->get_graph()[rand_target].player == player) {
+					rand_country_index = rand() % game->get_game_map()->get_adjacent_countries(attack_source).size();
+					rand_target = game->get_game_map()->get_adjacent_countries(attack_source)[rand_country_index];
+				}
+				auto& target = game->get_game_map()->get_graph()[rand_target];
+				
 				// Pick random number of times to attack assuming 1 attack dice is rolled
 				int number_of_attacks = rand() % source.army_size;
 
@@ -164,6 +170,7 @@ void Random::execute_attack(Game* game, Player* player) {
 							}
 							else {
 								if (def_army_size == 0) {
+									conquered = true;
 									phase_state.append("Attacking Player " + player->get_name() + " successfully took over country " + target.country + " from Player " + target.player->get_name() + "!\nPlayer " + player->get_name() + " now owns country " + target.country + "\n");
 
 									atk_army_size--;
@@ -200,6 +207,11 @@ void Random::execute_attack(Game* game, Player* player) {
 			}
 		}
 	}
+	if (conquered) {
+		game->get_game_deck()->draw(player->get_hand());
+		phase_state.append("Player " + player->get_name() + " was awarded a card.\n");
+	}
+
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 }
@@ -261,4 +273,12 @@ void Random::execute_fortify(Game* game, Player* player) {
 
 std::string Random::get_strategy_name() {
 	return "Random";
+}
+
+bool Random::owns_all_adjacencies(Game* game, Player* player, Vertex country) {
+	for(Vertex adj : game->get_game_map()->get_adjacent_countries(country)) {
+		if (game->get_game_map()->get_graph()[adj].player != player) return false;
+	}
+
+	return true;
 }
