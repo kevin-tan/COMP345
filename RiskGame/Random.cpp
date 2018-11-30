@@ -9,6 +9,8 @@ using std::begin;
 using std::end;
 using std::string;
 using std::chrono::system_clock;
+using std::cout;
+using std::cin;
 
 void Random::execute_reinforce(Game* game, Player* player) {
 	Map* map = game->get_game_map();
@@ -61,22 +63,143 @@ void Random::execute_reinforce(Game* game, Player* player) {
 	game->notify_all();
 }
 
-//Reinforces random a random country, attacks a random number of times a random country, and fortifies a random country
 void Random::execute_attack(Game* game, Player* player) {
-	// Way I'd go about it:
-	// Shuffle the vector of countries
-	// For each it
-	// Pick a random target (who cares)
-	// Calc. number of attacks possible and random gen.
-	// Do until # of attacks is reached or conquered or lost
-	// End for each
-	// Done wrecking all its forces. (likely gonna be one or two anyway...)
-	
 	// Initialize phase
 	string phase_state = "Player " + player->get_name() + ": attack phase.\n";
 	game->set_state(&phase_state);
 
-	phase_state.append("Player " + player->get_name() + " chose to skip attack phase.\n");
+	phase_state.append("Player " + player->get_name() + " chose to attack.\n");
+
+	for (Vertex attack_source : player->get_countries()) {
+		// For all attack sources, find valid attack sources (army size is more than 1)
+		auto& source = game->get_game_map()->get_graph()[attack_source];
+		if (source.army_size >= 1) {
+			// Pick random attack target
+			srand(time(0));
+			int rand_country_index = rand() % game->get_game_map()->get_adjacent_countries(attack_source).size();
+			Vertex rand_target = game->get_game_map()->get_adjacent_countries(attack_source)[rand_country_index];
+			auto& target = game->get_game_map()->get_graph()[rand_target];
+
+			if (target.player != player) {
+				// Pick random number of times to attack assuming 1 attack dice is rolled
+				int number_of_attacks = rand() % source.army_size;
+
+				// If RNG picks 0, no attack
+				if (number_of_attacks != 0) {
+					phase_state.append("Player " + player->get_name() + " chose " + source.country + " to attack from.\n");
+					phase_state.append("Player " + player->get_name() + " chose " + target.country + " to attack.\n");
+				
+					// Attack for random number of attacks, STOP if source army runs out, or target army is conquered
+					while (number_of_attacks > 0 && source.army_size > 1 && target.player != source.player) {
+						// Pick random number of dice to roll
+						int a_max_dice = source.army_size - 1 >= 3 ? 3 : source.army_size - 1;
+						int a_rand_dice = (rand() % a_max_dice) + 1;
+						phase_state.append("Attacking Player " + player->get_name() + " chose " + std::to_string(a_rand_dice) + " dice to roll.\n");
+
+						vector<int> attack_rolls = player->get_dice_rolling_facility()->rollDice(a_rand_dice);
+						vector<int> defend_rolls;
+
+						if (target.player->is_human()) {
+							// Defender rolling chosen number dice for attack per army (army size)
+							game->notify_all();
+							int d_max_dice = target.army_size >= 2 ? 2 : target.army_size;
+							int d_num_roll = 0;
+							Player* p = target.player;
+							cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << "): ";
+							cin >> d_num_roll;
+							while (d_num_roll <= 0 || d_num_roll > d_max_dice) {
+								cout << "Player " << p->get_name() << ", choose number of dice to roll to defend (1-" << d_max_dice << ") only: ";
+								cin >> d_num_roll;
+							}
+
+							phase_state.append("Defending Player " + p->get_name() + " chose " + std::to_string(d_num_roll) + " dice to roll.\n");
+							game->notify_all();
+
+							defend_rolls = player->get_dice_rolling_facility()->rollDice(d_num_roll);
+						}
+						else {
+							int d_max_dice = target.army_size >= 2 ? 2 : target.army_size;
+							phase_state.append("Defending Player " + target.player->get_name() + " chose " + std::to_string(d_max_dice) + " dice to roll.\n");
+
+							defend_rolls = player->get_dice_rolling_facility()->rollDice(d_max_dice);
+						}
+
+						// Eliminating army phase
+						int max_army = attack_rolls.size() > defend_rolls.size() ? attack_rolls.size() : defend_rolls.size();
+						int d_index = 0, a_index = 0;
+						bool elimination_phase = true;
+						while (elimination_phase) {
+							// Ref to army size of attacker and defender
+							int& atk_army_size = source.army_size;
+							int& def_army_size = target.army_size;
+							const int atk_army_size_before = atk_army_size;
+
+							if (d_index < defend_rolls.size() && a_index < attack_rolls.size()) {
+								if (defend_rolls[d_index] > attack_rolls[a_index]) {
+									phase_state.append("Defender Player " + target.player->get_name() + " beat the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
+									phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
+
+									atk_army_size--;
+									phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+									phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+								}
+								else if (defend_rolls[d_index] == attack_rolls[a_index]) {
+									phase_state.append("Defender Player " + target.player->get_name() + " matched the attacker " + player->get_name() + " with a roll of " + std::to_string(attack_rolls[a_index]) + "!\n");
+									phase_state.append("Attacking Player " + player->get_name() + " has lost an army!\n");
+
+									atk_army_size--;
+									phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+									phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+								}
+								else {
+									phase_state.append("Defender Player " + target.player->get_name() + " lost to the attacker " + player->get_name() + " with a roll of " + std::to_string(defend_rolls[d_index]) + " vs " + std::to_string(attack_rolls[a_index]) + "!\n");
+									phase_state.append("Defender Player " + target.player->get_name() + " has lost an army!\n");
+
+									def_army_size--;
+									phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+									phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+								}
+								d_index++;
+								a_index++;
+							}
+							else {
+								if (def_army_size == 0) {
+									phase_state.append("Attacking Player " + player->get_name() + " successfully took over country " + target.country + " from Player " + target.player->get_name() + "!\nPlayer " + player->get_name() + " now owns country " + target.country + "\n");
+
+									atk_army_size--;
+									def_army_size = 1;
+
+									Player* defeated_player = target.player;
+									std::string name = defeated_player->get_name();
+
+									target.player->remove_country(rand_target, *game->get_game_map());
+									player->add_country(rand_target, *game->get_game_map());
+									phase_state.append("Player " + player->get_name() + " moved 1 army unit(s) from country " + source.country + " to " + target.country + "!\n");
+									phase_state.append("Country " + source.country + " now has " + std::to_string(atk_army_size) + " armies!\n");
+									phase_state.append("Country " + target.country + " now has " + std::to_string(def_army_size) + " armies!\n");
+
+									if (game->check_player_eliminated(defeated_player)) {
+										phase_state.append("Player " + name + " has been eliminated. They have been removed from the game.");
+									}
+
+									if (game->check_win_condition(player)) {
+										game->notify_all();
+										game->get_game_map()->notify_all();
+										game->get_running() = false;
+										return;
+									}
+								}
+								elimination_phase = false;
+							}
+							game->notify_all();
+							game->get_game_map()->notify_all();
+						}
+						number_of_attacks--;
+					}
+				}
+			}
+		}
+	}
 	phase_state.append("Player " + player->get_name() + " attack phase terminating.\n");
 	game->notify_all();
 }
@@ -115,7 +238,7 @@ void Random::execute_fortify(Game* game, Player* player) {
 
 		phase_state.append("Player " + player->get_name() + " chose country " + source_node.country + " to move armies from!\n");
 		phase_state.append("Player " + player->get_name() + " chose country " + target_node.country + " to move armies to!\n");
-		
+
 		int total_armies = source_node.army_size + target_node.army_size;
 		int target_armies = total_armies / 2;
 		int source_armies = total_armies - target_armies;
