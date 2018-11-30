@@ -63,7 +63,7 @@ void GameMode::init_game_mode() {
 
 		int strategy = 0;
 		vector<std::string> player_strategy;
-		cout << "Strategy options\n[0] Random player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater" << endl;
+		cout << "Strategy options\n[0] Random computer player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater computer player" << endl;
 		for (int i = 0; i < player_size; i++) {
 			cout << "\nPlayer " << i << " strategy option: ";
 			cin >> strategy;
@@ -72,10 +72,11 @@ void GameMode::init_game_mode() {
 				cin >> strategy;
 			}
 
-			if (strategy == 0) strategy = rand() % 3 + 1; // Replace with Random()
-
 			Player* p;
 			switch (strategy) {
+			case 0:
+				player_strategy.push_back("Random");
+				break;
 			case 1:
 				player_strategy.push_back("Aggressive");
 				break;

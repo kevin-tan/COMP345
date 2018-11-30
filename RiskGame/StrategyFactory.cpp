@@ -3,6 +3,7 @@
 #include "Aggressive.h"
 #include "Benevolent.h"
 #include "Cheater.h"
+#include "Random.h"
 
 Strategy* StrategyFactory::createStrategy(std::string strategy) {
 	if (strategy.compare("Aggressive") == 0) {
@@ -15,7 +16,7 @@ Strategy* StrategyFactory::createStrategy(std::string strategy) {
 		return new Cheater();
 	}
 	if (strategy.compare("Random") == 0) {
-		return nullptr;
+		return new Random();
 	}
 	return nullptr;
 }

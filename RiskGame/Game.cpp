@@ -11,6 +11,7 @@
 #include "Aggressive.h"
 #include "GameStatsViewer.h"
 #include "Cheater.h"
+#include "Random.h"
 
 using std::cin;
 using std::cout;
@@ -61,7 +62,7 @@ void Game::init_game_players() {
 	}
 
 	cout <<
-		"Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater computer player"
+		"Strategy options\n[0] Human player\n[1] Aggressive computer player\n[2] Benevolent computer player\n[3] Cheater computer player\n[4] Random computer player"
 		<< endl;
 
 	int strategy;
@@ -69,7 +70,7 @@ void Game::init_game_players() {
 	for (int i = 0; i < number_of_players; i++) {
 		cout << "\nPlayer " << i << " strategy option: " << endl;
 		cin >> strategy;
-		while (strategy < 0 || strategy > 3) {
+		while (strategy < 0 || strategy > 4) {
 			cout << "Invalid option. Please re-enter an option number from the list above: " << endl;
 		}
 
@@ -89,6 +90,10 @@ void Game::init_game_players() {
 			break;
 		case 3:
 			p = new Player(to_string(i), new Cheater());
+			game_players.push_back(p);
+			break;
+		case 4:
+			p = new Player(to_string(i), new Random());
 			game_players.push_back(p);
 		}
 	}

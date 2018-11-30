@@ -27,12 +27,12 @@ void Benevolent::execute_reinforce(Game* game, Player* player) {
 	if (player->get_hand()->get_hand_size() >= 5) {
 		while (player->get_hand()->get_hand_size() >= 5)
 			exchange_armies += player->get_hand()->exchange(game->get_game_deck());
-		phase_state.append("Phase " + player->get_name() + " has more than 5 cards, auto-exchanging for armies.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
+		phase_state.append("Player " + player->get_name() + " has more than 5 cards, auto-exchanging for armies.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
 		game->notify_all();
 	}
 	while (player->get_hand()->can_exchange()) {
 		exchange_armies += player->get_hand()->exchange(game->get_game_deck());
-		phase_state.append("Phase " + player->get_name() + " chose to exchange cards more cards.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
+		phase_state.append("Player " + player->get_name() + " chose to exchange their cards.\nPlayer " + player->get_name() + " received " + std::to_string(exchange_armies) + " number of armies.\n");
 		game->notify_all();
 	}
 	total_army = country_armies + continent_armies + exchange_armies;
